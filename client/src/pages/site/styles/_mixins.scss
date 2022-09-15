@@ -1,0 +1,11 @@
+@mixin light-text {
+    font-weight: 200;
+    font-size: 1rem;
+    line-height: 120%;
+}
+
+@mixin bold-text {
+    font-weight: 600;
+    font-size: 1.2rem;
+    line-height: 120%;
+}
