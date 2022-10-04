@@ -109,6 +109,10 @@
             color: #f0f1f5;
         }
 
+        .accounts-lists > * {
+            color: lightgoldenrodyellow;
+        }
+
         .location p:first-child,
         .accounts-lists .accounts-list-dropdown p {
             @include bold-text;
@@ -154,8 +158,17 @@
             padding: 0;
         }
 
-        .shopping-cart {
+        #shopping-cart > * {
             margin: auto none;
+            display: flex;
+        }
+
+        #shopping-cart > * {
+            margin: auto;
+            font-weight: 600;
+            font-size: 1.2rem;
+            line-height: 120%;
+            color: #f0f1f5;
         }
     }
 }

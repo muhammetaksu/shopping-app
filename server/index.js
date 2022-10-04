@@ -1,10 +1,18 @@
 const express = require("express");
 const cors = require("cors");
+require("dotenv").config();
 const mongoose = require("mongoose");
-const database = require("./database");
+const database = require("./config/database");
+const checkAuth = require("./middleware/checkAuth");
+
 const productsRoute = require("./routes/productsRoute");
 const suppliersRoute = require("./routes/suppliersRoute");
 const categoriesRoute = require("./routes/categoriesRoute");
+const usersRoute = require("./routes/usersRoute");
+const adminsRoute = require("./routes/adminsRoute");
+const authRoute = require("./routes/authRoute");
+const addressRoute = require("./routes/addressRoute");
+const passwordResetRoute = require("./routes/passwordResetRoute");
 
 const app = express();
 app.use(cors());
@@ -17,3 +25,13 @@ app.listen(5000, () => {
 app.use("/api/products", productsRoute);
 app.use("/api/categories", categoriesRoute);
 app.use("/api/suppliers", suppliersRoute);
+app.use("/api/admins", adminsRoute);
+app.use("/api/login", authRoute);
+app.use("/api/reset-password", passwordResetRoute);
+app.use("/api/users", usersRoute);
+app.use("/api/addresses", checkAuth, addressRoute);
+
+// Catch all routes
+// app.all("*", (req, res) => {
+//     res.json({ message: "Route not found" });
+// });

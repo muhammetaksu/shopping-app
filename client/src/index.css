@@ -32,6 +32,12 @@ p {
     background: #fff;
 }
 
+/* NAVBAR */
+
+.activeNavLink {
+    color: aqua !important;
+}
+
 /* SUB NAVIGATION BAR - START */
 
 @import url("https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap");
@@ -266,7 +272,7 @@ p {
 
 .cardImgCont {
     display: flex;
-    width: 45%;
+    width: 40%;
     align-items: center;
     align-self: center;
     align-content: center;
@@ -632,4 +638,121 @@ p {
 }
 .adminPageNavbar > div > a:hover {
     color: rgb(0, 220, 220);
+}
+
+/*********** AUTH **********/
+
+/* LOGIN  */
+#forgotCont > div {
+    transition: 0.3s;
+}
+#forgotCont > div:hover {
+    transform: scale(1.2) !important;
+}
+
+.login-form {
+    transition: 0.5s;
+}
+
+.login-form:focus {
+    border: 1px solid rgb(255, 0, 0, 0);
+    border-bottom: 1px solid rgb(0, 60, 255);
+    box-shadow: none;
+    border-radius: 0;
+}
+
+@media (max-width: 991px) {
+    #imgCont {
+        border: 0 !important;
+    }
+    #loginImg {
+        display: none;
+    }
+
+    #registerImg {
+        display: none;
+    }
+
+    #resetPassImg {
+        display: none;
+    }
+
+    #loginCont {
+        background: url("https://live.staticflickr.com/65535/52364926883_de6a3ded9e_c.jpg")
+            no-repeat center !important;
+        background-size: cover !important;
+        border: none !important;
+        padding: 0 !important;
+        height: 80vh !important;
+    }
+
+    #adminLoginCont {
+        background: url("https://live.staticflickr.com/65535/52371781468_7437f9aba8_o.png")
+            no-repeat center !important;
+        background-size: cover !important;
+        border: none !important;
+        padding: 0 !important;
+        height: 80vh !important;
+    }
+
+    #registerCont {
+        background: url("https://live.staticflickr.com/65535/52364701191_5bef2751d6_k.jpg")
+            no-repeat center !important;
+        background-size: cover !important;
+        border: none !important;
+        padding: 0 !important;
+        height: 80vh !important;
+    }
+
+    #resetPassCont {
+        background: url("https://live.staticflickr.com/65535/52367925557_216d1d1ce7_b.jpg")
+            no-repeat center !important;
+        background-size: cover !important;
+        border: none !important;
+        padding: 0 !important;
+        height: 80vh !important;
+    }
+
+    #newPassCont {
+        background: url("https://live.staticflickr.com/65535/52378431761_72c3359112_o.jpg")
+            no-repeat center !important;
+        background-size: cover !important;
+        border: none !important;
+        padding: 0 !important;
+        height: 80vh !important;
+    }
+
+    #loginCont > div {
+        background: rgba(255, 255, 255, 0.7);
+        background-size: cover !important;
+        height: 100%;
+    }
+
+    #adminLoginCont > div {
+        background: rgba(255, 255, 255, 0.8);
+        background-size: cover !important;
+        height: 100%;
+    }
+
+    #registerCont > div {
+        background: rgba(255, 255, 255, 0.7);
+        background-size: cover !important;
+        height: 100%;
+    }
+
+    #resetPassCont > div {
+        background: rgba(255, 255, 255, 0.7);
+        background-size: cover !important;
+        height: 100%;
+    }
+
+    #newPassCont > div {
+        background: rgba(255, 255, 255, 0.7);
+        background-size: cover !important;
+        height: 100%;
+    }
+
+    #forgotCont > div {
+        width: 51% !important;
+    }
 }

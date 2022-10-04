@@ -66,7 +66,7 @@ const CartPage = () => {
                                 </div>
                                 <div className="border-end my-auto cartSummaryBox">
                                     <h3 className="m-0 cartSummaryText">
-                                        Subtotal: <br /> $ {totalCartPrice.toFixed(2)}
+                                        Subtotal: <br /> $ {totalCartPrice}
                                     </h3>
                                 </div>
                                 <div className="my-auto  cartSummaryBox">
@@ -116,8 +116,7 @@ const CartPage = () => {
                                                         }}
                                                         className="col-3 text-center my-auto border-start cartProductsText"
                                                     >
-                                                        Unit Price: <br /> ${" "}
-                                                        {product.unitPrice.toFixed(2)}
+                                                        Unit Price: <br /> $ {product.unitPrice}
                                                     </div>
                                                     <div
                                                         style={{
@@ -161,9 +160,7 @@ const CartPage = () => {
                                                         className="col-3  text-center my-auto border-start cartProductsText"
                                                     >
                                                         Total Price: <br /> ${" "}
-                                                        {(
-                                                            product.quantity * product.unitPrice
-                                                        ).toFixed(2)}
+                                                        {product.quantity * product.unitPrice}
                                                     </div>
                                                     <div
                                                         style={{ cursor: "pointer" }}
@@ -228,8 +225,7 @@ const CartPage = () => {
                                                         }}
                                                         className="col-3 text-center my-auto border-start cartProductsText"
                                                     >
-                                                        Unit Price: <br /> ${" "}
-                                                        {product.unitPrice.toFixed(2)}
+                                                        Unit Price: <br /> $ {product.unitPrice}
                                                     </div>
                                                     <div
                                                         style={{
@@ -266,9 +262,7 @@ const CartPage = () => {
                                                         className="col-3 text-center my-auto border-start cartProductsText"
                                                     >
                                                         Total Price: <br /> ${" "}
-                                                        {(
-                                                            product.quantity * product.unitPrice
-                                                        ).toFixed(2)}
+                                                        {product.quantity * product.unitPrice}
                                                     </div>
                                                     <div
                                                         style={{ cursor: "pointer" }}
@@ -304,7 +298,7 @@ const CartPage = () => {
                                 </div>
                                 <div className="border-bottom">
                                     <h3 style={{ fontSize: "20px" }} className="my-3">
-                                        Subtotal: $ {totalCartPrice.toFixed(2)}
+                                        Subtotal: $ {totalCartPrice}
                                     </h3>
                                 </div>
                                 <div>

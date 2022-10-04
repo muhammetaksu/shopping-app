@@ -36,7 +36,6 @@ function ProductList() {
         {
             title: "Brand",
             dataIndex: "brand",
-            defaultSortOrder: "descend",
             filters: [
                 {
                     text: "Joe",
@@ -57,7 +56,6 @@ function ProductList() {
         {
             title: "Model",
             dataIndex: "model",
-            defaultSortOrder: "descend",
             sorter: (a, b) => {
                 const nameA = a.model.toLowerCase(); // ignore Lower and lowercase
                 const nameB = b.model.toLowerCase(); // ignore Lower and lowercase
@@ -88,8 +86,7 @@ function ProductList() {
                 <div className="d-flex justify-content-evenly">
                     <EditOutlined
                         onClick={() => navigate(`/admin/update-product/${e}`)}
-                        className="text-info"
-                        style={{ cursor: "pointer", fontSize: "20px" }}
+                        style={{ cursor: "pointer", fontSize: "20px", color: "#161920" }}
                     />
                     <CloseOutlined
                         onClick={() => confirm(e)}

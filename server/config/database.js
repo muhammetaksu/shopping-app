@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
+const { connectionString } = require("./environments");
 
-mongoose.connect(
-    "mongodb+srv://muhammetaksu:1234567890@cluster0.vrwbu6p.mongodb.net/amazon-clone-db?retryWrites=true&w=majority"
-);
+mongoose.connect(connectionString);
 
 var db = mongoose.connection;
 

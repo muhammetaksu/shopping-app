@@ -35,9 +35,8 @@ function CategoryList() {
     const columns = [
         {
             title: "Name",
-            width: "90%",
+            width: "88%",
             dataIndex: "name",
-            defaultSortOrder: "descend",
 
             sorter: (a, b) => {
                 const nameA = a.name.toLowerCase(); // ignore Lower and lowercase
@@ -60,8 +59,7 @@ function CategoryList() {
                 <div className="d-flex justify-content-evenly">
                     <EditOutlined
                         onClick={() => navigate(`/admin/update-category/${e}`)}
-                        className="text-info"
-                        style={{ cursor: "pointer", fontSize: "20px" }}
+                        style={{ cursor: "pointer", fontSize: "20px", color: "#161920" }}
                     />
                     <CloseOutlined
                         onClick={() => confirm(e)}

@@ -36,7 +36,6 @@ function SupplierList() {
         {
             title: "Name",
             dataIndex: "name",
-            defaultSortOrder: "descend",
 
             sorter: (a, b) => {
                 const nameA = a.name.toLowerCase(); // ignore Lower and lowercase
@@ -52,7 +51,6 @@ function SupplierList() {
         {
             title: "Contact Name",
             dataIndex: "contactName",
-            defaultSortOrder: "descend",
 
             sorter: (a, b) => {
                 const nameA = a.contactName.toLowerCase(); // ignore Lower and lowercase
@@ -68,8 +66,6 @@ function SupplierList() {
         {
             title: "Contact Title",
             dataIndex: "contactTitle",
-
-            defaultSortOrder: "descend",
 
             sorter: (a, b) => {
                 const nameA = a.contactTitle.toLowerCase(); // ignore Lower and lowercase
@@ -87,8 +83,6 @@ function SupplierList() {
             dataIndex: "address",
             render: (address) => [address].map((ad) => ad.city).join(),
 
-            defaultSortOrder: "descend",
-
             sorter: (a, b) => {
                 const nameA = a.address.city.toLowerCase(); // ignore Lower and lowercase
                 const nameB = b.address.city.toLowerCase(); // ignore Lower and lowercase
@@ -104,7 +98,6 @@ function SupplierList() {
             title: "Country",
             dataIndex: "address",
             render: (address) => [address].map((ad) => ad.country).join(),
-            defaultSortOrder: "descend",
 
             sorter: (a, b) => {
                 const nameA = a.address.country.toLowerCase(); // ignore Lower and lowercase
@@ -127,8 +120,7 @@ function SupplierList() {
                 <div className="d-flex justify-content-evenly">
                     <EditOutlined
                         onClick={() => navigate(`/admin/update-supplier/${e}`)}
-                        className="text-info"
-                        style={{ cursor: "pointer", fontSize: "20px" }}
+                        style={{ cursor: "pointer", fontSize: "20px", color: "#161920" }}
                     />
                     <CloseOutlined
                         onClick={() => confirm(e)}

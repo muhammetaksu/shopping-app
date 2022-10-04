@@ -44,7 +44,7 @@ function Departments() {
                                 key={item.id}
                                 style={{ color: "black", cursor: "pointer" }}
                             >
-                                {item.companyName}
+                                {item.name}
                             </li>
                         );
                     })}

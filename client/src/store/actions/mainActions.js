@@ -85,3 +85,17 @@ export const clearSelectedSupplier = () => {
         type: "CLEAR_SELECTED_SUPPLIER",
     };
 };
+
+/////// CURRENT USER ///////
+
+export const setCurrentUser = (payload) => {
+    return {
+        type: "SET_CURRENT_USER",
+        payload: payload,
+    };
+};
+export const clearCurrentUser = () => {
+    return {
+        type: "CLEAR_CURRENT_USER",
+    };
+};

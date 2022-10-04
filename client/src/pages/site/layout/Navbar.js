@@ -1,35 +1,39 @@
-import React, { useContext, useEffect, useState } from "react";
-import { baseManager } from "../../../network/baseManager";
+import React, { useState } from "react";
 import logo from "../images/icons/bx_bxl-amazon.png";
 import locationIcon from "../images/icons/Location.png";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import searchIcon from "../images/icons/Search.png";
-import dropdownBotomLight from "../images/icons/dropdown-bottom.png";
 import drag from "../images/icons/Drag.png";
 import close from "../images/icons/close.png";
 import cartIcon from "../images/icons/shopping-cart.png";
 import "../styles/Header.scss";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { changeData, changeProductsData } from "../../../store/actions/mainActions";
+import { changeProductsData, clearCurrentUser } from "../../../store/actions/mainActions";
+import { AdminOnlyLink } from "../../../tools/AdminOnly";
+import { ShowOnLogin, ShowOnLogout } from "../../../tools/HiddenLink";
+import { userStorage } from "../../../service/localStorage/userStorage";
+import { toast } from "react-toastify";
 
 function Navbar() {
     const [searchText, setSearchText] = useState("");
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const cart = useSelector((state) => state.cartReducer);
-    const suppliersState = useSelector((state) => state.suppliersReducer);
-    const { suppliers } = suppliersState;
+    const { suppliers } = useSelector((state) => state.suppliersReducer);
 
-    const originalDataState = useSelector((state) => state.originalProductsReducer);
-    const { originalProducts } = originalDataState;
+    const { originalProducts } = useSelector((state) => state.originalProductsReducer);
 
-    const getProductsBySupplier = (id) => {
-        if (id == -1) {
+    const { currentUser } = useSelector((state) => state.userReducer);
+    console.log(currentUser);
+
+    const getProductsBySupplier = (_id) => {
+        if (_id === -1) {
             dispatch(changeProductsData(originalProducts));
         } else {
-            const newProducts = originalProducts.filter((e) => e.supplierId == id);
+            const newProducts = originalProducts.filter((e) => e.supplierId === _id);
             dispatch(changeProductsData(newProducts));
         }
         document.querySelector("#countProduct").value = -1;
@@ -38,10 +42,22 @@ function Navbar() {
     const search = (text) => {
         setSearchText(text);
         const myText = text.toLowerCase();
-        const filteredProducts = originalProducts.filter((product) =>
-            product.name.toLowerCase().includes(myText)
+        const filteredProducts = originalProducts.filter(
+            (product) =>
+                product.brand.toLowerCase().includes(myText) ||
+                product.model.toLowerCase().includes(myText)
         );
+
         dispatch(changeProductsData(filteredProducts));
+    };
+
+    const activeLink = ({ isActive }) => (isActive ? "activeNavLink" : "");
+
+    const handleLogout = async () => {
+        await userStorage.removeUser();
+        dispatch(clearCurrentUser());
+        toast.success("Logout successfully!");
+        navigate("/login");
     };
 
     return (
@@ -50,29 +66,36 @@ function Navbar() {
                 <input type="checkbox" id="check" />
                 <div className="nav-bar">
                     {/* --------LOGO------- */}
-                    <NavLink className="my-auto" to="/">
+                    <NavLink className="my-auto " to="/">
                         <div className="logo">
                             <img src={logo} alt="logo" />
                         </div>
                     </NavLink>
 
                     {/* --------ADMIN PANEL------- */}
-                    <div className="adminPanelCont">
-                        <Link className="adminPanel" to={"/admin"}>
-                            Admin Panel
-                        </Link>
-                    </div>
+                    <AdminOnlyLink>
+                        <ShowOnLogin>
+                            <div className="adminPanelCont">
+                                <NavLink className="adminPanel" to={"/admin"}>
+                                    Admin Panel
+                                </NavLink>
+                            </div>
+                        </ShowOnLogin>
+                    </AdminOnlyLink>
 
                     {/* --------LOCATION------- */}
-                    <div className="location">
-                        <div className="location-icon">
-                            <img src={locationIcon} alt="location" />
+                    <ShowOnLogin>
+                        <div className="location">
+                            <div className="location-icon">
+                                <img src={locationIcon} alt="location" />
+                            </div>
+                            <div className="location-title">
+                                <p>Delivers</p>
+                                <p>Ottowa, K2G 1V8</p>
+                            </div>
                         </div>
-                        <div className="location-title">
-                            <p>Delivers</p>
-                            <p>Ottowa, K2G 1V8</p>
-                        </div>
-                    </div>
+                    </ShowOnLogin>
+
                     {/* --------SEARCH------ */}
                     <div className="search_box">
                         <select
@@ -83,14 +106,10 @@ function Navbar() {
                         >
                             <option value={-1}>All </option>
                             {suppliers &&
-                                suppliers.map((item) => {
+                                suppliers.map((item, i) => {
                                     return (
-                                        <option
-                                            value={item.id}
-                                            key={item.id}
-                                            style={{ color: "black" }}
-                                        >
-                                            {item.companyName}
+                                        <option value={item._id} key={i} style={{ color: "black" }}>
+                                            {item.name}
                                         </option>
                                     );
                                 })}
@@ -113,30 +132,95 @@ function Navbar() {
 
                     {/* --------ACCOUNT-LISTS----- */}
 
-                    <div className="accounts-lists">
-                        <p>Hello Guest</p>
-
-                        <div className="accounts-list-dropdown">
-                            <p>Accounts & Lists</p>
-                            <p>
-                                <img src={dropdownBotomLight} alt="" />
-                            </p>
-                        </div>
-                    </div>
                     {/* --------ORDERS----- */}
-                    <div className="favorites">
-                        <NavLink to="/favorites">Favorites</NavLink>
-                    </div>
-                    {/* --------SHOPPING CART----- */}
-                    <NavLink style={{ maxHeight: "42px" }} className="shopping-cart" to="/cart">
-                        <div style={{ maxHeight: "42px" }}>
-                            <span className="cart-badge">{cart.length}</span>
-                            <br />
-                            <span className="cart-icon">
-                                <img src={cartIcon} alt="" />
-                            </span>
+                    <ShowOnLogin>
+                        <div className="favorites">
+                            <NavLink className={activeLink} to="/favorites">
+                                Favorites
+                            </NavLink>
                         </div>
-                    </NavLink>
+                    </ShowOnLogin>
+
+                    {/* --------SHOPPING CART----- */}
+                    <ShowOnLogin>
+                        <div id="shopping-cart">
+                            <NavLink
+                                to="/cart"
+                                style={{ maxHeight: "42px" }}
+                                className={activeLink}
+                            >
+                                <div className="m-auto">Cart</div>
+                                <div style={{ maxHeight: "42px" }}>
+                                    <span className="cart-badge">{cart.length}</span>
+                                    <br />
+                                    <span className="cart-icon">
+                                        <img src={cartIcon} alt="" />
+                                    </span>
+                                </div>
+                            </NavLink>
+                        </div>
+                    </ShowOnLogin>
+
+                    <div className="accounts-lists">
+                        {currentUser?.name ? (
+                            <ShowOnLogin>
+                                <NavLink className={activeLink} to={"/profile-page"}>
+                                    <p>Welcome</p>
+
+                                    <div className="accounts-list-dropdown">
+                                        <p>{currentUser?.name}</p>
+                                    </div>
+                                </NavLink>
+                            </ShowOnLogin>
+                        ) : (
+                            <div>
+                                <p>Welcome</p>
+
+                                <div className="accounts-list-dropdown">
+                                    <p>Guest</p>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    <ShowOnLogin>
+                        <div className="favorites">
+                            <a
+                                onClick={() => handleLogout()}
+                                style={{ maxHeight: "42px", cursor: "pointer" }}
+                            >
+                                Logout
+                            </a>
+                        </div>
+                    </ShowOnLogin>
+
+                    {/* ------------------AUTH---------------- */}
+                    <ShowOnLogout>
+                        <div className="favorites">
+                            <NavLink className={activeLink} to="/register">
+                                Register
+                            </NavLink>
+                        </div>
+                    </ShowOnLogout>
+                    <ShowOnLogout>
+                        <div className="favorites">
+                            <NavLink
+                                className={activeLink}
+                                // className={activeLink}
+                                to="/login"
+                            >
+                                User Login
+                            </NavLink>
+                        </div>
+                    </ShowOnLogout>
+                    <ShowOnLogout>
+                        <div className="favorites">
+                            <NavLink className={activeLink} to="/admin-login">
+                                Admin Login
+                            </NavLink>
+                        </div>
+                    </ShowOnLogout>
+
                     {/* --------HAMBURBER MENU----- */}
                     <label htmlFor="check" className="bar">
                         <span id="bars">

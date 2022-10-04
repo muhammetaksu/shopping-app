@@ -22,30 +22,21 @@ function AddSupplier() {
     const navigate = useNavigate();
     const [countries, setCountries] = useState([]);
     const [states, setStates] = useState([]);
-    const [selectedStates, setSelectedStates] = useState([]);
+    // const [selectedStates, setSelectedStates] = useState([]);
     const [cities, setCities] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState("");
 
     useEffect(() => {
         const fetchCountries = async () => {
-            const response = await axios.get("https://countriesnow.space/api/v0.1/countries");
+            const response = await axios.get(
+                "https://countriesnow.space/api/v0.1/countries/states"
+            );
             if (response?.status === 200) {
                 setCountries(response.data.data);
             } else {
                 alert("fetchCountries()error");
             }
         };
-        const fetchStates = async () => {
-            const response = await axios.get(
-                "https://countriesnow.space/api/v0.1/countries/states"
-            );
-            if (response?.status === 200) {
-                setStates(response.data.data);
-            } else {
-                alert("fetchStates()error");
-            }
-        };
-        fetchStates();
         fetchCountries();
     }, []);
 
@@ -81,19 +72,12 @@ function AddSupplier() {
         setSelectedCountry(formik.values.country);
     }, [formik.values.country]);
 
-    useEffect(() => {
-        const findCities = async () => {
-            const findCities = countries.find((q) => q.country == selectedCountry);
-            setCities(findCities.cities);
-        };
-        findCities();
-    }, [selectedCountry]);
+    console.log(formik.values);
 
     useEffect(() => {
         const findStates = async () => {
-            const findStates = states.find((q) => q.name == selectedCountry);
-            console.log(findStates);
-            setSelectedStates(findStates.states);
+            const findStates = await countries.find((q) => q.name == selectedCountry);
+            setStates(findStates?.states);
         };
         findStates();
     }, [selectedCountry]);
@@ -200,8 +184,8 @@ function AddSupplier() {
 
                             {countries &&
                                 countries.map((cou, i) => (
-                                    <option key={i} value={cou.country}>
-                                        {cou.country}
+                                    <option key={i} value={cou.name}>
+                                        {cou.name}
                                     </option>
                                 ))}
                         </select>
@@ -209,33 +193,6 @@ function AddSupplier() {
                             {formik.errors.country &&
                                 formik.touched.country &&
                                 formik.errors.country}
-                        </div>
-                    </div>
-                    <div className="col-lg-3 mt-3">
-                        <label htmlFor="city" className="form-label">
-                            City
-                        </label>
-
-                        <select
-                            className="form-select"
-                            id="city"
-                            name="city"
-                            value={formik.values.city}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            placeholder="Select city"
-                        >
-                            <option value="">Select City</option>
-
-                            {cities &&
-                                cities.map((city, i) => (
-                                    <option key={i} value={city}>
-                                        {city}
-                                    </option>
-                                ))}
-                        </select>
-                        <div className="text-danger">
-                            {formik.errors.city && formik.touched.city && formik.errors.city}
                         </div>
                     </div>
                     <div className="col-lg-3 mt-3">
@@ -254,8 +211,8 @@ function AddSupplier() {
                         >
                             <option value="">Select State</option>
 
-                            {selectedStates &&
-                                selectedStates.map((state, i) => (
+                            {states &&
+                                states.map((state, i) => (
                                     <option key={i} value={state.name}>
                                         {state.name}
                                     </option>
@@ -266,6 +223,26 @@ function AddSupplier() {
                             {formik.errors.state && formik.touched.state && formik.errors.state}
                         </div>
                     </div>
+                    <div className="col-lg-3 mt-3">
+                        <label htmlFor="city" className="form-label">
+                            City
+                        </label>
+
+                        <input
+                            className="form-control"
+                            id="city"
+                            name="city"
+                            value={formik.values.city}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            placeholder="Enter City"
+                        />
+
+                        <div className="text-danger">
+                            {formik.errors.city && formik.touched.city && formik.errors.city}
+                        </div>
+                    </div>
+
                     <div className="col-lg-3 mt-3">
                         <label htmlFor="district" className="form-label">
                             District

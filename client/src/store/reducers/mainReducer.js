@@ -11,6 +11,7 @@ import {
     selectedSupplierReducer,
 } from "./dataReducer.js";
 import { favoritesReducer } from "./favoritesReducer";
+import { userReducer } from "./userReducer";
 
 export default combineReducers({
     cartReducer,
@@ -23,4 +24,5 @@ export default combineReducers({
     suppliersReducer,
     selectedCategoryReducer,
     selectedSupplierReducer,
+    userReducer,
 });
