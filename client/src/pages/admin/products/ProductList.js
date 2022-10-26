@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchOriginalProducts } from "../../../store/middleware/thunkActions";
+import { fetchProducts } from "../../../store/middleware/thunkActions";
 import axios from "axios";
 import { API_URL } from "../../../env/config";
 
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import { Modal, Table } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { CloseOutlined } from "@ant-design/icons";
@@ -14,10 +14,6 @@ import { DeleteOutlined } from "@ant-design/icons";
 function ProductList() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        dispatch(fetchOriginalProducts());
-    }, []);
 
     const originalDataState = useSelector((state) => state.originalProductsReducer);
     const { originalProducts } = originalDataState;
@@ -119,7 +115,7 @@ function ProductList() {
             signal,
         });
         if (result?.status === 200) {
-            dispatch(fetchOriginalProducts());
+            dispatch(fetchProducts());
         } else {
             console.log("deleteProduct()/Error");
         }

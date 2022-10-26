@@ -5,7 +5,7 @@ import { fetchCategories, fetchSuppliers } from "../../../store/middleware/thunk
 import axios from "axios";
 import { API_URL } from "../../../env/config";
 
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import { Modal, Table } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { CloseOutlined } from "@ant-design/icons";

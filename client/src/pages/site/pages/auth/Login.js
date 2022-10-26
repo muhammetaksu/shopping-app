@@ -73,23 +73,22 @@ function Login() {
     };
 
     return (
-        <div className="container row d-flex justify-content-center m-auto">
+        <div className="container row d-flex m-auto py-3 justify-content-center loginPageCont ">
             <div
                 id="imgCont"
-                className="col-lg-6 d-flex justify-content-center rounded-start border-start border-top border-bottom p-0"
+                className="col-lg-6 rounded-start border-start border-top border-bottom "
             >
-                <div style={{ maxWidth: "50vw", maxHeight: "50vw" }}>
+                <div>
                     <img
                         id="loginImg"
-                        className="h-100 w-100"
-                        style={{ objectFit: "fill" }}
                         src="https://live.staticflickr.com/65535/52364926883_de6a3ded9e_c.jpg"
+                        alt="login"
                     />
                 </div>
             </div>
             <div
                 id="loginCont"
-                className="col-lg-6 p-5 d-flex flex-column rounded-end border-end border-top border-bottom bg-light justify-content-center"
+                className="col-lg-6 rounded-end border-end border-top border-bottom bg-light d-flex flex-column justify-content-center p-5"
             >
                 <div className="d-flex flex-column justify-content-center">
                     <div className="mb-4 d-flex justify-content-center">
@@ -110,7 +109,7 @@ function Login() {
                                     type="email"
                                     id="email"
                                     name="email"
-                                    className="form-control login-form"
+                                    className="form-control auth-form-input"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
@@ -124,7 +123,7 @@ function Login() {
                                     type="password"
                                     id="password"
                                     name="password"
-                                    className="form-control login-form"
+                                    className="form-control auth-form-input"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />

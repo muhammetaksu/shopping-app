@@ -1,10 +1,5 @@
 export const originalProductsReducer = (state = { originalProducts: [] }, action) => {
     switch (action.type) {
-        case "GET_ORIGINAL_PRODUCT_REQUEST":
-            return {
-                originalProductsLoading: true,
-                ...state,
-            };
         case "GET_ORIGINAL_PRODUCT_SUCCESS":
             return {
                 originalProductsLoading: false,
@@ -49,11 +44,6 @@ export const productsReducer = (state = { products: [] }, action) => {
 
 export const filteredProductsReducer = (state = { filteredProducts: [] }, action) => {
     switch (action.type) {
-        case "GET_FILTERED_PRODUCT_REQUEST":
-            return {
-                filteredProductsLoading: true,
-                ...state,
-            };
         case "GET_FILTERED_PRODUCT_SUCCESS":
             return {
                 filteredProductsLoading: false,

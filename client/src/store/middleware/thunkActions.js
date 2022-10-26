@@ -4,35 +4,17 @@ import axios from "axios";
 import { cartStorage } from "../../service/localStorage/cartStorage";
 import { favoriteStorage } from "../../service/localStorage/favoriteStorage";
 
-export const fetchOriginalProducts = () => async (dispatch) => {
-    dispatch({ type: "GET_ORIGINAL_PRODUCT_REQUEST" });
-
-    try {
-        const response = await axios.get(`${API_URL}/products`);
-        dispatch({ type: "GET_ORIGINAL_PRODUCT_SUCCESS", payload: response.data });
-    } catch (error) {
-        dispatch({ type: "GET_ORIGINAL_PRODUCT_ERROR", payload: error });
-    }
-};
-
 export const fetchProducts = () => async (dispatch) => {
     dispatch({ type: "GET_PRODUCTS_REQUEST" });
 
     try {
         const response = await axios.get(`${API_URL}/products`);
         dispatch({ type: "GET_PRODUCT_SUCCESS", payload: response.data });
-    } catch (error) {
-        dispatch({ type: "GET_PRODUCT_ERROR", payload: error });
-    }
-};
-
-export const fetchFilteredProducts = () => async (dispatch) => {
-    dispatch({ type: "GET_FILTERED_PRODUCT_REQUEST" });
-
-    try {
-        const response = await axios.get(`${API_URL}/products`);
+        dispatch({ type: "GET_ORIGINAL_PRODUCT_SUCCESS", payload: response.data });
         dispatch({ type: "GET_FILTERED_PRODUCT_SUCCESS", payload: response.data });
     } catch (error) {
+        dispatch({ type: "GET_PRODUCT_ERROR", payload: error });
+        dispatch({ type: "GET_ORIGINAL_PRODUCT_ERROR", payload: error });
         dispatch({ type: "GET_FILTERED_PRODUCT_ERROR", payload: error });
     }
 };

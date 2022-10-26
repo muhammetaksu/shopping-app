@@ -88,17 +88,16 @@ function AdminLogin() {
     };
 
     return (
-        <div className="container row d-flex justify-content-center m-auto">
+        <div className="adminLoginPageCont container row d-flex justify-content-center m-auto py-3">
             <div
                 id="imgCont"
-                className="col-lg-6 d-flex justify-content-center rounded-start border-start border-top border-bottom p-0"
+                className="col-lg-6 rounded-start border-start border-top border-bottom "
             >
-                <div style={{ maxWidth: "50vw", maxHeight: "50vw" }}>
+                <div>
                     <img
                         id="loginImg"
-                        className="h-100 w-100"
-                        style={{ objectFit: "fill" }}
                         src="https://live.staticflickr.com/65535/52371781468_7437f9aba8_o.png"
+                        alt="admin-login"
                     />
                 </div>
             </div>
@@ -125,7 +124,7 @@ function AdminLogin() {
                                     type="email"
                                     id="email"
                                     name="email"
-                                    className="form-control login-form"
+                                    className="form-control auth-form-input"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
@@ -139,7 +138,7 @@ function AdminLogin() {
                                     type="password"
                                     id="password"
                                     name="password"
-                                    className="form-control login-form"
+                                    className="form-control auth-form-input"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />

@@ -6,7 +6,6 @@ import searchIcon from "../images/icons/Search.png";
 import drag from "../images/icons/Drag.png";
 import close from "../images/icons/close.png";
 import cartIcon from "../images/icons/shopping-cart.png";
-import "../styles/Header.scss";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { changeProductsData, clearCurrentUser } from "../../../store/actions/mainActions";
@@ -62,8 +61,7 @@ function Navbar() {
 
     return (
         <>
-            <div className="header">
-                <input type="checkbox" id="check" />
+            <div className="siteNavbar">
                 <div className="nav-bar">
                     {/* --------LOGO------- */}
                     <NavLink className="my-auto " to="/">
@@ -185,12 +183,12 @@ function Navbar() {
 
                     <ShowOnLogin>
                         <div className="favorites">
-                            <a
+                            <Link
                                 onClick={() => handleLogout()}
                                 style={{ maxHeight: "42px", cursor: "pointer" }}
                             >
                                 Logout
-                            </a>
+                            </Link>
                         </div>
                     </ShowOnLogin>
 

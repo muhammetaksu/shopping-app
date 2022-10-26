@@ -59,7 +59,7 @@ function NewPassword() {
     };
 
     return (
-        <div className="container row d-flex justify-content-center m-auto">
+        <div className="newPassPageCont py-3 container row d-flex justify-content-center m-auto">
             <div
                 id="newPassCont"
                 className="col-lg-6 p-5 d-flex flex-column rounded-start border-start border-top border-bottom bg-light justify-content-center"
@@ -82,7 +82,7 @@ function NewPassword() {
                                     type="password"
                                     id="password"
                                     name="password"
-                                    className="form-control login-form"
+                                    className="form-control auth-form-input"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
@@ -95,7 +95,7 @@ function NewPassword() {
                                     type="password"
                                     id="confirmPassword"
                                     name="confirmPassword"
-                                    className="form-control login-form"
+                                    className="form-control auth-form-input"
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                 />
@@ -112,14 +112,13 @@ function NewPassword() {
             </div>
             <div
                 id="imgCont"
-                className="col-lg-6 d-flex justify-content-center rounded-end border-end border-top border-bottom p-0"
+                className="col-lg-6  rounded-end border-end border-top border-bottom "
             >
-                <div style={{ maxWidth: "50vw", maxHeight: "50vw" }}>
+                <div>
                     <img
                         id="resetPassImg"
-                        className="h-100 w-100"
-                        style={{ objectFit: "fill" }}
                         src="https://live.staticflickr.com/65535/52378431761_72c3359112_o.jpg"
+                        alt="new-pass"
                     />
                 </div>
             </div>

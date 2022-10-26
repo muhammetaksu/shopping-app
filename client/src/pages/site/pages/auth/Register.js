@@ -61,7 +61,7 @@ function Register() {
     };
 
     return (
-        <div className="container row d-flex justify-content-center m-auto">
+        <div className="registerPageCont container row d-flex justify-content-center m-auto py-3">
             <div
                 id="registerCont"
                 className="col-lg-6 p-5 d-flex flex-column rounded-start border-start border-top border-bottom bg-light justify-content-center"
@@ -83,7 +83,7 @@ function Register() {
                                 <input
                                     id="name"
                                     name="name"
-                                    className="form-control login-form"
+                                    className="form-control auth-form-input"
                                     autocomplete="off"
                                     value={name}
                                     onChange={(e) =>
@@ -103,7 +103,7 @@ function Register() {
                                 <input
                                     id="surname"
                                     name="surname"
-                                    className="form-control login-form"
+                                    className="form-control auth-form-input"
                                     autocomplete="off"
                                     value={surname}
                                     onChange={(e) => setSurname(e.target.value.toUpperCase())}
@@ -117,7 +117,7 @@ function Register() {
                                     type="email"
                                     id="email"
                                     name="email"
-                                    className="form-control login-form"
+                                    className="form-control auth-form-input"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
@@ -131,7 +131,7 @@ function Register() {
                                     id="password"
                                     name="password"
                                     autocomplete="off"
-                                    className="form-control login-form"
+                                    className="form-control auth-form-input"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
@@ -144,7 +144,7 @@ function Register() {
                                     type="password"
                                     id="confirmPassword"
                                     name="confirmPassword"
-                                    className="form-control login-form"
+                                    className="form-control auth-form-input"
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                 />
@@ -168,17 +168,15 @@ function Register() {
                     </div>
                 </div>
             </div>
-            <div className="col-lg-6 p-0 d-flex rounded-end border-end border-top border-bottom">
-                <div
-                    id="imgCont"
-                    style={{ maxWidth: "50vw", maxHeight: "50vw" }}
-                    className="d-flex justify-content-center m-auto p-0"
-                >
-                    <img
-                        id="registerImg"
-                        className="h-100 w-100"
-                        src="https://live.staticflickr.com/65535/52364701191_5bef2751d6_k.jpg"
-                    />
+            <div className="col-lg-6 d-flex rounded-end border-end border-top border-bottom">
+                <div id="imgCont" className=" m-auto">
+                    <div>
+                        <img
+                            id="registerImg"
+                            src="https://live.staticflickr.com/65535/52364701191_5bef2751d6_k.jpg"
+                            alt="register"
+                        />
+                    </div>
                 </div>
             </div>
         </div>

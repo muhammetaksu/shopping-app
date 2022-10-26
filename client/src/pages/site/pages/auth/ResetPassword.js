@@ -41,7 +41,7 @@ function ResetPassword() {
     };
 
     return (
-        <div className="container row d-flex justify-content-center m-auto">
+        <div className="resetPassPageCont container row d-flex justify-content-center m-auto py-3">
             <div
                 id="resetPassCont"
                 className="col-lg-6 p-5 d-flex flex-column rounded-start border-start border-top border-bottom bg-light justify-content-center"
@@ -63,7 +63,7 @@ function ResetPassword() {
                                 <input
                                     id="email"
                                     name="email"
-                                    className="form-control login-form"
+                                    className="form-control auth-form-input"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
@@ -89,16 +89,12 @@ function ResetPassword() {
                     </div>
                 </div>
             </div>
-            <div
-                id="imgCont"
-                className="col-lg-6 d-flex justify-content-center rounded-end border-end border-top border-bottom p-0"
-            >
-                <div style={{ maxWidth: "50vw", maxHeight: "50vw" }}>
+            <div id="imgCont" className="col-lg-6 rounded-end border-end border-top border-bottom">
+                <div>
                     <img
                         id="resetPassImg"
-                        className="h-100 w-100"
-                        style={{ objectFit: "fill" }}
                         src="https://live.staticflickr.com/65535/52367925557_216d1d1ce7_b.jpg"
+                        alt="reset-pass"
                     />
                 </div>
             </div>
