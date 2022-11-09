@@ -178,11 +178,11 @@ p {
     margin: auto;
 }
 
-.favorites {
+.navLinks {
     margin: auto 0;
 }
 
-.favorites > :first-child {
+.navLinks > :first-child {
     font-weight: 600;
     font-size: 1.2rem;
     line-height: 120%;
@@ -208,18 +208,6 @@ p {
     line-height: 120%;
 }
 
-.adminPanelCont {
-    vertical-align: middle;
-    display: flex;
-}
-.adminPanel {
-    font-weight: 200;
-    font-size: 1rem;
-    line-height: 120%;
-    color: var(--main-color);
-    margin: auto;
-}
-
 .accounts-list-dropdown {
     display: flex;
     text-align: center;
@@ -243,13 +231,15 @@ p {
     padding: 0;
 }
 
+#shopping-cart {
+    display: flex;
+    align-items: center;
+}
 #shopping-cart > * {
-    margin: auto none;
     display: flex;
 }
 
 #shopping-cart > * {
-    margin: auto;
     font-weight: 600;
     font-size: 1.2rem;
     line-height: 120%;
@@ -994,6 +984,7 @@ p {
     height: 100%;
     width: 100%;
     object-fit: fill;
+    user-select: none;
 }
 
 #forgotCont > div {
@@ -1124,4 +1115,107 @@ p {
     #forgotCont > div {
         width: 51% !important;
     }
+}
+
+/**** PROFILE PAGE *****/
+.profilePageContent {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+.profilePageContent > :nth-child(1) {
+    padding: 0;
+    /* border-right: 1px solid lightgray; */
+}
+.profilePageContent > :nth-child(2) {
+    padding: 0;
+}
+
+.profilePageLinks {
+    background-color: #161920;
+    display: flex;
+    justify-content: space-evenly;
+    border-bottom: 1px solid lightgray;
+}
+.profilePageLinks > a {
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 10px 20px;
+}
+
+.profilePageRoutes {
+    /* border: 1px solid lightgray; */
+    display: flex;
+    justify-content: center;
+}
+
+/**** PROFILE DETAIL */
+.profileDetailCont {
+}
+.profileDetailCont > div {
+    padding: 30px;
+}
+
+.form-item {
+    margin-top: 20px;
+}
+
+.profilePageBtn {
+    margin-top: 25px;
+    display: flex;
+    justify-content: end;
+}
+
+/*** PROFILE ADDRESS */
+.profileAddressCont {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.profileAddressCont > div {
+    padding: 30px;
+    width: 75%;
+}
+.profileAddressLinks {
+    background-color: #161920;
+    display: flex;
+    justify-content: space-evenly;
+    border-bottom: 1px solid lightgray;
+}
+.profileAddressLinks > a {
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 10px 20px;
+}
+
+.profileAddressRoutes {
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+/*add*/
+.profileAddressBtn {
+    margin-top: 30px;
+    text-align: end;
+}
+
+/*list*/
+.addressItem {
+    margin-bottom: 20px;
+}
+.addressListCont {
+    width: 100%;
+}
+
+.addressesCont tr:nth-child(even) {
+    background-color: #dddddd;
+}
+.addressesCont > :nth-child(1) {
+    border-bottom: 1px solid black;
+}
+.addressesCont > :nth-child(1) > * {
+    padding: 5px;
+    text-align: center;
 }

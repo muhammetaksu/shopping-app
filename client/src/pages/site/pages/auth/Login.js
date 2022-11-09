@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../../../../env/config";
 import { toast } from "react-toastify";
-import { Slide, Zoom, Flip, Bounce } from "react-toastify";
 import { userStorage } from "../../../../service/localStorage/userStorage";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../../../store/actions/mainActions";
@@ -38,22 +37,13 @@ function Login() {
 
                 response
                     .then((q) => {
-                        const setStorageInfo = {
-                            name: q.data.user.name,
-                            surname: q.data.user.surname,
-                            email: q.data.user.email,
-                            token: q.data.token,
-                        };
-                        userStorage.setUser(setStorageInfo);
-                        return q;
-                    })
-                    .then((q) => {
                         const userInfo = {
+                            id: q.data.user._id,
                             name: q.data.user.name,
                             surname: q.data.user.surname,
-                            email: q.data.user.email,
                             token: q.data.token,
                         };
+                        userStorage.setUser(userInfo);
                         dispatch(setCurrentUser(userInfo));
                     })
                     .catch((err) => console.log(err))

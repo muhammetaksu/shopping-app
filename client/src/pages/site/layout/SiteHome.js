@@ -115,6 +115,7 @@ function SiteHome() {
                                         onClick={() => navigate(`/productdetail/${product.id}`)}
                                         className="cardImg"
                                         src={product.image.img1}
+                                        alt="detail"
                                     />
                                 </div>
                                 <div className="cardCol ">
@@ -131,7 +132,6 @@ function SiteHome() {
                                         <div className="cardProduct">
                                             <select
                                                 value={productQuantity}
-                                                defaultValue={productQuantity}
                                                 onChange={(e) => setProductQuantity(e.target.value)}
                                             >
                                                 <option value={1}>1</option>

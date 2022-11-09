@@ -1,12 +1,12 @@
 const express = require("express");
-const AdminModel = require("../models/AdminModel");
+const OrdersModel = require("../models/OrdersModel");
 const router = express.Router();
 
-// GET ALL ADMINS
+// GET ALL ADDRESS
 
 router.get("/", (req, res) => {
     try {
-        AdminModel.find({}, (error, result) => {
+        OrdersModel.find({}, (error, result) => {
             if (error) {
                 res.json(error);
             } else {
@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
             }
         });
     } catch (error) {
-        console.log("models/AdminModel.js: get: Error");
+        console.log("models/OrdersModel.js: get: Error");
         console.log(error);
         return res.status(500).json({ message: "Error" });
     }
@@ -25,7 +25,7 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
     const id = req.params.id;
     try {
-        AdminModel.findById(id, (error, result) => {
+        OrdersModel.findById(id, (error, result) => {
             if (error) {
                 res.json(error);
             } else {
@@ -33,56 +33,59 @@ router.get("/:id", (req, res) => {
             }
         });
     } catch (error) {
-        console.log("models/AdminModel.js: get: Error");
+        console.log("models/OrdersModel.js: get: Error");
         console.log(error);
         return res.status(500).json({ message: "Error" });
     }
 });
 
-// ADD ADMIN
+// ADD ORDER
 
 router.post("/", async (req, res) => {
-    const admin = req.body;
+    const order = {
+        productsId: req.body.productsId,
+        userId: req.body.userId,
+        totalPrice: req.body.totalPrice,
+        deliveryAddress: req.body.deliveryAddress,
+    };
+    // const order = req.body;
     try {
-        const newAdmin = new AdminModel(admin);
-        await newAdmin.save();
+        const newOrder = new OrdersModel(order);
+        await newOrder.save();
 
-        return res.status(201).json(newAdmin);
+        return res.status(201).json(newOrder);
     } catch (error) {
-        console.log("models/AdminModel.js: post: Error");
+        console.log("models/OrdersModel.js: post: Error");
         console.log(error);
         return res.status(500).json({ message: "Error" });
     }
 });
 
-// DELETE ADMIN
+// DELETE ORDER
 
 router.delete("/:id", async (req, res) => {
     try {
-        await AdminModel.findByIdAndRemove(req.params.id).exec();
-        res.send("ADMIN DELETED");
+        await OrdersModel.findByIdAndRemove(req.params.id).exec();
+        res.send("ORDER DELETED");
     } catch (error) {
-        console.log("models/AdminModel.js: delete: Error");
+        console.log("models/OrdersModel.js: delete: Error");
         console.log(error);
         return res.status(500).json({ message: error });
     }
 });
 
-// UPDATE ADMIN
+// UPDATE ORDER
 
 router.put("/:id", async (req, res) => {
-    const updatedUser = {
-        name: req.body.name,
-        surname: req.body.surname,
-        email: req.body.email,
-        updatedAt: new Date(),
-    };
     try {
-        await AdminModel.findByIdAndUpdate(req.params.id, updatedUser, { returnDocument: "after" });
+        const newOrder = req.body;
+        await OrdersModel.findByIdAndUpdate(req.params.id, newOrder, {
+            returnDocument: "after",
+        });
 
-        res.status(201).send("ADMIN UPDATED");
+        res.status(201).send("ORDER UPDATED");
     } catch (error) {
-        console.log("models/AdminModel.js: update: Error");
+        console.log("models/OrdersModel.js: update: Error");
         console.log(error);
         return res.status(500).json({ message: "Error" });
     }

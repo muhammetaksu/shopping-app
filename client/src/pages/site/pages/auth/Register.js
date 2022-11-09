@@ -84,7 +84,7 @@ function Register() {
                                     id="name"
                                     name="name"
                                     className="form-control auth-form-input"
-                                    autocomplete="off"
+                                    autoComplete="off"
                                     value={name}
                                     onChange={(e) =>
                                         setName(

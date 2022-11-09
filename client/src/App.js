@@ -25,11 +25,11 @@ import { Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AdminLogin from "./pages/site/pages/auth/AdminLogin";
 import { AdminOnlyLink, AdminOnlyRoute } from "./tools/AdminOnly";
-import GuardRoute from "./tools/GuardRoute";
-import ProfilePage from "./pages/site/pages/ProfilePage";
+import ProtectedRoute from "./tools/ProtectedRoute";
 import { userStorage } from "./service/localStorage/userStorage";
 import { setCurrentUser } from "./store/actions/mainActions";
 import NewPassword from "./pages/site/pages/auth/NewPassword";
+import ProfilePage from "./pages/site/pages/profile-page/ProfilePage";
 
 function App() {
     const { currentUser } = useSelector((state) => state.userReducer);
@@ -73,101 +73,100 @@ function App() {
             {/*  */}
             <Navbar />
             <Routes>
-                <Route>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/*" element={<PageNotFound />} />
-                </Route>
-
                 {/* AUTH ROUTES */}
                 <Route>
                     <Route
                         path="/login"
                         element={
-                            <GuardRoute token={!token}>
+                            <ProtectedRoute token={!token}>
                                 <Login />
-                            </GuardRoute>
+                            </ProtectedRoute>
                         }
                     />
                     <Route
                         path="/admin-login"
                         element={
-                            <GuardRoute token={!token}>
+                            <ProtectedRoute token={!token}>
                                 <AdminLogin />
-                            </GuardRoute>
+                            </ProtectedRoute>
                         }
                     />
                     <Route
                         path="/register"
                         element={
-                            <GuardRoute token={!token}>
+                            <ProtectedRoute token={!token}>
                                 <Register />
-                            </GuardRoute>
+                            </ProtectedRoute>
                         }
                     />
                     <Route
                         path="/reset-password"
                         element={
-                            <GuardRoute token={!token}>
+                            <ProtectedRoute token={!token}>
                                 <ResetPassword />
-                            </GuardRoute>
+                            </ProtectedRoute>
                         }
                     />
                     <Route
                         path="/reset-password/:id/:token"
                         element={
-                            <GuardRoute token={!token}>
+                            <ProtectedRoute token={!token}>
                                 <NewPassword />
-                            </GuardRoute>
+                            </ProtectedRoute>
                         }
                     />
                 </Route>
 
                 {/* OTHER ROUTES */}
                 <Route
-                    path="/profile-page"
+                    path="/profile-page/*"
                     element={
-                        <GuardRoute token={token}>
+                        <ProtectedRoute token={token}>
                             <ProfilePage />
-                        </GuardRoute>
+                        </ProtectedRoute>
                     }
                 />
                 <Route
                     path="/cart"
                     element={
-                        <GuardRoute token={token}>
+                        <ProtectedRoute token={token}>
                             <CartPage />
-                        </GuardRoute>
+                        </ProtectedRoute>
                     }
                 />
                 <Route
                     path="/favorites"
                     element={
-                        <GuardRoute token={token}>
+                        <ProtectedRoute token={token}>
                             <FavoritePage />
-                        </GuardRoute>
+                        </ProtectedRoute>
                     }
                 />
                 <Route
                     path="/productdetail/:id"
                     element={
-                        <GuardRoute token={token}>
+                        <ProtectedRoute token={token}>
                             <ProductDetailPage />
-                        </GuardRoute>
+                        </ProtectedRoute>
                     }
                 />
 
                 {/* ADMIN ROUTE */}
+
+                <Route
+                    path="/admin/*"
+                    element={
+                        <AdminOnlyRoute>
+                            <ProtectedRoute token={token}>
+                                <AdminHome />
+                            </ProtectedRoute>
+                        </AdminOnlyRoute>
+                    }
+                />
+
                 <Route>
-                    <Route
-                        path="/admin/*"
-                        element={
-                            <GuardRoute token={token}>
-                                <AdminOnlyRoute>
-                                    <AdminHome />
-                                </AdminOnlyRoute>
-                            </GuardRoute>
-                        }
-                    />
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/*" element={<PageNotFound />} />
                 </Route>
             </Routes>
         </div>

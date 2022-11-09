@@ -36,12 +36,12 @@ function Departments() {
                     All Suppliers
                 </li>
                 {suppliers &&
-                    suppliers.map((item) => {
+                    suppliers.map((item, i) => {
                         return (
                             <li
                                 id="sidebarSupplierItem"
                                 onClick={() => getProductsBySupplier(item.id)}
-                                key={item.id}
+                                key={i}
                                 style={{ color: "black", cursor: "pointer" }}
                             >
                                 {item.name}

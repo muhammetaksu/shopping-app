@@ -98,6 +98,7 @@ const CartPage = () => {
                                                         onClick={() =>
                                                             navigate(`/productdetail/${product.id}`)
                                                         }
+                                                        alt="detail"
                                                     />
                                                 </div>
                                                 <div className="col-10  row p-0">
@@ -208,6 +209,7 @@ const CartPage = () => {
                                                         onClick={() =>
                                                             navigate(`/productdetail/${product.id}`)
                                                         }
+                                                        alt="detail"
                                                     />
                                                 </div>
                                                 <div className="col-10 row pe-0">

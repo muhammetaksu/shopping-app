@@ -81,10 +81,10 @@ function NavbarCategories() {
                     <p className="catName">All Categories</p>
                 </button>
                 {categories &&
-                    categories.map((category) => (
+                    categories.map((category, i) => (
                         <button
                             onClick={() => getProductsByCategory(category.id)}
-                            key={category.id}
+                            key={i}
                             style={{ color: "black" }}
                             className="subNavigationButton"
                         >

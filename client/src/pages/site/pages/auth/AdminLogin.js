@@ -51,24 +51,14 @@ function AdminLogin() {
 
                 response
                     .then((q) => {
-                        const setStorageInfo = {
-                            name: q.data.user.name,
-                            surname: q.data.user.surname,
-                            email: q.data.user.email,
-                            isAdmin: Boolean(q.data.user.isAdmin),
-                            token: q.data.token,
-                        };
-                        userStorage.setUser(setStorageInfo);
-                        return q;
-                    })
-                    .then((q) => {
                         const userInfo = {
+                            id: q.data.user._id,
                             name: q.data.user.name,
                             surname: q.data.user.surname,
-                            email: q.data.user.email,
                             isAdmin: Boolean(q.data.user.isAdmin),
                             token: q.data.token,
                         };
+                        userStorage.setUser(userInfo);
                         dispatch(setCurrentUser(userInfo));
                     })
                     .catch((err) => console.log(err))

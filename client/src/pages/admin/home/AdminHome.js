@@ -43,8 +43,8 @@ function AdminHome() {
             <div className="adminPageNavbar row m-0 border-top border-secondary">
                 {pages &&
                     pages.map((page, i) => (
-                        <div className="col-lg-2 p-4 text-center">
-                            <Link key={i} className="text-center" to={page.path}>
+                        <div key={i} className="col-lg-2 p-4 text-center">
+                            <Link className="text-center" to={page.path}>
                                 {page.title}
                             </Link>
                         </div>

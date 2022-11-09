@@ -4,7 +4,7 @@ const AddressSchema = mongoose.Schema(
     {
         title: { type: String, require },
         country: { type: String, require },
-        state: { type: String, require },
+        state: { type: String },
         city: { type: String, require },
         district: { type: String, require },
         address: { type: String, require },

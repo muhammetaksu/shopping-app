@@ -77,6 +77,7 @@ function FavoritePage() {
                                                 onClick={() =>
                                                     navigate(`/productdetail/${product.id}`)
                                                 }
+                                                alt="detail"
                                             />
                                         </div>
                                         <div

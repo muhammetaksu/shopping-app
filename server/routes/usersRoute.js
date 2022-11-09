@@ -73,9 +73,16 @@ router.delete("/:id", async (req, res) => {
 // UPDATE USER
 
 router.put("/:id", async (req, res) => {
+    const updatedUser = {
+        name: req.body.name,
+        surname: req.body.surname,
+        email: req.body.email,
+        updatedAt: new Date(),
+    };
     try {
-        const user = req.body;
-        await UserModel.findByIdAndUpdate(req.params.id, user, { returnDocument: "after" });
+        await UserModel.findByIdAndUpdate(req.params.id, updatedUser, {
+            returnDocument: "after",
+        });
 
         res.status(201).send("USER UPDATED");
     } catch (error) {

@@ -26,7 +26,6 @@ function Navbar() {
     const { originalProducts } = useSelector((state) => state.originalProductsReducer);
 
     const { currentUser } = useSelector((state) => state.userReducer);
-    console.log(currentUser);
 
     const getProductsBySupplier = (_id) => {
         if (_id === -1) {
@@ -73,8 +72,8 @@ function Navbar() {
                     {/* --------ADMIN PANEL------- */}
                     <AdminOnlyLink>
                         <ShowOnLogin>
-                            <div className="adminPanelCont">
-                                <NavLink className="adminPanel" to={"/admin"}>
+                            <div className="navLinks">
+                                <NavLink className={activeLink} to="/admin">
                                     Admin Panel
                                 </NavLink>
                             </div>
@@ -132,7 +131,7 @@ function Navbar() {
 
                     {/* --------ORDERS----- */}
                     <ShowOnLogin>
-                        <div className="favorites">
+                        <div className="navLinks">
                             <NavLink className={activeLink} to="/favorites">
                                 Favorites
                             </NavLink>
@@ -162,10 +161,10 @@ function Navbar() {
                     <div className="accounts-lists">
                         {currentUser?.name ? (
                             <ShowOnLogin>
-                                <NavLink className={activeLink} to={"/profile-page"}>
+                                <NavLink className="navLinks" to={"/profile-page"}>
                                     <p>Welcome</p>
 
-                                    <div className="accounts-list-dropdown">
+                                    <div className="navLinks">
                                         <p>{currentUser?.name}</p>
                                     </div>
                                 </NavLink>
@@ -182,7 +181,7 @@ function Navbar() {
                     </div>
 
                     <ShowOnLogin>
-                        <div className="favorites">
+                        <div className="navLinks">
                             <Link
                                 onClick={() => handleLogout()}
                                 style={{ maxHeight: "42px", cursor: "pointer" }}
@@ -194,14 +193,14 @@ function Navbar() {
 
                     {/* ------------------AUTH---------------- */}
                     <ShowOnLogout>
-                        <div className="favorites">
+                        <div className="navLinks">
                             <NavLink className={activeLink} to="/register">
                                 Register
                             </NavLink>
                         </div>
                     </ShowOnLogout>
                     <ShowOnLogout>
-                        <div className="favorites">
+                        <div className="navLinks">
                             <NavLink
                                 className={activeLink}
                                 // className={activeLink}
@@ -212,7 +211,7 @@ function Navbar() {
                         </div>
                     </ShowOnLogout>
                     <ShowOnLogout>
-                        <div className="favorites">
+                        <div className="navLinks">
                             <NavLink className={activeLink} to="/admin-login">
                                 Admin Login
                             </NavLink>
