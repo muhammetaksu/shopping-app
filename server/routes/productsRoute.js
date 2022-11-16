@@ -5,13 +5,15 @@ const router = express.Router();
 // GET ALL PRODUCTS
 
 router.get("/", (req, res) => {
-    ProductModel.find({}, (err, result) => {
-        if (err) {
-            res.json(err);
-        } else {
-            res.json(result);
-        }
-    });
+    ProductModel.find({})
+        .populate("category")
+        .exec((err, result) => {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(result);
+            }
+        });
 });
 
 // GET SINGLE
@@ -19,13 +21,15 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
     const id = req.params.id;
 
-    ProductModel.findById(id, (err, result) => {
-        if (err) {
-            res.json(err);
-        } else {
-            res.json(result);
-        }
-    });
+    ProductModel.findById(id)
+        .populate("category")
+        .exec((err, result) => {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(result);
+            }
+        });
 });
 
 // ADD PRODUCT
@@ -36,8 +40,8 @@ router.post("/", async (req, res) => {
         model: req.body.model,
         unitPrice: req.body.unitPrice,
         unitsInStock: req.body.unitsInStock,
-        categoryId: req.body.categoryId,
-        supplierId: req.body.supplierId,
+        category: req.body.category,
+        supplier: req.body.supplier,
         description: req.body.description,
         image: {
             imageLink1: req.body.imageLink1,
@@ -68,8 +72,8 @@ router.put("/:id", async (req, res) => {
             imageLink1,
             imageLink2,
             imageLink3,
-            categoryId,
-            supplierId,
+            category,
+            supplier,
         } = req.body;
         const updatedProduct = await ProductModel.findByIdAndUpdate(
             req.params.id,
@@ -84,8 +88,8 @@ router.put("/:id", async (req, res) => {
                     imageLink2,
                     imageLink3,
                 },
-                categoryId,
-                supplierId,
+                category,
+                supplier,
             },
             { returnDocument: "after" }
         );
