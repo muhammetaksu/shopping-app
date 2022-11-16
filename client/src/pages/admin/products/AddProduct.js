@@ -5,14 +5,15 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { API_URL } from "../../../env/config";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const validationSchema = yup.object({
     brand: yup.string().required("Brand is required!"),
     model: yup.string().required("Model is required!"),
     unitPrice: yup.number().required("Price is required!"),
     unitsInStock: yup.number().required("Stock is required!"),
-    categoryId: yup.string().required("Category is required!"),
-    supplierId: yup.string().required("Supplier is required!"),
+    category: yup.string().required("Category is required!"),
+    supplier: yup.string().required("Supplier is required!"),
     description: yup.string().required("Description is required!"),
     imageLink1: yup.string().required("Image 1 is required!"),
     imageLink2: yup.string().required("Image 2 is required!"),
@@ -37,8 +38,8 @@ function AddProduct() {
                         model: "",
                         unitPrice: "",
                         unitsInStock: "",
-                        categoryId: "",
-                        supplierId: "",
+                        category: "",
+                        supplier: "",
                         description: "",
                         imageLink1: "",
                         imageLink2: "",
@@ -49,6 +50,7 @@ function AddProduct() {
                         if (values) {
                             const response = await axios.post(`${API_URL}/products`, values);
                             if (response?.status === 201) {
+                                toast.success("Successfully added!");
                                 navigate("/admin/product-list");
                             } else {
                                 alert("Something went wrong");
@@ -142,14 +144,14 @@ function AddProduct() {
                                 </div>
                             </div>
                             <div className="col-lg-6 mt-3">
-                                <label htmlFor="categoryId" className="form-label">
+                                <label htmlFor="category" className="form-label">
                                     Category
                                 </label>
                                 <select
                                     className="form-select"
-                                    id="categoryId"
-                                    name="categoryId"
-                                    value={values.categoryId}
+                                    id="category"
+                                    name="category"
+                                    value={values.category}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                 >
@@ -164,18 +166,18 @@ function AddProduct() {
                                 </select>
 
                                 <div className="text-danger">
-                                    {errors.categoryId && touched.categoryId && errors.categoryId}
+                                    {errors.category && touched.category && errors.category}
                                 </div>
                             </div>
                             <div className="col-lg-6 mt-3">
-                                <label htmlFor="supplierId" className="form-label">
+                                <label htmlFor="supplier" className="form-label">
                                     Supplier
                                 </label>
                                 <select
                                     className="form-select"
-                                    id="supplierId"
-                                    name="supplierId"
-                                    value={values.supplierId}
+                                    id="supplier"
+                                    name="supplier"
+                                    value={values.supplier}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                 >
@@ -190,7 +192,7 @@ function AddProduct() {
                                 </select>
 
                                 <div className="text-danger">
-                                    {errors.supplierId && touched.supplierId && errors.supplierId}
+                                    {errors.supplier && touched.supplier && errors.supplier}
                                 </div>
                             </div>
                             <div className="mt-3">

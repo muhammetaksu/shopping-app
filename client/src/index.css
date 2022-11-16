@@ -1118,6 +1118,13 @@ p {
 }
 
 /**** PROFILE PAGE *****/
+.profilePageCont {
+    margin-bottom: 20px;
+}
+.profilePageCont > :nth-child(1) > h2 {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
 .profilePageContent {
     border: 1px solid lightgray;
     border-radius: 5px;
@@ -1208,7 +1215,13 @@ p {
 .addressListCont {
     width: 100%;
 }
+.addressListCont > :nth-child(1) {
+    text-align: center;
+}
 
+.addressesCont {
+    width: 100%;
+}
 .addressesCont tr:nth-child(even) {
     background-color: #dddddd;
 }
@@ -1218,4 +1231,38 @@ p {
 .addressesCont > :nth-child(1) > * {
     padding: 5px;
     text-align: center;
+}
+.addressesCont > :nth-child(1) > :nth-child(2) {
+    width: 20%;
+}
+.addressesCont > :nth-child(1) > :nth-child(2) {
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    width: 65%;
+}
+.addressesCont > :nth-child(1) > :nth-child(3) {
+    width: 15%;
+}
+
+.addressListCont {
+    height: 100%;
+}
+.addressListCont > td {
+    padding: 5px;
+    text-align: center;
+}
+.addressListCont > :nth-child(2) {
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+}
+.addressListCont > :nth-child(3) > * {
+    margin: 5px 5px;
+}
+.addressListCont > :nth-child(3) svg {
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.addressListCont > :nth-child(3) > :nth-child(2) > svg {
+    fill: crimson;
 }

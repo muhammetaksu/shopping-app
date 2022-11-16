@@ -48,7 +48,7 @@ const CartPage = () => {
 
     return (
         <div id="cartPageContainer" className="container" style={{ minWidth: "375px" }}>
-            {cart.length != 0 ? (
+            {cart?.length != 0 ? (
                 <>
                     {width < 992 ? (
                         <div className=" d-flex  justify-content-evenly row mx-2">
@@ -89,14 +89,14 @@ const CartPage = () => {
                                                         style={{
                                                             maxWidth: "100%",
                                                             cursor: "pointer",
+                                                            padding: "5px",
                                                         }}
                                                         className=""
-                                                        src={`https://picsum.photos/id/${
-                                                            product.id + 10
-                                                        }/250/250
-                                        `}
+                                                        src={product?.image.imageLink1}
                                                         onClick={() =>
-                                                            navigate(`/productdetail/${product.id}`)
+                                                            navigate(
+                                                                `/productdetail/${product._id}`
+                                                            )
                                                         }
                                                         alt="detail"
                                                     />
@@ -107,17 +107,26 @@ const CartPage = () => {
                                                         style={{
                                                             wordWrap: "break-word",
                                                         }}
-                                                        className="col-3 text-center my-auto cartProductsText"
+                                                        className="col-2 text-center my-auto cartProductsText"
                                                     >
-                                                        {product.name}
+                                                        {product?.brand}
+                                                    </div>
+                                                    <div
+                                                        id="cartProdName"
+                                                        style={{
+                                                            wordWrap: "break-word",
+                                                        }}
+                                                        className="col-2 text-center my-auto border-start cartProductsText"
+                                                    >
+                                                        {product?.model}
                                                     </div>
                                                     <div
                                                         style={{
                                                             wordWrap: "break-word",
                                                         }}
-                                                        className="col-3 text-center my-auto border-start cartProductsText"
+                                                        className="col-2 text-center my-auto border-start cartProductsText"
                                                     >
-                                                        Unit Price: <br /> $ {product.unitPrice}
+                                                        Price <br /> $ {product?.unitPrice}
                                                     </div>
                                                     <div
                                                         style={{
@@ -135,7 +144,7 @@ const CartPage = () => {
                                                         </p>
                                                         <select
                                                             className="overflow-hidden "
-                                                            defaultValue={product.quantity}
+                                                            defaultValue={product?.quantity}
                                                             onChange={(e) =>
                                                                 changeQuantity(
                                                                     product,
@@ -160,8 +169,8 @@ const CartPage = () => {
                                                         }}
                                                         className="col-3  text-center my-auto border-start cartProductsText"
                                                     >
-                                                        Total Price: <br /> ${" "}
-                                                        {product.quantity * product.unitPrice}
+                                                        Total Price <br /> ${" "}
+                                                        {product?.quantity * product?.unitPrice}
                                                     </div>
                                                     <div
                                                         style={{ cursor: "pointer" }}
@@ -200,14 +209,14 @@ const CartPage = () => {
                                                             width: "110px",
                                                             height: "110px",
                                                             cursor: "pointer",
+                                                            padding: "5px",
                                                         }}
                                                         className=""
-                                                        src={`https://picsum.photos/id/${
-                                                            product.id + 10
-                                                        }/250/250
-                                                `}
+                                                        src={product?.image.imageLink1}
                                                         onClick={() =>
-                                                            navigate(`/productdetail/${product.id}`)
+                                                            navigate(
+                                                                `/productdetail/${product._id}`
+                                                            )
                                                         }
                                                         alt="detail"
                                                     />
@@ -217,17 +226,25 @@ const CartPage = () => {
                                                         style={{
                                                             wordWrap: "break-word",
                                                         }}
-                                                        className="col-3 text-center my-auto cartProductsText"
+                                                        className="col-2 text-center my-auto cartProductsText"
                                                     >
-                                                        {product.name}
+                                                        {product.brand}
                                                     </div>
                                                     <div
                                                         style={{
                                                             wordWrap: "break-word",
                                                         }}
-                                                        className="col-3 text-center my-auto border-start cartProductsText"
+                                                        className="col-2 text-center my-auto border-start cartProductsText"
                                                     >
-                                                        Unit Price: <br /> $ {product.unitPrice}
+                                                        {product.model}
+                                                    </div>
+                                                    <div
+                                                        style={{
+                                                            wordWrap: "break-word",
+                                                        }}
+                                                        className="col-2 text-center my-auto border-start cartProductsText"
+                                                    >
+                                                        Price <br /> $ {product.unitPrice}
                                                     </div>
                                                     <div
                                                         style={{
@@ -263,8 +280,8 @@ const CartPage = () => {
                                                         }}
                                                         className="col-3 text-center my-auto border-start cartProductsText"
                                                     >
-                                                        Total Price: <br /> ${" "}
-                                                        {product.quantity * product.unitPrice}
+                                                        Total Price <br /> ${" "}
+                                                        {product?.quantity * product?.unitPrice}
                                                     </div>
                                                     <div
                                                         style={{ cursor: "pointer" }}

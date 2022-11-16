@@ -31,7 +31,7 @@ function Navbar() {
         if (_id === -1) {
             dispatch(changeProductsData(originalProducts));
         } else {
-            const newProducts = originalProducts.filter((e) => e.supplierId === _id);
+            const newProducts = originalProducts.filter((e) => e.supplier === _id);
             dispatch(changeProductsData(newProducts));
         }
         document.querySelector("#countProduct").value = -1;

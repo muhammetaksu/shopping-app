@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -34,6 +34,8 @@ function ProductDetailPage() {
     const favorites = useSelector((state) => state.favoritesReducer);
     const cart = useSelector((state) => state.cartReducer);
 
+    console.log(product);
+
     const { id } = useParams();
     const dispatch = useDispatch();
 
@@ -48,23 +50,26 @@ function ProductDetailPage() {
     }, [id]);
 
     useEffect(() => {
-        if (product) {
-            dispatch(setSelectedCategory(product));
-            dispatch(setSelectedSupplier(product));
-        } else {
-            dispatch(fetchProductById(id));
-        }
+        console.log("second");
+        // if (product) {
+        dispatch(setSelectedCategory(product));
+        dispatch(setSelectedSupplier(product));
+        // } else {
+        //     dispatch(fetchProductById(id));
+        // }
     }, [id, product]);
 
     const addToCart = (item) => {
-        const itemControl = cart.find((q) => q.id == item.id);
+        const itemControl = cart.find((q) => q._id == item._id);
 
         if (!itemControl) {
             let newCartProduct = {
-                id: item.id,
-                name: item.name,
+                _id: item._id,
+                brand: item.brand,
+                model: item.model,
                 unitPrice: item.unitPrice,
                 quantity: productQuantity,
+                image: item.image,
             };
 
             dispatch(addProductToCart(newCartProduct));
@@ -78,11 +83,11 @@ function ProductDetailPage() {
     };
 
     const addRemoveFavorites = (product) => {
-        let checkFavorite = favorites.find((q) => q.id == product.id);
+        let checkFavorite = favorites.find((q) => q._id == product._id);
 
         if (checkFavorite) {
             dispatch(removeFromFavorites(product));
-            let newFavs = favorites.filter((q) => q.id != product.id);
+            let newFavs = favorites.filter((q) => q._id != product._id);
             favoriteStorage.setFav([...newFavs]);
         } else {
             dispatch(addToFavorites(product));
@@ -92,7 +97,7 @@ function ProductDetailPage() {
     };
 
     const favControl = (product) => {
-        let checkFavorite = favorites.find((q) => q.id == product.id);
+        let checkFavorite = favorites.find((q) => q._id == product._id);
 
         if (checkFavorite) {
             return (
@@ -127,11 +132,12 @@ function ProductDetailPage() {
                     <img
                         src={`https://picsum.photos/id/${id + 10}/300/300`}
                         style={{ width: "100%" }}
+                        alt="product"
                     />
                 </div>
                 <div className="col-lg-5">
                     <div className="mt-2 mb-3">
-                        <h2 className="m-0">$ {product.unitPrice?.toFixed(2)}</h2>
+                        <h2 className="m-0">$ {Number(product?.unitPrice).toFixed(2)}</h2>
                     </div>
 
                     <div className="my-3">

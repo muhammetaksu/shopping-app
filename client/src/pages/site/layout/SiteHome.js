@@ -32,19 +32,22 @@ function SiteHome() {
     const dispatch = useDispatch();
 
     const addToCart = (item) => {
-        const itemControl = cart.find((q) => q.id == item.id);
+        const itemControl = cart.find((q) => q._id === item._id);
 
         if (!itemControl) {
             let newCartProduct = {
-                id: item.id,
-                name: item.name,
+                _id: item._id,
+                brand: item.brand,
+                model: item.model,
                 unitPrice: item.unitPrice,
                 quantity: productQuantity,
+                image: item.image,
             };
 
             dispatch(addProductToCart(newCartProduct));
             cartStorage.setCart([...cart, newCartProduct]);
         } else if (itemControl) {
+            console.log("ELSE IF", itemControl.quantity);
             itemControl.quantity = Number(itemControl.quantity) + Number(productQuantity);
             dispatch(setCartQuantity([...cart]));
             cartStorage.setCart([...cart]);
@@ -52,12 +55,15 @@ function SiteHome() {
         setProductQuantity(1);
     };
 
+    console.log(cart);
+
     const addRemoveFavorites = (product) => {
-        let checkFavorite = favorites.find((q) => q.id == product.id);
+        let checkFavorite = favorites.length > 0 && favorites.find((q) => q._id === product._id);
+        console.log(checkFavorite);
 
         if (checkFavorite) {
             dispatch(removeFromFavorites(product));
-            let newFavs = favorites.filter((q) => q.id != product.id);
+            let newFavs = favorites.filter((q) => q._id !== product._id);
             favoriteStorage.setFav([...newFavs]);
         } else {
             dispatch(addToFavorites(product));
@@ -77,7 +83,7 @@ function SiteHome() {
     };
 
     const favControl = (product) => {
-        let checkFavorite = favorites.find((q) => q.id == product.id);
+        let checkFavorite = favorites.find((q) => q._id === product._id);
 
         if (checkFavorite) {
             return (
@@ -112,9 +118,9 @@ function SiteHome() {
                             <div className="card">
                                 <div className="cardImgCont">
                                     <img
-                                        onClick={() => navigate(`/productdetail/${product.id}`)}
+                                        onClick={() => navigate(`/productdetail/${product._id}`)}
                                         className="cardImg"
-                                        src={product.image.img1}
+                                        src={product.image.imageLink1}
                                         alt="detail"
                                     />
                                 </div>
@@ -125,8 +131,8 @@ function SiteHome() {
                                     <div className="cardProduct ">{product.brand}</div>
                                     <div className="cardProduct ">{product.model}</div>
                                     <div className="cardProduct">
-                                        Category ID: {product.categoryId} / Supplier ID:{" "}
-                                        {product.supplierId}
+                                        Category ID: {product.category} / Supplier ID:{" "}
+                                        {product.supplier}
                                     </div>
                                     {product.unitsInStock != 0 ? (
                                         <div className="cardProduct">

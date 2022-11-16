@@ -12,8 +12,8 @@ const ProductSchema = mongoose.Schema(
             imageLink2: { type: String, require },
             imageLink3: { type: String },
         },
-        categoryId: { type: String, require },
-        supplierId: { type: String, require },
+        category: { type: mongoose.Schema.Types.ObjectId, ref: "categories" },
+        supplier: { type: String, require },
     },
     {
         timestamps: true,

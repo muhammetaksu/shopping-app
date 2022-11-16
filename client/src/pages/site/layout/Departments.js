@@ -15,7 +15,7 @@ function Departments() {
         if (id == -1) {
             dispatch(changeProductsData(originalProducts));
         } else {
-            const newProducts = originalProducts.filter((e) => e.supplierId == id);
+            const newProducts = originalProducts.filter((e) => e.supplier == id);
             dispatch(changeProductsData(newProducts));
         }
 

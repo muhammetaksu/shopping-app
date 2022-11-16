@@ -26,7 +26,7 @@ function ProfilePage() {
     }, []);
 
     return (
-        <div className="container profilePageCont my-3">
+        <div className="container profilePageCont ">
             <div>
                 <h2 className="text-center">
                     Welcome {currentUser.name + " " + currentUser.surname} !

@@ -3,12 +3,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { pageNumberContext } from "../../../context/PageNumberProvider";
 import { productsPerPageContext } from "../../../context/ProductsPerPageProvider";
-import { selectedSortFilterContext } from "../../../context/SelectedSortFilterProvider";
-import {
-    changeData,
-    changeProductsData,
-    setCategoryFilter,
-} from "../../../store/actions/mainActions";
+import { changeProductsData } from "../../../store/actions/mainActions";
 
 function NavbarCategories() {
     /**********  DRAG SCROLL - start */
@@ -22,8 +17,6 @@ function NavbarCategories() {
     const { originalProducts } = originalDataState;
 
     const { page, setPage } = useContext(pageNumberContext);
-    const { selectedSortFilter, setSelectedSortFilter } = useContext(selectedSortFilterContext);
-    const { productsPerPage, setProductsPerPage } = useContext(productsPerPageContext);
 
     subNav.forEach((element) => {
         element.addEventListener("mousedown", (e) => mouseIsDown(e));
@@ -62,12 +55,11 @@ function NavbarCategories() {
         if (id == -1) {
             dispatch(changeProductsData(originalProducts));
         } else {
-            const newProducts = originalProducts.filter((e) => e.categoryId == id);
+            const newProducts = originalProducts.filter((e) => e.category == id);
             dispatch(changeProductsData(newProducts));
         }
 
         setPage(0);
-        setSelectedSortFilter(-1);
     };
 
     return (

@@ -44,7 +44,7 @@ export const setSelectedCategory = (currentProduct) => async (dispatch) => {
     dispatch({ type: "SET_SELECTED_CATEGORY_REQUEST" });
 
     try {
-        let response = await axios.get(`${API_URL}/categories/${currentProduct.categoryId}`);
+        let response = await axios.get(`${API_URL}/categories/${currentProduct.category}`);
 
         dispatch({ type: "SET_SELECTED_CATEGORY_SUCCESS", payload: response.data });
     } catch (error) {
@@ -66,7 +66,7 @@ export const setSelectedSupplier = (currentProduct) => async (dispatch) => {
     dispatch({ type: "SET_SELECTED_SUPPLIER_REQUEST" });
 
     try {
-        let response = await axios.get(`${API_URL}/suppliers/${currentProduct.supplierId}`);
+        let response = await axios.get(`${API_URL}/suppliers/${currentProduct.supplier}`);
 
         dispatch({ type: "SET_SELECTED_SUPPLIER_SUCCESS", payload: response.data });
     } catch (error) {

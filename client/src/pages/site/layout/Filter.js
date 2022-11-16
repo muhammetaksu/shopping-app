@@ -3,13 +3,13 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { pageNumberContext } from "../../../context/PageNumberProvider";
 import { productsPerPageContext } from "../../../context/ProductsPerPageProvider";
-import { selectedSortFilterContext } from "../../../context/SelectedSortFilterProvider";
 import { changeProductsData } from "../../../store/actions/mainActions";
 import ClearIcon from "@mui/icons-material/Clear";
 
 function Filter() {
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(0);
+    const [selectedSortFilter, setSelectedSortFilter] = useState(-1);
 
     const productsState = useSelector((state) => state.productsReducer);
     const { products } = productsState;
@@ -17,8 +17,6 @@ function Filter() {
     const { originalProducts } = originalDataState;
 
     const { page, setPage } = useContext(pageNumberContext);
-    const { productsPerPage, setProductsPerPage } = useContext(productsPerPageContext);
-    const { selectedSortFilter, setSelectedSortFilter } = useContext(selectedSortFilterContext);
 
     const dispatch = useDispatch();
 

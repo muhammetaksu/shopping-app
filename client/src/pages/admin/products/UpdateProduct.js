@@ -7,22 +7,23 @@ import { API_URL } from "../../../env/config";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchProductById } from "../../../store/middleware/thunkActions";
 import { clearGetProductById } from "../../../store/actions/mainActions";
+import { toast } from "react-toastify";
 
 const validationSchema = yup.object({
     brand: yup.string().required("Brand is required!"),
     model: yup.string().required("Model is required!"),
     unitPrice: yup.number().required("Price is required!"),
     unitsInStock: yup.number().required("Stock is required!"),
-    categoryId: yup.string().required("Category is required!"),
-    supplierId: yup.string().required("Supplier is required!"),
+    category: yup.string().required("Category is required!"),
+    supplier: yup.string().required("Supplier is required!"),
     description: yup.string().required("Description is required!"),
     imageLink1: yup.string().required("Image 1 is required!"),
     imageLink2: yup.string().required("Image 2 is required!"),
 });
 
 function UpdateProduct() {
-    const navigate = useNavigate();
     const { id } = useParams();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const categoriesState = useSelector((state) => state.categoriesReducer);
@@ -31,6 +32,8 @@ function UpdateProduct() {
     const { suppliers } = suppliersState;
     const singleProductState = useSelector((state) => state.getProductByIdReducer);
     const { product } = singleProductState;
+
+    console.log(product);
 
     useEffect(() => {
         dispatch(fetchProductById(id));
@@ -53,18 +56,19 @@ function UpdateProduct() {
                         model: product.model || "",
                         unitPrice: product.unitPrice || "",
                         unitsInStock: product.unitsInStock || "",
-                        categoryId: product.categoryId || "",
-                        supplierId: product.supplierId || "",
+                        category: product.category || "",
+                        supplier: product.supplier || "",
                         description: product.description || "",
-                        imageLink1: product.imageLink1 || "",
-                        imageLink2: product.imageLink2 || "",
-                        imageLink3: product.imageLink3 || "",
+                        imageLink1: product?.image?.imageLink1 || "",
+                        imageLink2: product?.image?.imageLink2 || "",
+                        imageLink3: product?.image?.imageLink3 || "",
                     }}
                     validationSchema={validationSchema}
                     onSubmit={async (values, { setSubmitting }) => {
                         if (values) {
                             const response = await axios.put(`${API_URL}/products/${id}`, values);
                             if (response?.status === 201) {
+                                toast.success("Successfully added!");
                                 navigate("/admin/product-list");
                             } else {
                                 alert("Something went wrong");
@@ -158,14 +162,14 @@ function UpdateProduct() {
                                 </div>
                             </div>
                             <div className="col-lg-6 mt-3">
-                                <label htmlFor="categoryId" className="form-label">
+                                <label htmlFor="category" className="form-label">
                                     Category
                                 </label>
                                 <select
                                     className="form-select"
-                                    id="categoryId"
-                                    name="categoryId"
-                                    value={values.categoryId}
+                                    id="category"
+                                    name="category"
+                                    value={values.category}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                 >
@@ -180,18 +184,18 @@ function UpdateProduct() {
                                 </select>
 
                                 <div className="text-danger">
-                                    {errors.categoryId && touched.categoryId && errors.categoryId}
+                                    {errors.category && touched.category && errors.category}
                                 </div>
                             </div>
                             <div className="col-lg-6 mt-3">
-                                <label htmlFor="supplierId" className="form-label">
+                                <label htmlFor="supplier" className="form-label">
                                     Supplier
                                 </label>
                                 <select
                                     className="form-select"
-                                    id="supplierId"
-                                    name="supplierId"
-                                    value={values.supplierId}
+                                    id="supplier"
+                                    name="supplier"
+                                    value={values.supplier}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                 >
@@ -206,7 +210,7 @@ function UpdateProduct() {
                                 </select>
 
                                 <div className="text-danger">
-                                    {errors.supplierId && touched.supplierId && errors.supplierId}
+                                    {errors.supplier && touched.supplier && errors.supplier}
                                 </div>
                             </div>
                             <div className="mt-3">

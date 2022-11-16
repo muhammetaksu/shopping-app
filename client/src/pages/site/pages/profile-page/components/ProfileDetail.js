@@ -91,27 +91,34 @@ const ProfileDetail = ({ userId, userDetail }) => {
                             <p className="text-danger">{formik.errors.email}</p>
                         )}
                     </div>
-                    <div className="form-item">
-                        <p>
-                            Creation Date:{" "}
-                            {userDetail.createdAt && (userDetail?.createdAt).substring(0, 10)} /{" "}
-                            {userDetail.createdAt && (userDetail?.createdAt).substring(11, 16)}
-                        </p>
-                    </div>
-                    <div className="form-item">
-                        <p>
-                            {userDetail?.createdAt !== userDetail?.updatedAt && (
+                    {!userDetail?.isAdmin && (
+                        <>
+                            <div className="form-item">
                                 <p>
-                                    Last Edit Date:{" "}
-                                    {userDetail.updatedAt &&
-                                        (userDetail?.updatedAt).substring(0, 10)}{" "}
+                                    Creation Date:{" "}
+                                    {userDetail?.createdAt &&
+                                        (userDetail?.createdAt).substring(0, 10)}{" "}
                                     /{" "}
-                                    {userDetail.updatedAt &&
-                                        (userDetail?.updatedAt).substring(11, 16)}
+                                    {userDetail?.createdAt &&
+                                        (userDetail?.createdAt).substring(11, 16)}
                                 </p>
-                            )}
-                        </p>
-                    </div>
+                            </div>
+                            <div className="form-item">
+                                <p>
+                                    {userDetail?.createdAt !== userDetail?.updatedAt && (
+                                        <p>
+                                            Last Edit Date:{" "}
+                                            {userDetail.updatedAt &&
+                                                (userDetail?.updatedAt).substring(0, 10)}{" "}
+                                            /{" "}
+                                            {userDetail.updatedAt &&
+                                                (userDetail?.updatedAt).substring(11, 16)}
+                                        </p>
+                                    )}
+                                </p>
+                            </div>
+                        </>
+                    )}
                     <div className="profilePageBtn">
                         <button className="btn btn-primary" type="submit">
                             Update

@@ -15,6 +15,10 @@ function ProductList() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    useEffect(() => {
+        dispatch(fetchProducts());
+    }, []);
+
     const originalDataState = useSelector((state) => state.originalProductsReducer);
     const { originalProducts } = originalDataState;
 
