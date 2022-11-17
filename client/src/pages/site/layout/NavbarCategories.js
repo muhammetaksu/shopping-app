@@ -55,7 +55,7 @@ function NavbarCategories() {
         if (id == -1) {
             dispatch(changeProductsData(originalProducts));
         } else {
-            const newProducts = originalProducts.filter((e) => e.category == id);
+            const newProducts = originalProducts.filter((e) => e.category._id === id);
             dispatch(changeProductsData(newProducts));
         }
 
@@ -75,7 +75,7 @@ function NavbarCategories() {
                 {categories &&
                     categories.map((category, i) => (
                         <button
-                            onClick={() => getProductsByCategory(category.id)}
+                            onClick={() => getProductsByCategory(category._id)}
                             key={i}
                             style={{ color: "black" }}
                             className="subNavigationButton"

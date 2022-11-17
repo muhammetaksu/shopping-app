@@ -7,8 +7,6 @@ import {
     getProductByIdReducer,
     categoriesReducer,
     suppliersReducer,
-    selectedCategoryReducer,
-    selectedSupplierReducer,
 } from "./dataReducer.js";
 import { favoritesReducer } from "./favoritesReducer";
 import { userReducer } from "./userReducer";
@@ -22,7 +20,5 @@ export default combineReducers({
     getProductByIdReducer,
     categoriesReducer,
     suppliersReducer,
-    selectedCategoryReducer,
-    selectedSupplierReducer,
     userReducer,
 });

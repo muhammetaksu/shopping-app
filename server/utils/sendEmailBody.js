@@ -645,5 +645,177 @@ const emailBody = (link) => {
     </html>
     `;
 };
+const contactEmailBody = (info) => {
+    return `<!DOCTYPE html>
 
-module.exports = emailBody;
+    <html
+        lang="en"
+        xmlns:o="urn:schemas-microsoft-com:office:office"
+        xmlns:v="urn:schemas-microsoft-com:vml"
+    >
+        <head>
+            <title></title>
+            <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+            <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+            <link
+                href="https://fonts.googleapis.com/css?family=Bitter"
+                rel="stylesheet"
+                type="text/css"
+            />
+            <link
+                href="https://fonts.googleapis.com/css?family=Cormorant+Garamond"
+                rel="stylesheet"
+                type="text/css"
+            />
+            <link
+                href="https://fonts.googleapis.com/css?family=Cabin"
+                rel="stylesheet"
+                type="text/css"
+            />
+            <link
+                href="https://fonts.googleapis.com/css?family=Droid+Serif"
+                rel="stylesheet"
+                type="text/css"
+            />
+            <link
+                href="https://fonts.googleapis.com/css?family=Montserrat"
+                rel="stylesheet"
+                type="text/css"
+            />
+            <link
+                href="https://fonts.googleapis.com/css?family=Roboto+Slab"
+                rel="stylesheet"
+                type="text/css"
+            />
+            <!--<![endif]-->
+            <style>
+                * {
+                    box-sizing: border-box;
+                    text-align: center;
+                }
+    
+                body {
+                    margin: 0;
+                    padding: 0;
+                }
+    
+                h3 {
+                    margin: 0;
+                    margin-bottom: 5px;
+                }
+    
+                .contactContainer {
+                    background-color: lightblue;
+                    display: flex;
+                    justify-content: center;
+                    flex-direction: column;
+                    padding-bottom: 20px;
+                }
+    
+                @media (max-width: 670px) {
+                }
+            </style>
+        </head>
+        <body>
+            <div class="contactContainer">
+                <h2 style="text-align: center">Contact Information</h2>
+                <br />
+                <h3 style="text-align: center">Name: ${info.name}</h3>
+                <h3 style="text-align: center">Surname: ${info.surname}</h3>
+                <h3 style="text-align: center">Email: ${info.email}</h3>
+                <h3 style="text-align: center">Title: ${info.title}</h3>
+                <h3 style="text-align: center">Message: ${info.message}</h3>
+            </div>
+        </body>
+    </html>
+    
+    `;
+};
+const contactCustomerEmailBody = (info) => {
+    return `<!DOCTYPE html>
+
+    <html
+        lang="en"
+        xmlns:o="urn:schemas-microsoft-com:office:office"
+        xmlns:v="urn:schemas-microsoft-com:vml"
+    >
+        <head>
+            <title></title>
+            <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+            <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+            <link
+                href="https://fonts.googleapis.com/css?family=Bitter"
+                rel="stylesheet"
+                type="text/css"
+            />
+            <link
+                href="https://fonts.googleapis.com/css?family=Cormorant+Garamond"
+                rel="stylesheet"
+                type="text/css"
+            />
+            <link
+                href="https://fonts.googleapis.com/css?family=Cabin"
+                rel="stylesheet"
+                type="text/css"
+            />
+            <link
+                href="https://fonts.googleapis.com/css?family=Droid+Serif"
+                rel="stylesheet"
+                type="text/css"
+            />
+            <link
+                href="https://fonts.googleapis.com/css?family=Montserrat"
+                rel="stylesheet"
+                type="text/css"
+            />
+            <link
+                href="https://fonts.googleapis.com/css?family=Roboto+Slab"
+                rel="stylesheet"
+                type="text/css"
+            />
+            <!--<![endif]-->
+            <style>
+                * {
+                    box-sizing: border-box;
+                    text-align: center;
+                }
+    
+                body {
+                    margin: 0;
+                    padding: 0;
+                }
+    
+                h3 {
+                    margin: 0;
+                    margin-bottom: 5px;
+                }
+    
+                .contactContainer {
+                    background-color: lightblue;
+                    display: flex;
+                    justify-content: center;
+                    flex-direction: column;
+                    padding-bottom: 20px;
+                }
+    
+                @media (max-width: 670px) {
+                }
+            </style>
+        </head>
+        <body>
+            <div class="contactContainer">
+                <h2 style="text-align: center">Online Shopping Contact Center</h2>
+                <br />
+                <h3 style="text-align: center">Name: ${info.name}</h3>
+                <h3 style="text-align: center">Surname: ${info.surname}</h3>
+                <h3 style="text-align: center">Title: ${info.title}</h3>
+                <h3 style="text-align: center">Message: ${info.message}</h3>
+                <br />
+                <p style="text-align: center">Our team will contact you as soon as possible.</p>
+            </div>
+        </body>
+    </html>
+    `;
+};
+
+module.exports = { emailBody, contactEmailBody, contactCustomerEmailBody };

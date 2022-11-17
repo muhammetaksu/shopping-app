@@ -22,7 +22,8 @@ router.get("/:id", (req, res) => {
     const id = req.params.id;
 
     ProductModel.findById(id)
-        .populate("category")
+        .populate("category", "name")
+        .populate("supplier")
         .exec((err, result) => {
             if (err) {
                 res.json(err);

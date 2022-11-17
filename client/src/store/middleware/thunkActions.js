@@ -40,18 +40,6 @@ export const fetchCategories = () => async (dispatch) => {
     }
 };
 
-export const setSelectedCategory = (currentProduct) => async (dispatch) => {
-    dispatch({ type: "SET_SELECTED_CATEGORY_REQUEST" });
-
-    try {
-        let response = await axios.get(`${API_URL}/categories/${currentProduct.category}`);
-
-        dispatch({ type: "SET_SELECTED_CATEGORY_SUCCESS", payload: response.data });
-    } catch (error) {
-        dispatch({ type: "SET_SELECTED_CATEGORY_ERROR", payload: error });
-    }
-};
-
 export const fetchSuppliers = () => async (dispatch) => {
     dispatch({ type: "GET_SUPPLIERS_REQUEST" });
     try {
@@ -59,18 +47,6 @@ export const fetchSuppliers = () => async (dispatch) => {
         dispatch({ type: "GET_SUPPLIERS_SUCCESS", payload: response.data });
     } catch (error) {
         dispatch({ type: "GET_SUPPLIERS_ERROR", payload: error });
-    }
-};
-
-export const setSelectedSupplier = (currentProduct) => async (dispatch) => {
-    dispatch({ type: "SET_SELECTED_SUPPLIER_REQUEST" });
-
-    try {
-        let response = await axios.get(`${API_URL}/suppliers/${currentProduct.supplier}`);
-
-        dispatch({ type: "SET_SELECTED_SUPPLIER_SUCCESS", payload: response.data });
-    } catch (error) {
-        dispatch({ type: "SET_SELECTED_SUPPLIER_ERROR", payload: error });
     }
 };
 

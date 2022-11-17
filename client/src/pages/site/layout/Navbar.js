@@ -81,17 +81,6 @@ function Navbar() {
                     </AdminOnlyLink>
 
                     {/* --------LOCATION------- */}
-                    <ShowOnLogin>
-                        <div className="location">
-                            <div className="location-icon">
-                                <img src={locationIcon} alt="location" />
-                            </div>
-                            <div className="location-title">
-                                <p>Delivers</p>
-                                <p>Ottowa, K2G 1V8</p>
-                            </div>
-                        </div>
-                    </ShowOnLogin>
 
                     {/* --------SEARCH------ */}
                     <div className="search_box">
@@ -158,27 +147,25 @@ function Navbar() {
                         </div>
                     </ShowOnLogin>
 
-                    <div className="accounts-lists">
-                        {currentUser?.name ? (
-                            <ShowOnLogin>
-                                <NavLink className="navLinks" to={"/profile-page"}>
-                                    <p>Welcome</p>
-
-                                    <div className="navLinks">
-                                        <p>{currentUser?.name}</p>
-                                    </div>
-                                </NavLink>
-                            </ShowOnLogin>
-                        ) : (
-                            <div>
+                    {currentUser?.name ? (
+                        <ShowOnLogin>
+                            <NavLink className="navLinks" to={"/profile-page"}>
                                 <p>Welcome</p>
 
-                                <div className="accounts-list-dropdown">
-                                    <p>Guest</p>
+                                <div className="navLinks">
+                                    <p>{currentUser?.name}</p>
                                 </div>
+                            </NavLink>
+                        </ShowOnLogin>
+                    ) : (
+                        <div>
+                            <p>Welcome</p>
+
+                            <div className="accounts-list-dropdown">
+                                <p>Guest</p>
                             </div>
-                        )}
-                    </div>
+                        </div>
+                    )}
 
                     <ShowOnLogin>
                         <div className="navLinks">

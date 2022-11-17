@@ -18,7 +18,6 @@ function Login() {
         email: email,
         password: password,
     };
-
     const handleLogin = async (e) => {
         e.preventDefault();
         if (password && email === "") {

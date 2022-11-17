@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Navigate, Route, Routes } from "react-router-dom";
+import { Link, Navigate, NavLink, Route, Routes } from "react-router-dom";
 import AddCategory from "../categories/AddCategory";
 import CategoryList from "../categories/CategoryList";
 import UpdateCategory from "../categories/UpdateCategory";
@@ -38,30 +38,29 @@ const pages = [
 ];
 
 function AdminHome() {
+    const activeLink = ({ isActive }) => (isActive ? "adminActiveNavLink" : "");
     return (
         <>
-            <div className="adminPageNavbar row m-0 border-top border-secondary">
+            <div className="adminPageNavbar m-0 ">
                 {pages &&
                     pages.map((page, i) => (
-                        <div key={i} className="col-lg-2 p-4 text-center">
-                            <Link className="text-center" to={page.path}>
-                                {page.title}
-                            </Link>
-                        </div>
+                        <NavLink key={i} className={activeLink} to={page.path}>
+                            {page.title}
+                        </NavLink>
                     ))}
             </div>
             <div>
                 <Routes>
-                    <Route path="/" element={<Navigate to="/admin/product-list" />} />
-                    <Route path="/product-list" element={<ProductList />} />
-                    <Route path="/add-product" element={<AddProduct />} />
-                    <Route path="/update-product/:id" element={<UpdateProduct />} />
-                    <Route path="/category-list" element={<CategoryList />} />
-                    <Route path="/add-category" element={<AddCategory />} />
-                    <Route path="/update-category/:id" element={<UpdateCategory />} />
-                    <Route path="/supplier-list" element={<SupplierList />} />
-                    <Route path="/add-supplier" element={<AddSupplier />} />
-                    <Route path="/update-supplier/:id" element={<UpdateSupplier />} />
+                    <Route path="" element={<Navigate to="/admin/product-list" />} />
+                    <Route path="product-list" element={<ProductList />} />
+                    <Route path="add-product" element={<AddProduct />} />
+                    <Route path="update-product/:id" element={<UpdateProduct />} />
+                    <Route path="category-list" element={<CategoryList />} />
+                    <Route path="add-category" element={<AddCategory />} />
+                    <Route path="update-category/:id" element={<UpdateCategory />} />
+                    <Route path="supplier-list" element={<SupplierList />} />
+                    <Route path="add-supplier" element={<AddSupplier />} />
+                    <Route path="update-supplier/:id" element={<UpdateSupplier />} />
                 </Routes>
             </div>
         </>

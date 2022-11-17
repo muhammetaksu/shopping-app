@@ -6,8 +6,6 @@ const { accessTokenOptions } = require("../../config/environments");
 const { generateAccessToken } = require("../../helpers/generateToken");
 const { UserModel } = require("../../models/UserModel");
 
-// ADD CATEGORY
-
 const auth = {
     login: async (req, res) => {
         if (!req.body.email || !req.body.password) {

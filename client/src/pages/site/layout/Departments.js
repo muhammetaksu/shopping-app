@@ -28,11 +28,7 @@ function Departments() {
                 <p className="m-0">Suppliers</p>
             </h3>
             <ul id="supplierItemsCont">
-                <li
-                    id="sidebarSupplierItem"
-                    style={{ color: "black", cursor: "pointer" }}
-                    onClick={() => getProductsBySupplier(-1)}
-                >
+                <li id="sidebarSupplierItem" onClick={() => getProductsBySupplier(-1)}>
                     All Suppliers
                 </li>
                 {suppliers &&
@@ -40,7 +36,7 @@ function Departments() {
                         return (
                             <li
                                 id="sidebarSupplierItem"
-                                onClick={() => getProductsBySupplier(item.id)}
+                                onClick={() => getProductsBySupplier(item._id)}
                                 key={i}
                                 style={{ color: "black", cursor: "pointer" }}
                             >

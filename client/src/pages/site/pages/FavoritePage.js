@@ -21,7 +21,7 @@ function FavoritePage() {
     };
 
     return (
-        <div className="container ">
+        <div className="container mb-3">
             {favorites.length > 0 ? (
                 <>
                     <div id="favPageHead" className="d-flex justify-content-between ps-5">

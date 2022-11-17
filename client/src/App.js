@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "antd/dist/antd.min.css";
 import "./index.css";
 import { Route, Routes } from "react-router-dom";
@@ -30,10 +30,16 @@ import { userStorage } from "./service/localStorage/userStorage";
 import { setCurrentUser } from "./store/actions/mainActions";
 import NewPassword from "./pages/site/pages/auth/NewPassword";
 import ProfilePage from "./pages/site/pages/profile-page/ProfilePage";
+import Loading from "./assets/Loading";
+import Footer from "./pages/site/layout/Footer";
+import ContactPage from "./pages/site/pages/ContactPage";
 
 function App() {
+    const [isLoading, setIsLoading] = useState(false);
     const { currentUser } = useSelector((state) => state.userReducer);
     const token = currentUser?.token ? currentUser?.token : null;
+
+    console.log("TOKEN:", token);
 
     const dispatch = useDispatch();
 
@@ -58,117 +64,55 @@ function App() {
 
     return (
         <div className="appJs ">
-            <ToastContainer
-                transition={Slide}
-                position="top-right"
-                autoClose={3000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-            />
-            {/*  */}
-            <Navbar />
-            <Routes>
-                {/* AUTH ROUTES */}
-                <Route>
-                    <Route
-                        path="/login"
-                        element={
-                            <ProtectedRoute token={!token}>
-                                <Login />
-                            </ProtectedRoute>
-                        }
+            {isLoading && <Loading />}
+            {!isLoading && (
+                <>
+                    <ToastContainer
+                        transition={Slide}
+                        position="top-right"
+                        autoClose={3000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
                     />
-                    <Route
-                        path="/admin-login"
-                        element={
-                            <ProtectedRoute token={!token}>
-                                <AdminLogin />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/register"
-                        element={
-                            <ProtectedRoute token={!token}>
-                                <Register />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/reset-password"
-                        element={
-                            <ProtectedRoute token={!token}>
-                                <ResetPassword />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/reset-password/:id/:token"
-                        element={
-                            <ProtectedRoute token={!token}>
-                                <NewPassword />
-                            </ProtectedRoute>
-                        }
-                    />
-                </Route>
+                    {/*  */}
+                    <Navbar />
+                    <Routes>
+                        {/* AUTH ROUTES */}
+                        <Route element={<ProtectedRoute token={!token} />}>
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/admin-login" element={<AdminLogin />} />
+                            <Route path="/register" element={<Register />} />
+                            <Route path="/reset-password" element={<ResetPassword />} />
+                            <Route path="/reset-password/:id/:token" element={<NewPassword />} />
+                        </Route>
 
-                {/* OTHER ROUTES */}
-                <Route
-                    path="/profile-page/*"
-                    element={
-                        <ProtectedRoute token={token}>
-                            <ProfilePage />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="/cart"
-                    element={
-                        <ProtectedRoute token={token}>
-                            <CartPage />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="/favorites"
-                    element={
-                        <ProtectedRoute token={token}>
-                            <FavoritePage />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="/productdetail/:id"
-                    element={
-                        <ProtectedRoute token={token}>
-                            <ProductDetailPage />
-                        </ProtectedRoute>
-                    }
-                />
+                        {/* USER ROUTES */}
+                        <Route element={<ProtectedRoute token={token} />}>
+                            <Route path="/profile-page/*" element={<ProfilePage />} />
+                            <Route path="/cart" element={<CartPage />} />
+                            <Route path="/favorites" element={<FavoritePage />} />
+                            <Route path="/productdetail/:id" element={<ProductDetailPage />} />
+                            {/* ADMIN ROUTE */}
+                            <Route element={<AdminOnlyRoute />}>
+                                <Route path="/admin/*" element={<AdminHome />} />
+                            </Route>
+                        </Route>
 
-                {/* ADMIN ROUTE */}
-
-                <Route
-                    path="/admin/*"
-                    element={
-                        <AdminOnlyRoute>
-                            <ProtectedRoute token={token}>
-                                <AdminHome />
-                            </ProtectedRoute>
-                        </AdminOnlyRoute>
-                    }
-                />
-
-                <Route>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/*" element={<PageNotFound />} />
-                </Route>
-            </Routes>
+                        {/* PUBLIC ROUTE */}
+                        <Route>
+                            <Route path="/contact" element={<ContactPage />} />
+                            <Route path="/*" element={<PageNotFound />} />
+                            <Route path="/" element={<HomePage />} />
+                        </Route>
+                    </Routes>
+                    <Footer />
+                </>
+            )}
         </div>
     );
 }

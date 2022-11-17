@@ -12,6 +12,7 @@ const adminsRoute = require("./routes/adminsRoute");
 const authRoute = require("./routes/authRoute");
 const addressRoute = require("./routes/addressRoute");
 const ordersRoute = require("./routes/ordersRoute");
+const contactRoute = require("./routes/contactRoute");
 const passwordResetRoute = require("./routes/passwordResetRoute");
 
 const app = express();
@@ -29,8 +30,9 @@ app.use("/api/admins", adminsRoute);
 app.use("/api/login", authRoute);
 app.use("/api/reset-password", passwordResetRoute);
 app.use("/api/users", usersRoute);
+app.use("/api/contact", contactRoute);
 app.use("/api/address", checkAuth, addressRoute);
-app.use("/api/orders", ordersRoute);
+app.use("/api/orders", checkAuth, ordersRoute);
 app.use("*", (req, res) => {
     res.send("There are no route!");
 });

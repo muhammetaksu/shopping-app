@@ -3,6 +3,7 @@ import { cartStorage } from "../../../service/localStorage/cartStorage";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { removeProductFromCart, setCartQuantity } from "../../../store/actions/mainActions";
+import { optionForLoop } from "../../../assets/OptionForLoop";
 
 const CartPage = () => {
     const [width, setWidth] = useState(window.innerWidth);
@@ -29,7 +30,7 @@ const CartPage = () => {
         /////// SEPETTEKİ ÜRÜNLERİN TOPLAM FİYATI
         let cartTotalPrice = 0;
         cart.forEach((i) => {
-            cartTotalPrice = Number(cartTotalPrice) + Number(i.quantity * i.unitPrice);
+            cartTotalPrice = Number(i.quantity) * Number(i.unitPrice) + Number(cartTotalPrice);
         });
         setTotalCartPrice(cartTotalPrice);
     }, [cart]);
@@ -42,13 +43,13 @@ const CartPage = () => {
 
     const removeFromCart = (product) => {
         dispatch(removeProductFromCart(product));
-        let newCart = cart.filter((q) => q.id != product.id);
+        let newCart = cart.filter((q) => q._id !== product._id);
         cartStorage.setCart(newCart);
     };
 
     return (
-        <div id="cartPageContainer" className="container" style={{ minWidth: "375px" }}>
-            {cart?.length != 0 ? (
+        <div id="cartPageContainer" className="container mb-3" style={{ minWidth: "375px" }}>
+            {cart?.length !== 0 ? (
                 <>
                     {width < 992 ? (
                         <div className=" d-flex  justify-content-evenly row mx-2">
@@ -144,7 +145,7 @@ const CartPage = () => {
                                                         </p>
                                                         <select
                                                             className="overflow-hidden "
-                                                            defaultValue={product?.quantity}
+                                                            value={product?.quantity}
                                                             onChange={(e) =>
                                                                 changeQuantity(
                                                                     product,
@@ -152,15 +153,7 @@ const CartPage = () => {
                                                                 )
                                                             }
                                                         >
-                                                            <option value={1}>1</option>
-                                                            <option value={2}>2</option>
-                                                            <option value={3}>3</option>
-                                                            <option value={4}>4</option>
-                                                            <option value={5}>5</option>
-                                                            <option value={6}>6</option>
-                                                            <option value={7}>7</option>
-                                                            <option value={8}>8</option>
-                                                            <option value={9}>9</option>
+                                                            {optionForLoop(10)}
                                                         </select>
                                                     </div>
                                                     <div
@@ -254,7 +247,7 @@ const CartPage = () => {
                                                     >
                                                         <p className="m-0">Quantity</p>
                                                         <select
-                                                            defaultValue={product.quantity}
+                                                            value={product.quantity}
                                                             onChange={(e) =>
                                                                 changeQuantity(
                                                                     product,
@@ -262,16 +255,7 @@ const CartPage = () => {
                                                                 )
                                                             }
                                                         >
-                                                            <option value={1}>1</option>
-                                                            <option value={2}>2</option>
-                                                            <option value={3}>3</option>
-                                                            <option value={4}>4</option>
-                                                            <option value={5}>5</option>
-                                                            <option value={6}>6</option>
-                                                            <option value={7}>7</option>
-                                                            <option value={8}>8</option>
-                                                            <option value={9}>9</option>
-                                                            <option value={10}>10</option>
+                                                            {optionForLoop(10)}
                                                         </select>
                                                     </div>
                                                     <div

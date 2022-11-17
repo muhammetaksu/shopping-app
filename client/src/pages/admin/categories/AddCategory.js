@@ -68,7 +68,7 @@ function AddCategory() {
                                 <button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className="btn btn-primary"
+                                    className="btn btn-warning"
                                 >
                                     Add Category
                                 </button>
