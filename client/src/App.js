@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import "antd/dist/antd.min.css";
 import "./index.css";
 import { Route, Routes } from "react-router-dom";
-import Navbar from "./pages/site/layout/Navbar";
-import HomePage from "./pages/site/pages/HomePage";
+
 import ProductDetailPage from "./pages/site/pages/ProductDetailPage";
 import CartPage from "./pages/site/pages/CartPage";
 import FavoritePage from "./pages/site/pages/FavoritePage";
@@ -24,22 +23,22 @@ import { ToastContainer } from "react-toastify";
 import { Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AdminLogin from "./pages/site/pages/auth/AdminLogin";
-import { AdminOnlyLink, AdminOnlyRoute } from "./tools/AdminOnly";
+import { AdminOnlyRoute } from "./tools/AdminOnly";
 import ProtectedRoute from "./tools/ProtectedRoute";
 import { userStorage } from "./service/localStorage/userStorage";
 import { setCurrentUser } from "./store/actions/mainActions";
 import NewPassword from "./pages/site/pages/auth/NewPassword";
 import ProfilePage from "./pages/site/pages/profile-page/ProfilePage";
 import Loading from "./assets/Loading";
-import Footer from "./pages/site/layout/Footer";
 import ContactPage from "./pages/site/pages/ContactPage";
+import HomePage from "./pages/site/pages/homepage/HomePage";
+import Footer from "./pages/components/Footer";
+import Navbar from "./pages/components/Navbar";
 
 function App() {
     const [isLoading, setIsLoading] = useState(false);
     const { currentUser } = useSelector((state) => state.userReducer);
     const token = currentUser?.token ? currentUser?.token : null;
-
-    console.log("TOKEN:", token);
 
     const dispatch = useDispatch();
 

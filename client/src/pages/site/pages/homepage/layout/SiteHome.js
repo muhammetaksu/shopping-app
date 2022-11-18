@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { useSelector } from "react-redux";
 import { TablePagination } from "@mui/material";
-import { pageNumberContext } from "../../../context/PageNumberProvider";
-import { productsPerPageContext } from "../../../context/ProductsPerPageProvider";
-import HomepageProductCard from "../../../assets/HomepageProductCard";
+import HomepageProductCard from "./HomepageProductCard";
+import { productsPerPageContext } from "../../../../../context/ProductsPerPageProvider";
+import { pageNumberContext } from "../../../../../context/PageNumberProvider";
 
 function SiteHome() {
     const { page, setPage } = useContext(pageNumberContext);

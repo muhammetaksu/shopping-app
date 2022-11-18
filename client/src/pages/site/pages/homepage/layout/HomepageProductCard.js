@@ -3,15 +3,15 @@ import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { cartStorage } from "../service/localStorage/cartStorage";
-import { favoriteStorage } from "../service/localStorage/favoriteStorage";
+import { optionForLoop } from "../../../../../assets/OptionForLoop";
+import { cartStorage } from "../../../../../service/localStorage/cartStorage";
+import { favoriteStorage } from "../../../../../service/localStorage/favoriteStorage";
 import {
     addProductToCart,
     addToFavorites,
     removeFromFavorites,
     setCartQuantity,
-} from "../store/actions/mainActions";
-import { optionForLoop } from "./OptionForLoop";
+} from "../../../../../store/actions/mainActions";
 
 const HomepageProductCard = ({ product, index }) => {
     const [quantity, setQuantity] = useState(1);

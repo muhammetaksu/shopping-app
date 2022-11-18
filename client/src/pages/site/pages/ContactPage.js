@@ -136,7 +136,7 @@ const ContactPage = () => {
                             <button
                                 disabled={isSubmitting}
                                 type="submit"
-                                className="btn btn-warning"
+                                className="btn btn-primary"
                             >
                                 Send
                             </button>

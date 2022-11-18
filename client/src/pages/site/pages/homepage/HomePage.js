@@ -1,9 +1,8 @@
 import React from "react";
-import Departments from "../layout/Departments";
-
-import NavbarCategories from "../layout/NavbarCategories";
-import Filter from "../layout/Filter";
-import SiteHome from "../layout/SiteHome";
+import Departments from "./layout/Departments";
+import Filter from "./layout/Filter";
+import NavbarCategories from "./layout/NavbarCategories";
+import SiteHome from "./layout/SiteHome";
 
 function HomePage() {
     return (

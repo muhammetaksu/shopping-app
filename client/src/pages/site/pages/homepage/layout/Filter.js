@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { pageNumberContext } from "../../../context/PageNumberProvider";
-import { productsPerPageContext } from "../../../context/ProductsPerPageProvider";
-import { changeProductsData } from "../../../store/actions/mainActions";
 import ClearIcon from "@mui/icons-material/Clear";
+import { changeProductsData } from "../../../../../store/actions/mainActions";
+import { pageNumberContext } from "../../../../../context/PageNumberProvider";
 
 function Filter() {
     const [minPrice, setMinPrice] = useState(0);

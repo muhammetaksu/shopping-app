@@ -1,18 +1,12 @@
 import React, { useState } from "react";
-import logo from "../images/icons/bx_bxl-amazon.png";
-import locationIcon from "../images/icons/Location.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import searchIcon from "../images/icons/Search.png";
-import drag from "../images/icons/Drag.png";
-import close from "../images/icons/close.png";
-import cartIcon from "../images/icons/shopping-cart.png";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { changeProductsData, clearCurrentUser } from "../../../store/actions/mainActions";
-import { AdminOnlyLink } from "../../../tools/AdminOnly";
-import { ShowOnLogin, ShowOnLogout } from "../../../tools/HiddenLink";
-import { userStorage } from "../../../service/localStorage/userStorage";
 import { toast } from "react-toastify";
+import { userStorage } from "../../service/localStorage/userStorage";
+import { ShowOnLogin, ShowOnLogout } from "../../tools/HiddenLink";
+import { AdminOnlyLink } from "../../tools/AdminOnly";
+import { changeProductsData, clearCurrentUser } from "../../store/actions/mainActions";
 
 function Navbar() {
     const [searchText, setSearchText] = useState("");
@@ -65,7 +59,7 @@ function Navbar() {
                     {/* --------LOGO------- */}
                     <NavLink className="my-auto " to="/">
                         <div className="logo">
-                            <img src={logo} alt="logo" />
+                            <img src="./assets/icons/bx_bxl-amazon.png" alt="logo" />
                         </div>
                     </NavLink>
 
@@ -112,7 +106,11 @@ function Navbar() {
                             style={{ cursor: "pointer" }}
                             onClick={() => search(searchText)}
                         >
-                            <img className="search_icon" src={searchIcon} alt="search" />
+                            <img
+                                className="search_icon"
+                                src="./assets/icons/Search.png"
+                                alt="search"
+                            />
                         </span>
                     </div>
 
@@ -140,7 +138,7 @@ function Navbar() {
                                     <span className="cart-badge">{cart.length}</span>
                                     <br />
                                     <span className="cart-icon">
-                                        <img src={cartIcon} alt="" />
+                                        <img src="./assets/icons/shopping-cart.png" alt="" />
                                     </span>
                                 </div>
                             </NavLink>
@@ -149,13 +147,17 @@ function Navbar() {
 
                     {currentUser?.name ? (
                         <ShowOnLogin>
-                            <NavLink className="navLinks" to={"/profile-page"}>
-                                <p>Welcome</p>
+                            <div className="navLinks">
+                                <NavLink className={activeLink} to={"/profile-page"}>
+                                    <div>
+                                        <p>Welcome</p>
 
-                                <div className="navLinks">
-                                    <p>{currentUser?.name}</p>
-                                </div>
-                            </NavLink>
+                                        <div>
+                                            <p>{currentUser?.name}</p>
+                                        </div>
+                                    </div>
+                                </NavLink>
+                            </div>
                         </ShowOnLogin>
                     ) : (
                         <div>
@@ -208,10 +210,10 @@ function Navbar() {
                     {/* --------HAMBURBER MENU----- */}
                     <label htmlFor="check" className="bar">
                         <span id="bars">
-                            <img src={drag} alt="bar" />
+                            <img src="./assets/icons/Drag.png" alt="bar" />
                         </span>
                         <span id="times">
-                            <img src={close} alt="times" />
+                            <img src="./assets/icons/close.png" alt="times" />
                         </span>
                     </label>
                 </div>

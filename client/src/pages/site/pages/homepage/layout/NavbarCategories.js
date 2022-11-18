@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { pageNumberContext } from "../../../context/PageNumberProvider";
-import { productsPerPageContext } from "../../../context/ProductsPerPageProvider";
-import { changeProductsData } from "../../../store/actions/mainActions";
+import { pageNumberContext } from "../../../../../context/PageNumberProvider";
+import { changeProductsData } from "../../../../../store/actions/mainActions";
 
 function NavbarCategories() {
     /**********  DRAG SCROLL - start */
