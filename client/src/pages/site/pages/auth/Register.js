@@ -29,7 +29,7 @@ function Register() {
             toast.warning("Name, surname or email cannot be blank!");
         } else {
             const response = new Promise((resolve, reject) => {
-                resolve(axios.post(`${API_URL}/users`, user));
+                resolve(axios.post(`${API_URL}users`, user));
             });
 
             try {

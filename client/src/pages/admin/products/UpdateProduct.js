@@ -66,7 +66,7 @@ function UpdateProduct() {
                     validationSchema={validationSchema}
                     onSubmit={async (values, { setSubmitting }) => {
                         if (values) {
-                            const response = await axios.put(`${API_URL}/products/${id}`, values);
+                            const response = await axios.put(`${API_URL}products/${id}`, values);
                             if (response?.status === 201) {
                                 toast.success("Successfully added!");
                                 navigate("/admin/product-list");

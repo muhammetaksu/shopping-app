@@ -16,11 +16,11 @@ function ProfilePage() {
     useEffect(() => {
         if (currentUser.isAdmin) {
             const response = axios
-                .get(API_URL + "/admins/" + currentUser.id)
+                .get(API_URL + "admins/" + currentUser.id)
                 .then((res) => setUserDetail(res?.data));
         } else {
             const response = axios
-                .get(API_URL + "/users/" + currentUser.id)
+                .get(API_URL + "users/" + currentUser.id)
                 .then((res) => setUserDetail(res?.data));
         }
     }, []);

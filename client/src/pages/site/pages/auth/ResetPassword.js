@@ -12,7 +12,7 @@ function ResetPassword() {
         e.preventDefault();
         try {
             const response = new Promise((resolve, reject) => {
-                return resolve(axios.post(`${API_URL}/reset-password`, { email: email }));
+                return resolve(axios.post(`${API_URL}reset-password`, { email: email }));
             });
             setEmail("");
             console.log(response);

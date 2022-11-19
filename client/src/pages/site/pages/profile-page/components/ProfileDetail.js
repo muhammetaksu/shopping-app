@@ -28,7 +28,7 @@ const ProfileDetail = ({ userId, userDetail }) => {
         validationSchema,
         onSubmit: (values) => {
             axios
-                .put(API_URL + (userDetail.isAdmin ? "/admins/" : "/users/") + userId, values)
+                .put(API_URL + (userDetail.isAdmin ? "admins/" : "users/") + userId, values)
                 .then((res) =>
                     res.status == 201
                         ? toast.success("Successfully updated! Please login again.")

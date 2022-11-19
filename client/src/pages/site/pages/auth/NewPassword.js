@@ -18,7 +18,7 @@ function NewPassword() {
                 try {
                     const response = new Promise((resolve, reject) => {
                         return resolve(
-                            axios.post(`${API_URL}/reset-password/${id}/${token}`, {
+                            axios.post(`${API_URL}reset-password/${id}/${token}`, {
                                 password: password,
                             })
                         );

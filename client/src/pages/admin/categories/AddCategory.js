@@ -25,7 +25,7 @@ function AddCategory() {
                     validationSchema={validationSchema}
                     onSubmit={async (values, { setSubmitting }) => {
                         if (values) {
-                            const response = await axios.post(`${API_URL}/categories`, values);
+                            const response = await axios.post(`${API_URL}categories`, values);
                             if (response?.status === 201) {
                                 navigate("/admin/category-list");
                             } else {

@@ -39,25 +39,6 @@ router.get("/:id", (req, res) => {
     }
 });
 
-// GET SINGLE BY USER ID
-
-router.get("/userId/:id", (req, res) => {
-    const id = req.params.id;
-    try {
-        AddressModel.find({ userId: id }, (error, result) => {
-            if (error) {
-                res.json(error);
-            } else {
-                res.json(result);
-            }
-        });
-    } catch (error) {
-        console.log("models/AddressModel.js: get: Error");
-        console.log(error);
-        return res.status(500).json({ message: "Error" });
-    }
-});
-
 // GET ADDRESS BY USERID
 
 router.get("/userId/:id", (req, res) => {

@@ -1,14 +1,13 @@
 const jwt = require("jsonwebtoken");
-const { accessTokenOptions } = require("../config/environments");
-accessTokenOptions;
+const { accessTokenOptions, refreshTokenOptions } = require("../config/environments");
 
-// const generateToken = function (email) {
-//     const refreshToken = jwt.sign({ email }, refreshTokenOptions.jwtKey, {
-//         algorithm: "HS256",
-//         expiresIn: refreshTokenOptions.jwtExpirySeconds,
-//     });
-//     return refreshToken;
-// };
+const generateRefreshToken = (email) => {
+    const refreshToken = jwt.sign({ email }, refreshTokenOptions.jwtKey, {
+        algorithm: "HS256",
+        expiresIn: refreshTokenOptions.jwtExpiry,
+    });
+    return refreshToken;
+};
 
 const generateAccessToken = (email) => {
     const accessToken = jwt.sign({ email }, accessTokenOptions.jwtKey, {
@@ -19,6 +18,6 @@ const generateAccessToken = (email) => {
 };
 
 module.exports = {
-    // generateRefreshToken: generateToken,
+    generateRefreshToken: generateRefreshToken,
     generateAccessToken: generateAccessToken,
 };

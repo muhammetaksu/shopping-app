@@ -1,12 +1,9 @@
-import axios from "axios";
 import { useFormik } from "formik";
 import React from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { countries } from "../../../../../../../assets/CountryList";
-import { API_URL } from "../../../../../../../env/config";
 import { postRequest } from "../../../../../../../tools/Requests";
 
 const validationSchema = yup.object({
@@ -20,7 +17,6 @@ const validationSchema = yup.object({
 });
 
 const AddAddress = ({ currentUser }) => {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const formik = useFormik({

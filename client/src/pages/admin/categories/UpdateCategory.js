@@ -17,7 +17,7 @@ function UpdateCategory() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await axios.get(`${API_URL}/categories/${id}`);
+            const response = await axios.get(`${API_URL}categories/${id}`);
             if (response?.status == 200) {
                 setCategory(response?.data);
             } else {
@@ -42,7 +42,7 @@ function UpdateCategory() {
                     validationSchema={validationSchema}
                     onSubmit={async (values, { setSubmitting }) => {
                         if (values) {
-                            const response = await axios.put(`${API_URL}/categories/${id}`, values);
+                            const response = await axios.put(`${API_URL}categories/${id}`, values);
                             if (response?.status === 201) {
                                 navigate("/admin/category-list");
                             } else {

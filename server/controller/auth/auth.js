@@ -3,7 +3,7 @@ const AdminModel = require("../../models/AdminModel");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const { accessTokenOptions } = require("../../config/environments");
-const { generateAccessToken } = require("../../helpers/generateToken");
+const { generateAccessToken, generateRefreshToken } = require("../../helpers/generateToken");
 const { UserModel } = require("../../models/UserModel");
 
 const auth = {
@@ -23,9 +23,18 @@ const auth = {
                         });
                     } else {
                         const token = generateAccessToken(email);
-                        return res
-                            .status(200)
-                            .json({ user: result, token: token, message: "Login successfully!" });
+                        const refreshToken = generateRefreshToken(email);
+                        return res.status(200).json({
+                            user: {
+                                _id: result._id,
+                                name: result.name,
+                                surname: result.surname,
+                                email: result.email,
+                            },
+                            token: token,
+                            refreshToken: refreshToken,
+                            message: "Login successfully!",
+                        });
                     }
                 } catch (err) {
                     res.status(400).send(err);
@@ -50,9 +59,19 @@ const auth = {
                         });
                     } else {
                         const token = generateAccessToken(email);
-                        return res
-                            .status(200)
-                            .json({ user: result, token: token, message: "Login successfully!" });
+                        const refreshToken = generateRefreshToken(email);
+                        return res.status(200).json({
+                            user: {
+                                _id: result._id,
+                                name: result.name,
+                                surname: result.surname,
+                                email: result.email,
+                                isAdmin: result.isAdmin,
+                            },
+                            token: token,
+                            refreshToken: refreshToken,
+                            message: "Login successfully!",
+                        });
                     }
                 } catch (err) {
                     res.status(400).send(err);

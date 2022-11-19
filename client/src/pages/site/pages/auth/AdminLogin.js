@@ -26,7 +26,7 @@ function AdminLogin() {
         } else {
             try {
                 const response = new Promise((resolve, reject) => {
-                    return resolve(axios.post(`${API_URL}/login/admin`, admin));
+                    return resolve(axios.post(`${API_URL}login/admin`, admin));
                 });
 
                 console.log(response);
@@ -57,6 +57,7 @@ function AdminLogin() {
                             surname: q.data.user.surname,
                             isAdmin: Boolean(q.data.user.isAdmin),
                             token: q.data.token,
+                            refreshToken: q.data.refreshToken,
                         };
                         userStorage.setUser(userInfo);
                         dispatch(setCurrentUser(userInfo));

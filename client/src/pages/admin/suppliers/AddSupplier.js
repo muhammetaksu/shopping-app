@@ -56,7 +56,7 @@ function AddSupplier() {
         validationSchema,
         onSubmit: async (values) => {
             if (values) {
-                const response = await axios.post(`${API_URL}/suppliers`, values);
+                const response = await axios.post(`${API_URL}suppliers`, values);
                 if (response?.status === 200) {
                     formik.resetForm();
                     navigate("/admin/supplier-list");

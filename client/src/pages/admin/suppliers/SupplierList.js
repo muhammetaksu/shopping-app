@@ -149,7 +149,7 @@ function SupplierList() {
     const deleteSupplier = async (e) => {
         const controller = new AbortController();
         const { signal } = controller;
-        const result = await axios.delete(`${API_URL}/suppliers/${e}`, {
+        const result = await axios.delete(`${API_URL}suppliers/${e}`, {
             signal,
         });
         if (result?.status === 200) {

@@ -88,7 +88,7 @@ function CategoryList() {
     const deleteCategory = async (e) => {
         const controller = new AbortController();
         const { signal } = controller;
-        const result = await axios.delete(`${API_URL}/categories/${e}`, {
+        const result = await axios.delete(`${API_URL}categories/${e}`, {
             signal,
         });
         if (result?.status === 200) {

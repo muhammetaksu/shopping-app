@@ -28,7 +28,7 @@ function UpdateSupplier() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await axios.get(`${API_URL}/suppliers/${id}`);
+            const response = await axios.get(`${API_URL}suppliers/${id}`);
             if (response?.status == 200) {
                 setSupplier(response?.data);
             } else {
@@ -84,7 +84,7 @@ function UpdateSupplier() {
                     validationSchema={validationSchema}
                     onSubmit={async (values, { setSubmitting }) => {
                         if (values) {
-                            const response = await axios.put(`${API_URL}/suppliers/${id}`, values);
+                            const response = await axios.put(`${API_URL}suppliers/${id}`, values);
                             if (response?.status === 201) {
                                 navigate("/admin/supplier-list");
                             } else {

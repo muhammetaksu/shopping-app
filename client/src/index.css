@@ -12,6 +12,8 @@
     --orange: #f8a025;
     --btn-first-color: #ffd814;
     --btn-first-color-hover: #ffd814;
+    --btn-secondary-color: #60686c;
+    --btn-secondary-color-hover: #d3d3d3;
     --active-link: #00ffff;
     --primary-hover-color: #d3d3d3;
     /**/
@@ -744,20 +746,15 @@ p {
 }
 
 .cardButton {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 0.4vw 0.9vw;
-
-    font-size: calc(0.4rem + 0.5vw);
-    background: var(--orange);
+    padding: 6px 12px;
+    font-size: 14px;
+    background: var(--btn-first-color);
     color: black;
     border: none;
     border-radius: 4px;
-
-    flex: none;
-    order: 3;
-    flex-grow: 0;
+}
+.cardButton:hover {
+    background: var(--btn-first-color-hover);
 }
 
 #favStarCont > div > svg {

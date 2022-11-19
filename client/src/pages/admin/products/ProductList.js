@@ -115,7 +115,7 @@ function ProductList() {
     const deleteProduct = async (e) => {
         const controller = new AbortController();
         const { signal } = controller;
-        const result = await axios.delete(`${API_URL}/products/${e}`, {
+        const result = await axios.delete(`${API_URL}products/${e}`, {
             signal,
         });
         if (result?.status === 200) {

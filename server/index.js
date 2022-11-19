@@ -23,18 +23,18 @@ app.listen(5000, () => {
     console.log("SERVER IS WORKING ON PORT 5000");
 });
 
-app.use("/api/products", productsRoute);
-app.use("/api/categories", categoriesRoute);
-app.use("/api/suppliers", suppliersRoute);
-app.use("/api/admins", adminsRoute);
-app.use("/api/login", authRoute);
-app.use("/api/reset-password", passwordResetRoute);
-app.use("/api/users", usersRoute);
-app.use("/api/contact", contactRoute);
-app.use("/api/address", checkAuth, addressRoute);
-app.use("/api/orders", checkAuth, ordersRoute);
+app.use("/products", productsRoute);
+app.use("/categories", categoriesRoute);
+app.use("/suppliers", suppliersRoute);
+app.use("/admins", adminsRoute);
+app.use("/login", authRoute);
+app.use("/reset-password", passwordResetRoute);
+app.use("/users", usersRoute);
+app.use("/contact", contactRoute);
+app.use("/address", checkAuth, addressRoute);
+app.use("/orders", checkAuth, ordersRoute);
 app.use("*", (req, res) => {
-    res.send("There are no route!");
+    res.send("There is no route!");
 });
 
 // Catch all routes

@@ -8,7 +8,7 @@ export const fetchProducts = () => async (dispatch) => {
     dispatch({ type: "GET_PRODUCTS_REQUEST" });
 
     try {
-        const response = await axios.get(`${API_URL}/products`);
+        const response = await axios.get(`${API_URL}products`);
         dispatch({ type: "GET_PRODUCT_SUCCESS", payload: response.data });
         dispatch({ type: "GET_ORIGINAL_PRODUCT_SUCCESS", payload: response.data });
         dispatch({ type: "GET_FILTERED_PRODUCT_SUCCESS", payload: response.data });
@@ -23,7 +23,7 @@ export const fetchProductById = (id) => async (dispatch) => {
     dispatch({ type: "GET_PRODUCT_BY_ID_REQUEST" });
 
     try {
-        const response = await axios.get(`${API_URL}/products/${id}`);
+        const response = await axios.get(`${API_URL}products/${id}`);
         dispatch({ type: "GET_PRODUCT_BY_ID_SUCCESS", payload: response.data });
     } catch (error) {
         dispatch({ type: "GET_PRODUCT_BY_ID_ERROR", payload: error });
@@ -33,7 +33,7 @@ export const fetchProductById = (id) => async (dispatch) => {
 export const fetchCategories = () => async (dispatch) => {
     dispatch({ type: "GET_CATEGORIES_REQUEST" });
     try {
-        const response = await axios.get(`${API_URL}/categories`);
+        const response = await axios.get(`${API_URL}categories`);
         dispatch({ type: "GET_CATEGORIES_SUCCESS", payload: response.data });
     } catch (error) {
         dispatch({ type: "GET_CATEGORIES_ERROR", error });
@@ -43,7 +43,7 @@ export const fetchCategories = () => async (dispatch) => {
 export const fetchSuppliers = () => async (dispatch) => {
     dispatch({ type: "GET_SUPPLIERS_REQUEST" });
     try {
-        const response = await axios.get(`${API_URL}/suppliers`);
+        const response = await axios.get(`${API_URL}suppliers`);
         dispatch({ type: "GET_SUPPLIERS_SUCCESS", payload: response.data });
     } catch (error) {
         dispatch({ type: "GET_SUPPLIERS_ERROR", payload: error });

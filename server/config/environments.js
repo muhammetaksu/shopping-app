@@ -1,14 +1,14 @@
 const connectionString =
     "mongodb+srv://muhammetaksu:1234567890@cluster0.vrwbu6p.mongodb.net/amazon-clone-db?retryWrites=true&w=majority";
 
-// const refreshTokenOptions = {
-//     jwtKey: "",
-//     jwtExpirySeconds: "1d",
-// };
+const refreshTokenOptions = {
+    jwtKey: "f6a94ee2-b8f4-4e1b-a8ee-6fafe4f0c6e3",
+    jwtExpiry: "1m",
+};
 
 const accessTokenOptions = {
     jwtKey: "7bfc1d64-397e-11ed-a261-0242ac120002",
-    jwtExpiry: "1d",
+    jwtExpiry: "10s",
 };
 
 const HOST = "smtp@gmail.com";
@@ -26,6 +26,6 @@ module.exports = {
     BASE_URL,
     SITE_URL,
     connectionString,
-    // refreshTokenOptions,
+    refreshTokenOptions,
     accessTokenOptions,
 };

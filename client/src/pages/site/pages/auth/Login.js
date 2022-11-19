@@ -25,7 +25,7 @@ function Login() {
         } else {
             try {
                 const response = new Promise((resolve, reject) => {
-                    return resolve(axios.post(`${API_URL}/login`, user));
+                    return resolve(axios.post(`${API_URL}login`, user));
                 });
 
                 await toast.promise(response, {
@@ -41,6 +41,7 @@ function Login() {
                             name: q.data.user.name,
                             surname: q.data.user.surname,
                             token: q.data.token,
+                            refreshToken: q.data.refreshToken,
                         };
                         userStorage.setUser(userInfo);
                         dispatch(setCurrentUser(userInfo));

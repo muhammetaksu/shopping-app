@@ -3,13 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Modal } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
-import {
-    deleteRequest,
-    getRequest,
-    getSingleRequestByUserId,
-} from "../../../../../../../tools/Requests";
-import { API_URL } from "../../../../../../../env/config";
-import axios from "axios";
+import { deleteRequest, getSingleRequestByUserId } from "../../../../../../../tools/Requests";
 
 const AddressList = ({ currentUser }) => {
     const [addresses, setAddresses] = useState([]);
