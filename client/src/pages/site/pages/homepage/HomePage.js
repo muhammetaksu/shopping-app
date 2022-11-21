@@ -8,7 +8,7 @@ function HomePage() {
     return (
         <>
             <NavbarCategories />
-            <div className="m-0 p-0 row d-flex justify-content-center">
+            <div className="homepageContent">
                 <Departments />
                 <div className="home">
                     <Filter />

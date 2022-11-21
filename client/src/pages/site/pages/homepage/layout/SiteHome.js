@@ -23,12 +23,13 @@ function SiteHome() {
     };
 
     return (
-        <div className="row w-100">
-            {products &&
-                products
-                    .slice(page * productsPerPage, page * productsPerPage + productsPerPage)
-                    .map((product, i) => <HomepageProductCard product={product} index={i} />)}
-
+        <>
+            <div className="siteHome">
+                {products &&
+                    products
+                        .slice(page * productsPerPage, page * productsPerPage + productsPerPage)
+                        .map((product, i) => <HomepageProductCard product={product} index={i} />)}
+            </div>
             <div
                 id="paginationBox"
                 style={{ background: "lightgray" }}
@@ -44,7 +45,7 @@ function SiteHome() {
                     onRowsPerPageChange={handleChangeProductsPerPage}
                 />
             </div>
-        </div>
+        </>
     );
 }
 

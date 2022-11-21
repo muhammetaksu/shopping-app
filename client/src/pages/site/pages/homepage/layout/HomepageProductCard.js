@@ -14,7 +14,7 @@ const HomepageProductCard = ({ product, index }) => {
     const navigate = useNavigate();
 
     return (
-        <div key={index} className="col-lg-6">
+        <div key={index}>
             <div className="card">
                 <div className="cardImgCont">
                     <img
@@ -53,7 +53,7 @@ const HomepageProductCard = ({ product, index }) => {
                                 setQuantity={setQuantity}
                             />
                         </>
-                        <div id="favStarCont" className=" mx-3 d-flex my-auto">
+                        <div id="favStarCont">
                             <div>
                                 <FavoriteBtn product={product} />
                             </div>

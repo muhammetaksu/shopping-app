@@ -64,11 +64,7 @@ function NavbarCategories() {
     return (
         <>
             <nav className="subNavigation">
-                <button
-                    onClick={() => getProductsByCategory(-1)}
-                    style={{ color: "black" }}
-                    className="subNavigationButton"
-                >
+                <button onClick={() => getProductsByCategory(-1)} className="subNavigationButton">
                     <p className="catName">All Categories</p>
                 </button>
                 {categories &&

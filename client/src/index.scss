@@ -40,7 +40,7 @@
 }
 
 * {
-    box-sizing: border-box;
+    box-sizing: border-box !important;
     font-family: var(--font-primary);
 }
 
@@ -82,9 +82,14 @@ p {
 .siteNavbar {
     background-color: var(--secondary-color);
     color: var(--main-color);
-    box-sizing: border-box;
-    overflow: hidden;
     max-width: 100vw;
+    width: 100% !important;
+    display: flex;
+    padding: 1rem;
+    position: sticky;
+    left: 0;
+    top: 0;
+    z-index: 3;
 }
 
 .navbarCheckbox {
@@ -92,23 +97,112 @@ p {
     display: none;
 }
 
-.nav-bar {
+.navbarLogo {
+    display: flex;
+    justify-content: center;
+    width: 10%;
+}
+
+.navItems {
     display: flex;
     text-align: center;
     justify-content: space-around;
     color: var(--main-color);
-    padding: 1rem;
+    width: 70%;
+    transition: 0.3s;
 }
 
-.bar {
-    display: none;
+.navbarSearch {
+    display: flex;
+    justify-content: center;
+    width: 20%;
 }
-
 .search_box {
     display: flex;
+    justify-content: center;
     max-height: 40px;
-    margin: auto 0;
-    padding: 2px 8px;
+    padding: 2px;
+    max-width: 100% !important;
+}
+
+.navbarMenu {
+    display: none;
+
+    div {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+
+        span {
+            font-size: 35px;
+            position: absolute;
+            transition: 0.3s;
+
+            &:nth-child(1) {
+                margin-top: 12px;
+            }
+
+            &:nth-child(2) {
+                margin-bottom: 12px;
+            }
+        }
+    }
+}
+.navbarMenuToggle {
+    div {
+        span {
+            &:nth-child(1) {
+                transform: rotate(45deg);
+                margin: 0;
+            }
+
+            &:nth-child(2) {
+                transform: rotate(-45deg);
+                margin: 0;
+            }
+        }
+    }
+}
+
+@media (max-width: 991px) {
+    .siteNavbar {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .siteNavbar > :nth-child(1) {
+        width: 10%;
+        padding: 0 5px;
+    }
+    .siteNavbar > :nth-child(2) {
+        width: 80%;
+        padding: 0 5px;
+    }
+    .siteNavbar > :nth-child(3) {
+        width: 10%;
+        padding: 0 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .navItems {
+        flex-direction: column;
+        /* gap: 20px; */
+        width: 100%;
+
+        height: 0px;
+        visibility: hidden;
+        opacity: 0;
+    }
+    .navbarToggle {
+        height: 240px;
+        max-height: 90vh !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        padding: 16px 0 0 0;
+    }
 }
 
 .search-departmants {
@@ -127,12 +221,12 @@ p {
 
 #navbarInput {
     background-color: var(--main-color);
+    color: var(--primary-text);
     border: none;
     outline: none;
-    width: 20vw;
     padding: 0 10px;
-    color: var(--primary-text);
     transition: 0.2s;
+    width: 100%;
 }
 
 ::placeholder {
@@ -211,8 +305,11 @@ p {
 
 #shopping-cart {
     display: flex;
+    justify-content: center;
     align-items: center;
+    margin: auto 0;
 }
+
 #shopping-cart > * {
     display: flex;
 }
@@ -273,7 +370,6 @@ p {
 
 .sideBar {
     padding: 0;
-    width: 20%;
     overflow: scroll;
 }
 .sideBar::-webkit-scrollbar {
@@ -285,9 +381,12 @@ p {
 
 #sidebarTitle {
     color: var(--primary-text);
-    font-weight: 900;
-    padding: 0.8rem 1.6rem;
+    font-weight: 800;
+    padding: 12px 20px;
     line-height: 120%;
+}
+#sidebarTitle > p {
+    margin: 0;
 }
 
 #supplierItemsCont {
@@ -297,30 +396,29 @@ p {
 #sidebarSupplierItem {
     color: var(--primary-text);
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 15px;
     font-weight: 400;
     list-style-type: none;
-    padding: 0.8rem 1.6rem;
+    padding: 12px 20px;
     transition: 0.15s;
 }
 #sidebarSupplierItem:hover {
     background-color: var(--primary-hover-color);
 }
 
-@media (max-width: 991px) {
+@media (max-width: 768px) {
     .sideBar {
         display: flex;
         width: 100%;
         flex-direction: row;
         max-height: 8vh;
-        margin-bottom: 10px;
         overflow-y: hidden;
     }
 
     #sidebarTitle {
         margin: 0;
         border: 0 !important;
-        font-size: calc(2vw + 0.5rem);
+        font-size: 20px;
         display: flex;
         padding: auto;
         background: var(--light-window-color);
@@ -339,7 +437,7 @@ p {
 
     #sidebarSupplierItem {
         margin: auto;
-        font-size: calc(0.5rem + 0.7vw);
+        font-size: 14px;
         padding: 0.5rem 1rem;
         white-space: nowrap;
     }
@@ -362,22 +460,6 @@ p {
     .sideBar > ::-webkit-scrollbar-thumb:hover {
         background: var(--black);
     }
-
-    .location {
-        display: none !important;
-    }
-
-    .accounts-lists {
-        display: none;
-    }
-
-    .search-departmants {
-        display: none !important;
-    }
-
-    #navbarInput {
-        border-radius: 0.8rem 0 0 0.8rem;
-    }
 }
 
 /********** SUB NAVIGATION BAR - START ***********/
@@ -389,29 +471,19 @@ p {
     padding: 16px;
     gap: 16px;
     user-select: none;
-
-    /* width: 100%; */
     overflow-x: hidden;
-
     background: var(--darkgray);
 }
 
 .subNavigationButton {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
     padding: 4px 8px;
     font-family: "Fira Sans", sans-serif;
     cursor: default;
     transition: 0.15s;
-
     background: var(--light-window-color);
+    color: var(--primary-text);
     border-radius: 50px;
     border: none;
-
-    flex: none;
-    order: 0;
-    flex-grow: 0;
 }
 
 .subNavigationButton:hover {
@@ -420,23 +492,20 @@ p {
 
 .catName {
     height: 16px;
-    margin: 0;
     border: none;
-
     font-family: "Fira Sans";
-    font-style: normal;
     font-weight: 400;
     font-size: 16px;
     line-height: 16px;
-
     text-transform: capitalize;
-
-    color: #303436;
+    color: var(--primary-text);
+    width: 100%;
+    white-space: nowrap;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 768px) {
     .catName {
-        font-size: calc(1vw + 0.4rem) !important;
+        font-size: 14px;
     }
 }
 
@@ -447,12 +516,8 @@ p {
 .home {
     display: flex;
     flex-direction: column;
-    padding: 48px 0px 48px 8px;
+    padding: 48px 0px 48px 0px;
     gap: 48px;
-
-    width: 80%;
-
-    left: 20%;
     overflow-y: scroll;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
@@ -463,10 +528,41 @@ p {
 .home::-webkit-scrollbar {
     display: none;
 }
-
-.col-6 {
+.homepageContent {
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
+    height: 100% !important;
+}
+.homepageContent > :nth-child(1) {
+    width: 20%;
+}
+.homepageContent > :nth-child(2) {
+    width: 80%;
+}
+
+@media (max-width: 768px) {
+    .homepageContent > :nth-child(1) {
+        width: 100%;
+    }
+    .homepageContent > :nth-child(2) {
+        width: 100%;
+    }
+}
+
+.siteHome {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.siteHome > div {
+    padding: 20px 20px;
+    width: 50%;
+}
+
+@media (max-width: 991px) {
+    .siteHome > div {
+        width: 100%;
+    }
 }
 
 /* FILTER - START */
@@ -509,7 +605,7 @@ p {
         justify-content: center !important;
     }
 }
-@media (max-width: 991px) {
+@media (max-width: 768px) {
     .filter {
         display: block !important;
         padding: 0 !important;
@@ -532,7 +628,6 @@ p {
     #priceRange {
         width: 75%;
         margin: auto;
-        font-size: calc(0.7rem + 0.4vw);
         justify-content: center;
         border-bottom: 1px solid var(--light-window-color);
         border-left: 1px solid var(--light-window-color);
@@ -542,7 +637,6 @@ p {
         width: 75%;
         margin: auto;
         justify-content: center;
-        font-size: calc(0.6rem + 0.5vw);
         border-bottom: 1px solid var(--light-window-color);
         border-left: 1px solid var(--light-window-color);
     }
@@ -553,12 +647,10 @@ p {
 
     #sortingFilterSelect {
         width: 50% !important;
-        font-size: calc(0.5rem + 0.5vw);
     }
 
     #productsPerPage > select {
         width: 50% !important;
-        font-size: calc(0.5rem + 0.5vw);
     }
 
     #productCount {
@@ -566,21 +658,21 @@ p {
         margin: auto;
         padding-top: 5px;
         justify-content: center;
-        font-size: calc(0.6rem + 0.5vw);
         border-right: 1px solid var(--light-window-color);
         border-left: 1px solid var(--light-window-color);
     }
 
     #paginationBox {
-        width: 75%;
         margin: 6px auto;
         justify-content: center;
-        font-size: calc(0.6rem + 0.5vw);
     }
 
     #paginationBox > div > div > div > * {
-        font-size: calc(0.6rem + 0.5vw);
     }
+}
+#paginationBox {
+    padding: 0;
+    margin: 0;
 }
 
 /* FILTER - END */
@@ -593,21 +685,14 @@ p {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    padding: 1.6vw;
-    gap: 14px;
+    padding: 15px 10px;
+    gap: 10px;
     margin: auto;
-    margin-bottom: 40px;
     overflow: hidden;
-
-    width: 95%;
-
+    width: 100%;
     background: var(--main-color);
     border: none;
-
-    border-radius: 16px;
-    flex: none;
-    order: 0;
-    flex-grow: 0;
+    border-radius: 5px;
 }
 
 .cardImgCont {
@@ -617,6 +702,8 @@ p {
     align-self: center;
     align-content: center;
     justify-content: center;
+    min-width: 120px;
+    max-width: 200px;
 }
 .cardImg {
     border-radius: 16px;
@@ -631,50 +718,34 @@ p {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 0 0 0 10px;
-    gap: 0.8vw;
-
-    width: 55%;
-
-    flex: none;
-    order: 1;
-    align-self: stretch;
-    flex-grow: 1;
+    padding: 0;
+    gap: 8px;
+    width: 60%;
+    margin: auto;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 768px) {
+    .card {
+        flex-direction: column;
+    }
     .cardCol {
-        gap: 1vw;
+        gap: 8px;
         padding: 0;
+        width: 100%;
     }
 
     .cardPrice {
-        font-size: calc(0.8rem + 1vw) !important;
+        font-size: 20px !important;
+        margin: auto;
     }
 
     .cardProduct {
-        font-size: calc(0.8vw + 0.5rem) !important;
+        font-size: 14px !important;
+        justify-content: center;
     }
     .cardImg {
-        border-radius: 16px;
         min-width: 80px;
-        width: 20vw;
-
         margin-right: auto;
-
-        flex: none;
-        order: 0;
-        flex-grow: 0;
-    }
-    .cardButton {
-        padding: 0.5vw 1vw !important;
-        width: 13vw;
-        font-size: 1.4vw !important;
-        justify-content: center;
-
-        white-space: nowrap;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
     }
 }
 
@@ -686,17 +757,10 @@ p {
     font-family: "Fira Sans";
 
     font-weight: 500;
-    font-size: calc(0.7rem + 1vw);
+    font-size: 22px;
     line-height: 120%;
-
     color: var(--primary-text);
-
     width: auto;
-
-    flex: none;
-    order: 0;
-    align-self: stretch;
-    flex-grow: 0;
 }
 
 .cardProduct {
@@ -707,7 +771,7 @@ p {
     padding-right: 3px;
 
     font-weight: 600;
-    font-size: calc(0.5rem + 0.5vw);
+    font-size: 14px;
     line-height: 120%;
 
     white-space: nowrap;
@@ -747,7 +811,7 @@ p {
 
 .cardButton {
     padding: 6px 12px;
-    font-size: 14px;
+    font-size: 13px;
     background: var(--btn-first-color);
     color: black;
     border: none;
@@ -757,13 +821,18 @@ p {
     background: var(--btn-first-color-hover);
 }
 
-#favStarCont > div > svg {
-    color: var(--orange);
-    width: calc(1.4vw + 0.5rem);
-    height: calc(1.4vw + 0.5rem);
+#favStarCont {
+    display: flex;
+    margin: auto 16px;
 }
-#favStarCont > div > svg > path {
-    color: var(--orange);
+
+#favStar {
+    color: var(--btn-first-color);
+    width: 28px;
+    height: 28px;
+}
+#favStar > path {
+    color: var(--btn-first-color);
 }
 
 /* .cardRankContainer {

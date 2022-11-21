@@ -24,9 +24,9 @@ function Departments() {
 
     return (
         <div className="sideBar">
-            <h3 id="sidebarTitle" className="border-bottom">
-                <p className="m-0">Suppliers</p>
-            </h3>
+            <h4 id="sidebarTitle" className="border-bottom">
+                <p>Suppliers</p>
+            </h4>
             <ul id="supplierItemsCont">
                 <li id="sidebarSupplierItem" onClick={() => getProductsBySupplier(-1)}>
                     All Suppliers

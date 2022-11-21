@@ -7,18 +7,18 @@ import { userStorage } from "../../service/localStorage/userStorage";
 import { ShowOnLogin, ShowOnLogout } from "../../tools/HiddenLink";
 import { AdminOnlyLink } from "../../tools/AdminOnly";
 import { changeProductsData, clearCurrentUser } from "../../store/actions/mainActions";
+import { LineOutlined } from "@ant-design/icons";
 
 function Navbar() {
     const [searchText, setSearchText] = useState("");
+    const [isOpenMenu, setIsOpenMenu] = useState(true);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const cart = useSelector((state) => state.cartReducer);
     const { suppliers } = useSelector((state) => state.suppliersReducer);
-
     const { originalProducts } = useSelector((state) => state.originalProductsReducer);
-
     const { currentUser } = useSelector((state) => state.userReducer);
 
     const getProductsBySupplier = (_id) => {
@@ -52,31 +52,33 @@ function Navbar() {
         navigate("/login");
     };
 
+    const handleChangeNavbar = () => {
+        setIsOpenMenu(!isOpenMenu);
+        let navbar = document.querySelector(".navItems");
+        navbar?.className.includes("navbarToggle")
+            ? navbar?.classList?.remove("navbarToggle")
+            : (navbar.className += " navbarToggle");
+
+        let toggler = document.querySelector(".navbarMenu");
+        toggler?.className.includes("navbarMenuToggle")
+            ? toggler?.classList?.remove("navbarMenuToggle")
+            : (toggler.className += " navbarMenuToggle");
+    };
+
     return (
         <>
             <div className="siteNavbar">
-                <div className="nav-bar">
+                <div className="navbarLogo">
                     {/* --------LOGO------- */}
                     <NavLink className="my-auto " to="/">
                         <div className="logo">
                             <img src="./assets/icons/bx_bxl-amazon.png" alt="logo" />
                         </div>
                     </NavLink>
+                </div>
 
-                    {/* --------ADMIN PANEL------- */}
-                    <AdminOnlyLink>
-                        <ShowOnLogin>
-                            <div className="navLinks">
-                                <NavLink className={activeLink} to="/admin">
-                                    Admin Panel
-                                </NavLink>
-                            </div>
-                        </ShowOnLogin>
-                    </AdminOnlyLink>
-
-                    {/* --------LOCATION------- */}
-
-                    {/* --------SEARCH------ */}
+                {/* --------SEARCH------ */}
+                <div className="navbarSearch">
                     <div className="search_box">
                         <select
                             defaultValue={-1}
@@ -113,10 +115,50 @@ function Navbar() {
                             />
                         </span>
                     </div>
+                </div>
 
-                    {/* --------ACCOUNT-LISTS----- */}
+                {/* --------HAMBURBER MENU----- */}
+                <div className="navbarMenu" onClick={() => handleChangeNavbar()}>
+                    <div>
+                        <LineOutlined />
+                        <LineOutlined />
+                    </div>
+                </div>
+                <div className="navItems">
+                    {/* --------ADMIN PANEL------- */}
+                    <AdminOnlyLink>
+                        <ShowOnLogin>
+                            <div className="navLinks">
+                                <NavLink className={activeLink} to="/admin">
+                                    Admin Panel
+                                </NavLink>
+                            </div>
+                        </ShowOnLogin>
+                    </AdminOnlyLink>
 
-                    {/* --------ORDERS----- */}
+                    <>
+                        {currentUser?.name ? (
+                            <ShowOnLogin>
+                                <div className="navLinks">
+                                    <NavLink className={activeLink} to={"/profile-page"}>
+                                        <div>
+                                            <p>Welcome {currentUser?.name}</p>
+                                        </div>
+                                    </NavLink>
+                                </div>
+                            </ShowOnLogin>
+                        ) : (
+                            <div>
+                                <p>Welcome</p>
+
+                                <div className="accounts-list-dropdown">
+                                    <p>Guest</p>
+                                </div>
+                            </div>
+                        )}
+                    </>
+
+                    {/* --------FAVORITES----- */}
                     <ShowOnLogin>
                         <div className="navLinks">
                             <NavLink className={activeLink} to="/favorites">
@@ -145,38 +187,9 @@ function Navbar() {
                         </div>
                     </ShowOnLogin>
 
-                    {currentUser?.name ? (
-                        <ShowOnLogin>
-                            <div className="navLinks">
-                                <NavLink className={activeLink} to={"/profile-page"}>
-                                    <div>
-                                        <p>Welcome</p>
-
-                                        <div>
-                                            <p>{currentUser?.name}</p>
-                                        </div>
-                                    </div>
-                                </NavLink>
-                            </div>
-                        </ShowOnLogin>
-                    ) : (
-                        <div>
-                            <p>Welcome</p>
-
-                            <div className="accounts-list-dropdown">
-                                <p>Guest</p>
-                            </div>
-                        </div>
-                    )}
-
                     <ShowOnLogin>
                         <div className="navLinks">
-                            <Link
-                                onClick={() => handleLogout()}
-                                style={{ maxHeight: "42px", cursor: "pointer" }}
-                            >
-                                Logout
-                            </Link>
+                            <Link onClick={() => handleLogout()}>Logout</Link>
                         </div>
                     </ShowOnLogin>
 
@@ -188,6 +201,7 @@ function Navbar() {
                             </NavLink>
                         </div>
                     </ShowOnLogout>
+
                     <ShowOnLogout>
                         <div className="navLinks">
                             <NavLink
@@ -199,6 +213,7 @@ function Navbar() {
                             </NavLink>
                         </div>
                     </ShowOnLogout>
+
                     <ShowOnLogout>
                         <div className="navLinks">
                             <NavLink className={activeLink} to="/admin-login">
@@ -206,16 +221,6 @@ function Navbar() {
                             </NavLink>
                         </div>
                     </ShowOnLogout>
-
-                    {/* --------HAMBURBER MENU----- */}
-                    <label htmlFor="check" className="bar">
-                        <span id="bars">
-                            <img src="./assets/icons/Drag.png" alt="bar" />
-                        </span>
-                        <span id="times">
-                            <img src="./assets/icons/close.png" alt="times" />
-                        </span>
-                    </label>
                 </div>
             </div>
         </>

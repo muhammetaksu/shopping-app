@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "antd/dist/antd.min.css";
-import "./index.css";
+import "./index.scss";
 import { Route, Routes } from "react-router-dom";
 
 import ProductDetailPage from "./pages/site/pages/ProductDetailPage";
