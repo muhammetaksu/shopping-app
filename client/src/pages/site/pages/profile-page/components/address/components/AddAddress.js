@@ -29,7 +29,7 @@ const AddAddress = ({ currentUser }) => {
             district: "",
             address: "",
             postalCode: "",
-            userId: currentUser.id,
+            userId: currentUser._id,
         },
         validationSchema,
         onSubmit: (values) => {

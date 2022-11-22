@@ -9,7 +9,7 @@ const AddressList = ({ currentUser }) => {
     const [addresses, setAddresses] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {
-        getSingleRequestByUserId("address", currentUser.id, currentUser.token).then((res) =>
+        getSingleRequestByUserId("address", currentUser._id, currentUser.token).then((res) =>
             setAddresses(res.data)
         );
     }, [currentUser]);

@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const { accessTokenOptions } = require("../../config/environments");
 const { generateAccessToken, generateRefreshToken } = require("../../helpers/generateToken");
 const { UserModel } = require("../../models/UserModel");
+const { comparePassword } = require("../../utils/hashPassword");
 
 const auth = {
     login: async (req, res) => {
@@ -15,13 +16,18 @@ const auth = {
         } else {
             const email = req.body.email;
             const password = req.body.password;
-            UserModel.findOne({ email: email, password: password }, (err, result) => {
+            UserModel.findOne({ email: email }, async (err, result) => {
                 try {
                     if (!result) {
                         return res.status(404).send({
-                            message: "User not found. Authentication failed.",
+                            message: "User not found.",
                         });
                     } else {
+                        const passResult = await comparePassword(password, result.password);
+                        if (!passResult) {
+                            return res.status(403).send("Invalid password!");
+                        }
+
                         const token = generateAccessToken(email);
                         const refreshToken = generateRefreshToken(email);
                         return res.status(200).json({
@@ -51,13 +57,18 @@ const auth = {
         } else {
             const email = req.body.email;
             const password = req.body.password;
-            AdminModel.findOne({ email: email, password: password }, (err, result) => {
+            AdminModel.findOne({ email: email }, async (err, result) => {
                 try {
                     if (!result) {
                         return res.status(404).send({
-                            message: "User not found. Authentication failed.",
+                            message: "User not found..",
                         });
                     } else {
+                        const passResult = await comparePassword(password, result.password);
+                        if (!passResult) {
+                            return res.status(403).send("Invalid password!");
+                        }
+
                         const token = generateAccessToken(email);
                         const refreshToken = generateRefreshToken(email);
                         return res.status(200).json({

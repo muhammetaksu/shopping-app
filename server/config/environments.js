@@ -15,7 +15,7 @@ const HOST = "smtp@gmail.com";
 const USER = "00.onlineprovider@gmail.com";
 const PASS = "uqbtxsfroyghpoya";
 const SERVICE = "Gmail";
-const BASE_URL = "http://localhost:5000/api";
+const BASE_URL = "http://localhost:5000/";
 const SITE_URL = "http://localhost:3000/";
 
 module.exports = {

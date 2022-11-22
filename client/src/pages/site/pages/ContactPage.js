@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
@@ -14,13 +15,14 @@ const validationSchema = yup.object({
 });
 
 const ContactPage = () => {
+    const { currentUser } = useSelector((state) => state.userReducer);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
-            name: "",
-            surname: "",
-            email: "",
+            name: currentUser?.name || "",
+            surname: currentUser?.surname || "",
+            email: currentUser?.email || "",
             title: "",
             message: "",
         },
@@ -59,6 +61,7 @@ const ContactPage = () => {
                                 value={formik.values.name}
                                 placeholder="Enter your name"
                                 className="form-control"
+                                readOnly={currentUser.token ? true : false}
                             />
                             {formik.touched.name && formik.errors.name && (
                                 <p className="text-danger">{formik.errors.name}</p>
@@ -76,6 +79,7 @@ const ContactPage = () => {
                                 value={formik.values.surname}
                                 placeholder="Enter your surname"
                                 className="form-control"
+                                readOnly={currentUser.token ? true : false}
                             />
                             {formik.touched.surname && formik.errors.surname && (
                                 <p className="text-danger">{formik.errors.surname}</p>
@@ -93,6 +97,7 @@ const ContactPage = () => {
                                 value={formik.values.email}
                                 placeholder="Enter your email"
                                 className="form-control"
+                                readOnly={currentUser.token ? true : false}
                             />
                             {formik.touched.email && formik.errors.email && (
                                 <p className="text-danger">{formik.errors.email}</p>

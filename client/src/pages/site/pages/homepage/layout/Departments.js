@@ -12,7 +12,7 @@ function Departments() {
     const { originalProducts } = originalDataState;
 
     const getProductsBySupplier = (id) => {
-        if (id == -1) {
+        if (id === -1) {
             dispatch(changeProductsData(originalProducts));
         } else {
             const newProducts = originalProducts.filter((e) => e.supplier == id);

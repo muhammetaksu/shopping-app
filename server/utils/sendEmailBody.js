@@ -460,7 +460,7 @@ const emailBody = (link) => {
                                                                                         style="
                                                                                             font-size: 22px;
                                                                                         "
-                                                                                        >Let's get yoy a
+                                                                                        >Let's get you a
                                                                                         new
                                                                                         password.</span
                                                                                     >

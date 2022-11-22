@@ -8,7 +8,8 @@ const jwt = require("jsonwebtoken");
 const { SITE_URL, accessTokenOptions } = require("../config/environments");
 const sendEmail = require("../utils/sendEmail");
 const checkAuth = require("../middleware/checkAuth");
-const emailBody = require("../utils/sendEmailBody");
+const { encodePassword } = require("../utils/hashPassword");
+const { emailBody } = require("../utils/sendEmailBody");
 
 router.post("/", async (req, res) => {
     try {
@@ -26,7 +27,6 @@ router.post("/", async (req, res) => {
         let token = await TokenModel.findOne({ userId: user._id });
         // console.log("TOKEN FOUND", token);
         if (!token) {
-            console.log("IF FIRST");
             token = await new TokenModel({
                 userId: user._id,
                 token: jwt.sign({ email: req.body.email }, accessTokenOptions.jwtKey, {
@@ -48,14 +48,13 @@ router.post("/", async (req, res) => {
             // console.log("UPDATED TOKEN", token);
         }
 
-        const link = `${SITE_URL}/reset-password/${user._id}/${token.token}`;
+        const link = `${SITE_URL}reset-password/${user._id}/${token.token}`;
         const html = emailBody(link);
         await sendEmail(user.email, "Reset Password", html);
 
         res.status(200).send({ message: "Password reset link sent to your email account." });
     } catch (error) {
-        res.send(400).send("An error occured");
-        console.log(error);
+        res.status(400).send("An error occured");
     }
 });
 
@@ -90,14 +89,13 @@ router.post("/:userId/:token", async (req, res) => {
 
         // console.log("TOKEN DECODED");
 
-        user.password = req.body.password;
+        user.password = await encodePassword(req.body.password);
         await user.save();
         await token.delete();
 
         res.status(200).send({ message: "Password reset succesfully!" });
     } catch (error) {
         res.status(400).send({ message: "An error occured!" });
-        console.log(error);
     }
 });
 

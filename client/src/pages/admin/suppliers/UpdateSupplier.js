@@ -29,7 +29,7 @@ function UpdateSupplier() {
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.get(`${API_URL}suppliers/${id}`);
-            if (response?.status == 200) {
+            if (response?.status === 200) {
                 setSupplier(response?.data);
             } else {
                 alert("Something went wrong!");

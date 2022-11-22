@@ -37,14 +37,28 @@ function Login() {
                 response
                     .then((q) => {
                         const userInfo = {
-                            id: q.data.user._id,
-                            name: q.data.user.name,
-                            surname: q.data.user.surname,
+                            _id: q.data.user._id,
+                            // name: q.data.user.name,
+                            // surname: q.data.user.surname,
+                            // email: q.data.user.email,
                             token: q.data.token,
                             refreshToken: q.data.refreshToken,
                         };
                         userStorage.setUser(userInfo);
-                        dispatch(setCurrentUser(userInfo));
+                        // dispatch(setCurrentUser(userInfo));
+                        return q;
+                    })
+                    .then((q) => {
+                        const userInfo2 = {
+                            _id: q.data.user._id,
+                            name: q.data.user.name,
+                            surname: q.data.user.surname,
+                            email: q.data.user.email,
+                            token: q.data.token,
+                            refreshToken: q.data.refreshToken,
+                        };
+
+                        dispatch(setCurrentUser(userInfo2));
                     })
                     .catch((err) => console.log(err))
                     .finally(() => navigate("/"));

@@ -1,5 +1,6 @@
 const express = require("express");
 const AdminModel = require("../models/AdminModel");
+const { encodePassword } = require("../utils/hashPassword");
 const router = express.Router();
 
 // GET ALL ADMINS
@@ -42,7 +43,12 @@ router.get("/:id", (req, res) => {
 // ADD ADMIN
 
 router.post("/", async (req, res) => {
-    const admin = req.body;
+    const admin = {
+        name: req.body.name,
+        surname: req.body.surname,
+        email: req.body.email,
+        password: await encodePassword(req.body.password),
+    };
     try {
         const newAdmin = new AdminModel(admin);
         await newAdmin.save();

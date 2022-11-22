@@ -16,11 +16,11 @@ function ProfilePage() {
     useEffect(() => {
         if (currentUser.isAdmin) {
             const response = axios
-                .get(API_URL + "admins/" + currentUser.id)
+                .get(API_URL + "admins/" + currentUser._id)
                 .then((res) => setUserDetail(res?.data));
         } else {
             const response = axios
-                .get(API_URL + "users/" + currentUser.id)
+                .get(API_URL + "users/" + currentUser._id)
                 .then((res) => setUserDetail(res?.data));
         }
     }, []);
@@ -52,7 +52,7 @@ function ProfilePage() {
                                 path="detail"
                                 element={
                                     <ProfileDetail
-                                        userId={currentUser.id}
+                                        userId={currentUser._id}
                                         userDetail={userDetail}
                                     />
                                 }

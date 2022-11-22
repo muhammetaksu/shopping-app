@@ -1,5 +1,6 @@
 const express = require("express");
 const { UserModel } = require("../models/UserModel");
+const { encodePassword } = require("../utils/hashPassword");
 const router = express.Router();
 
 // GET ALL CATEGORIES
@@ -42,7 +43,12 @@ router.get("/:id", (req, res) => {
 // ADD USER
 
 router.post("/", async (req, res) => {
-    const user = req.body;
+    const user = {
+        name: req.body.name,
+        surname: req.body.surname,
+        email: req.body.email,
+        password: await encodePassword(req.body.password),
+    };
     UserModel.findOne({ email: user.email }, async (error, result) => {
         try {
             if (!result) {

@@ -33,8 +33,6 @@ function Register() {
             });
 
             try {
-                console.log(response);
-
                 await toast.promise(response, {
                     pending: {
                         render() {
@@ -104,7 +102,7 @@ function Register() {
                                     id="surname"
                                     name="surname"
                                     className="form-control auth-form-input"
-                                    autocomplete="off"
+                                    autoComplete="off"
                                     value={surname}
                                     onChange={(e) => setSurname(e.target.value.toUpperCase())}
                                 />
@@ -130,7 +128,7 @@ function Register() {
                                     type="password"
                                     id="password"
                                     name="password"
-                                    autocomplete="off"
+                                    autoComplete="off"
                                     className="form-control auth-form-input"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}

@@ -51,7 +51,7 @@ function NavbarCategories() {
     /********  DRAG SCROLL - end */
 
     const getProductsByCategory = (id) => {
-        if (id == -1) {
+        if (id === -1) {
             dispatch(changeProductsData(originalProducts));
         } else {
             const newProducts = originalProducts.filter((e) => e.category._id === id);

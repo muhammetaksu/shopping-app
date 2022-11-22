@@ -34,6 +34,7 @@ import ContactPage from "./pages/site/pages/ContactPage";
 import HomePage from "./pages/site/pages/homepage/HomePage";
 import Footer from "./pages/components/Footer";
 import Navbar from "./pages/components/Navbar";
+import { getSingleRequest } from "./tools/Requests";
 
 function App() {
     const [isLoading, setIsLoading] = useState(false);
@@ -51,10 +52,21 @@ function App() {
 
         try {
             const user = userStorage.getUser();
-            console.log(user);
 
-            if (user) {
-                dispatch(setCurrentUser(user));
+            if (user.token) {
+                getSingleRequest(user.isAdmin ? "admins" : "users", user._id)
+                    .then((q) => {
+                        console.log(q);
+                        let newUser = {
+                            name: q.data.name,
+                            surname: q.data.surname,
+                            email: q.data.email,
+                            ...user,
+                        };
+                        console.log(newUser);
+                        dispatch(setCurrentUser(newUser));
+                    })
+                    .catch((err) => console.log(err));
             }
         } catch (error) {
             console.log(error);
