@@ -1,4 +1,5 @@
 const express = require("express");
+const checkIsAdmin = require("../middleware/checkIsAdmin");
 const CategoryModel = require("../models/CategoryModel");
 const router = express.Router();
 
@@ -41,7 +42,7 @@ router.get("/:id", (req, res) => {
 
 // ADD CATEGORY
 
-router.post("/", async (req, res) => {
+router.post("/", checkIsAdmin, async (req, res) => {
     const category = req.body;
     try {
         const newCategory = new CategoryModel(category);
@@ -57,10 +58,10 @@ router.post("/", async (req, res) => {
 
 // DELETE CATEGORY
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkIsAdmin, async (req, res) => {
     try {
         await CategoryModel.findByIdAndRemove(req.params.id).exec();
-        res.send("PRODUCT DELETED");
+        return res.send("PRODUCT DELETED");
     } catch (error) {
         console.log("models/CategoryModel.js: delete: Error");
         console.log(error);
@@ -70,12 +71,12 @@ router.delete("/:id", async (req, res) => {
 
 // UPDATE CATEGORY
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", checkIsAdmin, async (req, res) => {
     try {
         const { name } = req.body;
         await CategoryModel.findByIdAndUpdate(req.params.id, { name }, { returnDocument: "after" });
 
-        res.status(201).send("CATEGORY UPDATED");
+        return res.status(201).send("CATEGORY UPDATED");
     } catch (error) {
         console.log("models/CategoryModel.js: update: Error");
         console.log(error);

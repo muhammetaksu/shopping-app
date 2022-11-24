@@ -29,9 +29,21 @@ function Login() {
                 });
 
                 await toast.promise(response, {
-                    pending: "Logging In...",
-                    success: "Logged In!",
-                    error: "Login Failed!",
+                    pending: {
+                        render() {
+                            return "Logging In...";
+                        },
+                    },
+                    success: {
+                        render({ data }) {
+                            return `${data.data.message}`;
+                        },
+                    },
+                    error: {
+                        render({ data }) {
+                            return `${data.response.data.message}`;
+                        },
+                    },
                 });
 
                 response
@@ -49,11 +61,14 @@ function Login() {
                         return q;
                     })
                     .then((q) => {
+                        console.log(q);
                         const userInfo2 = {
                             _id: q.data.user._id,
                             name: q.data.user.name,
                             surname: q.data.user.surname,
                             email: q.data.user.email,
+                            createdAt: q.data.user.createdAt,
+                            updatedAt: q.data.user.updatedAt,
                             token: q.data.token,
                             refreshToken: q.data.refreshToken,
                         };

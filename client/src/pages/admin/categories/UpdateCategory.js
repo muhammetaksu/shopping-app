@@ -5,20 +5,21 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { API_URL } from "../../../env/config";
 import { useNavigate, useParams } from "react-router-dom";
+import { getSingleRequest, updateRequest } from "../../../tools/Requests";
 
 const validationSchema = yup.object({
     name: yup.string().required("Brand is required!"),
 });
 
-function UpdateCategory() {
+function UpdateCategory({ currentUser }) {
     const [category, setCategory] = useState("");
     const navigate = useNavigate();
     const { id } = useParams();
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await axios.get(`${API_URL}categories/${id}`);
-            if (response?.status == 200) {
+            const response = await getSingleRequest("categories" + id);
+            if (response?.status === 200) {
                 setCategory(response?.data);
             } else {
                 alert("Something went wrong!");
@@ -27,7 +28,6 @@ function UpdateCategory() {
         fetchData();
     }, [id]);
 
-    console.log(category);
     return (
         <div className="my-2 m-3">
             <div>
@@ -42,12 +42,16 @@ function UpdateCategory() {
                     validationSchema={validationSchema}
                     onSubmit={async (values, { setSubmitting }) => {
                         if (values) {
-                            const response = await axios.put(`${API_URL}categories/${id}`, values);
+                            const response = await updateRequest(
+                                "categories",
+                                id,
+                                currentUser.token,
+                                values
+                            );
                             if (response?.status === 201) {
                                 navigate("/admin/category-list");
                             } else {
                                 alert("Something went wrong");
-                                console.log(response);
                             }
                         }
                         setSubmitting(false);

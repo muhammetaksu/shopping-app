@@ -26,15 +26,19 @@ export const getSingleRequestByUserId = async (path, id, token) => {
     return response;
 };
 export const postRequest = async (path, value, token) => {
-    const response = await axios.post(API_URL + path, value, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
-    return response;
+    try {
+        const response = await axios.post(API_URL + path, value, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response;
+    } catch (error) {
+        return error;
+    }
 };
-export const updateRequest = async (path, value, token) => {
-    const response = await axios.put(API_URL + path, value, {
+export const updateRequest = async (path, id, token, value) => {
+    const response = await axios.put(API_URL + path + id, value, {
         headers: {
             Authorization: `Bearer ${token}`,
         },

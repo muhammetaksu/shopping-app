@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { clearCurrentUser, setCurrentUser } from "../../../../../store/actions/mainActions";
 import { userStorage } from "../../../../../service/localStorage/userStorage";
 import { useNavigate } from "react-router-dom";
+import { updateRequest } from "../../../../../tools/Requests";
 
 const validationSchema = yup.object({
     name: yup.string().required("Name is required!"),
@@ -15,30 +16,36 @@ const validationSchema = yup.object({
     email: yup.string().required("Email is required!").email("Invalid email format!"),
 });
 
-const ProfileDetail = ({ userId, userDetail }) => {
+const ProfileDetail = ({ currentUser }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
-            name: userDetail?.name,
-            surname: userDetail?.surname,
-            email: userDetail?.email,
+            name: currentUser?.name,
+            surname: currentUser?.surname,
+            email: currentUser?.email,
         },
         validationSchema,
-        onSubmit: (values) => {
-            axios
-                .put(API_URL + (userDetail.isAdmin ? "admins/" : "users/") + userId, values)
-                .then((res) =>
-                    res.status == 201
-                        ? toast.success("Successfully updated! Please login again.")
-                        : toast.error("There is an error!")
-                )
-                .then(() => {
-                    userStorage.removeUser();
-                    dispatch(clearCurrentUser());
-                })
-                .finally(() => navigate("/login"));
+        onSubmit: async (values) => {
+            const response = await updateRequest(
+                currentUser.isAdmin ? "admins/" : "users/",
+                currentUser._id,
+                currentUser.token,
+                values
+            );
+
+            console.log(response);
+
+            if (response.status === 200) {
+                toast.success("Successfully updated! Please login again.");
+                userStorage.removeUser();
+                dispatch(clearCurrentUser());
+                navigate("/login");
+            } else {
+                toast.error("There is an error!");
+            }
         },
     });
 
@@ -91,28 +98,28 @@ const ProfileDetail = ({ userId, userDetail }) => {
                             <p className="text-danger">{formik.errors.email}</p>
                         )}
                     </div>
-                    {!userDetail?.isAdmin && (
+                    {!currentUser?.isAdmin && (
                         <>
                             <div className="form-item">
                                 <p>
                                     Creation Date:{" "}
-                                    {userDetail?.createdAt &&
-                                        (userDetail?.createdAt).substring(0, 10)}{" "}
+                                    {currentUser?.createdAt &&
+                                        (currentUser?.createdAt).substring(0, 10)}{" "}
                                     /{" "}
-                                    {userDetail?.createdAt &&
-                                        (userDetail?.createdAt).substring(11, 16)}
+                                    {currentUser?.createdAt &&
+                                        (currentUser?.createdAt).substring(11, 16)}
                                 </p>
                             </div>
                             <div className="form-item">
                                 <p>
-                                    {userDetail?.createdAt !== userDetail?.updatedAt && (
+                                    {currentUser?.createdAt !== currentUser?.updatedAt && (
                                         <p>
                                             Last Edit Date:{" "}
-                                            {userDetail.updatedAt &&
-                                                (userDetail?.updatedAt).substring(0, 10)}{" "}
+                                            {currentUser.updatedAt &&
+                                                (currentUser?.updatedAt).substring(0, 10)}{" "}
                                             /{" "}
-                                            {userDetail.updatedAt &&
-                                                (userDetail?.updatedAt).substring(11, 16)}
+                                            {currentUser.updatedAt &&
+                                                (currentUser?.updatedAt).substring(11, 16)}
                                         </p>
                                     )}
                                 </p>

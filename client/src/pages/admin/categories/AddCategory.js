@@ -1,15 +1,15 @@
 import React from "react";
 import * as yup from "yup";
 import { Formik } from "formik";
-import axios from "axios";
-import { API_URL } from "../../../env/config";
 import { useNavigate } from "react-router-dom";
+import { postRequest } from "../../../tools/Requests";
+import { toast } from "react-toastify";
 
 const validationSchema = yup.object({
     name: yup.string().required("Name is required!"),
 });
 
-function AddCategory() {
+function AddCategory({ currentUser }) {
     const navigate = useNavigate();
 
     return (
@@ -25,12 +25,16 @@ function AddCategory() {
                     validationSchema={validationSchema}
                     onSubmit={async (values, { setSubmitting }) => {
                         if (values) {
-                            const response = await axios.post(`${API_URL}categories`, values);
+                            const response = await postRequest(
+                                "categories",
+                                values,
+                                currentUser.token
+                            );
                             if (response?.status === 201) {
+                                toast.success("Added successfully!");
                                 navigate("/admin/category-list");
                             } else {
-                                alert("Something went wrong");
-                                console.log(response);
+                                toast.error("Something went wrong");
                             }
                         }
                         setSubmitting(false);

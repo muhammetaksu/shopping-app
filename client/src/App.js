@@ -44,17 +44,11 @@ function App() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchProducts());
-        dispatch(fetchCategories());
-        dispatch(fetchSuppliers());
-        dispatch(fetchCartLocalStorage());
-        dispatch(fetchFavLocalStorage());
-
         try {
             const user = userStorage.getUser();
 
             if (user.token) {
-                getSingleRequest(user.isAdmin ? "admins" : "users", user._id)
+                getSingleRequest(user.isAdmin ? "admins" : "users", user._id, user.token)
                     .then((q) => {
                         console.log(q);
                         let newUser = {
@@ -71,6 +65,12 @@ function App() {
         } catch (error) {
             console.log(error);
         }
+
+        dispatch(fetchProducts());
+        dispatch(fetchCategories());
+        dispatch(fetchSuppliers());
+        dispatch(fetchCartLocalStorage());
+        dispatch(fetchFavLocalStorage());
     }, []);
 
     return (

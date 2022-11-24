@@ -1,29 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Link, Navigate, NavLink, Route, Router, Routes, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { Navigate, NavLink, Route, Routes } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Orders from "./components/Orders";
 import ProfileDetail from "./components/ProfileDetail";
-import axios from "axios";
-import { API_URL } from "../../../../env/config";
 import Addresses from "./components/address/Addresses";
 
 function ProfilePage() {
     const { currentUser } = useSelector((state) => state.userReducer);
-    const [userDetail, setUserDetail] = useState({});
 
     const activeLink = ({ isActive }) => (isActive ? "activeNavLink" : "");
-
-    useEffect(() => {
-        if (currentUser.isAdmin) {
-            const response = axios
-                .get(API_URL + "admins/" + currentUser._id)
-                .then((res) => setUserDetail(res?.data));
-        } else {
-            const response = axios
-                .get(API_URL + "users/" + currentUser._id)
-                .then((res) => setUserDetail(res?.data));
-        }
-    }, []);
 
     return (
         <div className="container profilePageCont ">
@@ -50,12 +35,7 @@ function ProfilePage() {
                         <Routes>
                             <Route
                                 path="detail"
-                                element={
-                                    <ProfileDetail
-                                        userId={currentUser._id}
-                                        userDetail={userDetail}
-                                    />
-                                }
+                                element={<ProfileDetail currentUser={currentUser} />}
                             />
                             <Route path="orders" element={<Orders user={currentUser} />} />
                             <Route

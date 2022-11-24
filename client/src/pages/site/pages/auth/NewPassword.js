@@ -24,7 +24,6 @@ function NewPassword() {
                         );
                     });
 
-                    console.log(response);
                     setPassword("");
                     setConfirmPassword("");
 

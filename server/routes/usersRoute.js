@@ -1,11 +1,14 @@
 const express = require("express");
+const checkAuth = require("../middleware/checkAuth");
+const checkIsAdmin = require("../middleware/checkIsAdmin");
+const checkTrueUser = require("../middleware/checkTrueUser");
 const { UserModel } = require("../models/UserModel");
 const { encodePassword } = require("../utils/hashPassword");
 const router = express.Router();
 
-// GET ALL CATEGORIES
+// GET ALL USER
 
-router.get("/", (req, res) => {
+router.get("/", checkIsAdmin, (req, res) => {
     try {
         UserModel.find({}, (error, result) => {
             if (error) {
@@ -23,14 +26,18 @@ router.get("/", (req, res) => {
 
 // GET SINGLE
 
-router.get("/:id", (req, res) => {
+router.get("/:id", checkAuth, (req, res) => {
     const id = req.params.id;
     try {
         UserModel.findById(id, (error, result) => {
+            if (checkTrueUser(req.headers.userId, result._id) === false) {
+                return res.status(401).send("You are not authorized to perform this action!");
+            }
+
             if (error) {
-                res.json(error);
+                return res.json(error);
             } else {
-                res.json(result);
+                return res.json(result);
             }
         });
     } catch (error) {
@@ -65,10 +72,16 @@ router.post("/", async (req, res) => {
 
 // DELETE USER
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkAuth, (req, res) => {
     try {
-        await UserModel.findByIdAndRemove(req.params.id).exec();
-        res.send("USER DELETED");
+        UserModel.findById(req.params.id, async (error, result) => {
+            if (checkTrueUser(req.headers.userId, result._id) === false) {
+                return res.status(401).send("You are not authorized to perform this action!");
+            }
+
+            await result.delete();
+            return res.send("User deleted!");
+        });
     } catch (error) {
         console.log("models/UserModel.js: delete: Error");
         console.log(error);
@@ -78,7 +91,7 @@ router.delete("/:id", async (req, res) => {
 
 // UPDATE USER
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", checkAuth, (req, res) => {
     const updatedUser = {
         name: req.body.name,
         surname: req.body.surname,
@@ -86,11 +99,14 @@ router.put("/:id", async (req, res) => {
         updatedAt: new Date(),
     };
     try {
-        await UserModel.findByIdAndUpdate(req.params.id, updatedUser, {
-            returnDocument: "after",
-        });
+        UserModel.findById(req.params.id, async (error, result) => {
+            if (checkTrueUser(req.headers.userId, result._id) === false) {
+                return res.status(401).send("You are not authorized to perform this action!");
+            }
 
-        res.status(201).send("USER UPDATED");
+            await UserModel.findByIdAndUpdate(result._id, updatedUser).exec();
+            return res.status(200).send("Update successfully!");
+        });
     } catch (error) {
         console.log("models/UserModel.js: update: Error");
         console.log(error);

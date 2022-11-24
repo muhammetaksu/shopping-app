@@ -2,16 +2,15 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchProducts } from "../../../store/middleware/thunkActions";
-import axios from "axios";
-import { API_URL } from "../../../env/config";
 
 import "antd/dist/antd.min.css";
 import { Modal, Table } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { CloseOutlined } from "@ant-design/icons";
 import { DeleteOutlined } from "@ant-design/icons";
+import { deleteRequest } from "../../../tools/Requests";
 
-function ProductList() {
+function ProductList({ currentUser }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -21,12 +20,6 @@ function ProductList() {
 
     const originalDataState = useSelector((state) => state.originalProductsReducer);
     const { originalProducts } = originalDataState;
-
-    // const suppliersState = useSelector((state) => state.suppliersReducer);
-    // const { suppliers } = suppliersState;
-
-    // const categoriesState = useSelector((state) => state.categoriesReducer);
-    // const { categories } = categoriesState;
 
     const onChange = (pagination, filters, sorter, extra) => {
         console.log("params", pagination, filters, sorter, extra);
@@ -113,17 +106,12 @@ function ProductList() {
     };
 
     const deleteProduct = async (e) => {
-        const controller = new AbortController();
-        const { signal } = controller;
-        const result = await axios.delete(`${API_URL}products/${e}`, {
-            signal,
-        });
+        const result = await deleteRequest("products", e, currentUser.token);
         if (result?.status === 200) {
             dispatch(fetchProducts());
         } else {
             console.log("deleteProduct()/Error");
         }
-        console.log(e);
     };
 
     return (

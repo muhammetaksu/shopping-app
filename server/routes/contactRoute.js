@@ -1,5 +1,6 @@
 const express = require("express");
 const { USER } = require("../config/environments");
+const checkIsAdmin = require("../middleware/checkIsAdmin");
 const ContactModel = require("../models/ContactModel");
 const sendEmail = require("../utils/sendEmail");
 const { contactEmailBody, contactCustomerEmailBody } = require("../utils/sendEmailBody");
@@ -7,7 +8,7 @@ const router = express.Router();
 
 // GET ALL CONTACT
 
-router.get("/", (req, res) => {
+router.get("/", checkIsAdmin, (req, res) => {
     try {
         ContactModel.find({}, (error, result) => {
             if (error) {
@@ -25,7 +26,7 @@ router.get("/", (req, res) => {
 
 // GET SINGLE
 
-router.get("/:id", (req, res) => {
+router.get("/:id", checkIsAdmin, (req, res) => {
     const id = req.params.id;
     try {
         ContactModel.findById(id, (error, result) => {
@@ -66,10 +67,10 @@ router.post("/", async (req, res) => {
 
 // DELETE CONTACT
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkIsAdmin, async (req, res) => {
     try {
         await ContactModel.findByIdAndRemove(req.params.id).exec();
-        res.send("CONTACT DELETED");
+        return res.send("CONTACT DELETED");
     } catch (error) {
         console.log("models/ContactModel.js: delete: Error");
         console.log(error);

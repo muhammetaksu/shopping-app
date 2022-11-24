@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import * as yup from "yup";
 import { Formik } from "formik";
-import { useDispatch } from "react-redux";
 import axios from "axios";
 import { API_URL } from "../../../env/config";
 import { useNavigate, useParams } from "react-router-dom";
+import { getSingleRequest, updateRequest } from "../../../tools/Requests";
+import { toast } from "react-toastify";
 
 const validationSchema = yup.object({
     name: yup.string().required("Name is required!"),
@@ -19,7 +20,7 @@ const validationSchema = yup.object({
     phone: yup.string().required("Phone is required!"),
 });
 
-function UpdateSupplier() {
+function UpdateSupplier({ currentUser }) {
     const [supplier, setSupplier] = useState("");
     const [countries, setCountries] = useState([]);
 
@@ -28,7 +29,7 @@ function UpdateSupplier() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await axios.get(`${API_URL}suppliers/${id}`);
+            const response = await getSingleRequest("suppliers", id, currentUser.token);
             if (response?.status === 200) {
                 setSupplier(response?.data);
             } else {
@@ -84,12 +85,17 @@ function UpdateSupplier() {
                     validationSchema={validationSchema}
                     onSubmit={async (values, { setSubmitting }) => {
                         if (values) {
-                            const response = await axios.put(`${API_URL}suppliers/${id}`, values);
+                            const response = await updateRequest(
+                                "suppliers",
+                                id,
+                                currentUser.token,
+                                values
+                            );
                             if (response?.status === 201) {
+                                toast.success("Update successfully!");
                                 navigate("/admin/supplier-list");
                             } else {
-                                alert("Something went wrong");
-                                console.log(response);
+                                toast.error("Something went wrong");
                             }
                         }
                         setSubmitting(false);

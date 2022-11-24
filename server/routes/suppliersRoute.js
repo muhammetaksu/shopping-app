@@ -1,4 +1,5 @@
 const express = require("express");
+const checkIsAdmin = require("../middleware/checkIsAdmin");
 const SupplierModel = require("../models/SupplierModel");
 const router = express.Router();
 
@@ -40,7 +41,7 @@ router.get("/:id", (req, res) => {
 
 // ADD SUPPLIER
 
-router.post("/", async (req, res) => {
+router.post("/", checkIsAdmin, async (req, res) => {
     const supplier = {
         name: req.body.name,
         contactName: req.body.contactName,
@@ -68,13 +69,13 @@ router.post("/", async (req, res) => {
 
 // DELETE SUPPLIER
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkIsAdmin, async (req, res) => {
     try {
         const deletedSupplier = await SupplierModel.findByIdAndRemove(req.params.id).exec();
         if (!deletedSupplier) {
             return res.status(404).json({ message: "Supplier Not found" });
         }
-        return res.status(200).json({ message: "Deleted" });
+        return res.status(200).json({ message: "Supplier deleted!" });
     } catch (error) {
         console.log("models/SupplierModel.js: delete: Error");
         console.log(error);
@@ -84,7 +85,7 @@ router.delete("/:id", async (req, res) => {
 
 // UPDATE SUPPLIER
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", checkIsAdmin, async (req, res) => {
     const supplier = {
         name: req.body.name,
         contactName: req.body.contactName,

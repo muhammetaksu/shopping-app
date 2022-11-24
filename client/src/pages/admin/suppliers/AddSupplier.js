@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import * as yup from "yup";
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import axios from "axios";
-import { API_URL } from "../../../env/config";
 import { useNavigate } from "react-router-dom";
+import { postRequest } from "../../../tools/Requests";
+import { toast } from "react-toastify";
 
 const validationSchema = yup.object({
     name: yup.string().required("Name is required!"),
@@ -18,12 +19,10 @@ const validationSchema = yup.object({
     phone: yup.string().required("Phone is required!"),
 });
 
-function AddSupplier() {
+function AddSupplier({ currentUser }) {
     const navigate = useNavigate();
     const [countries, setCountries] = useState([]);
     const [states, setStates] = useState([]);
-    // const [selectedStates, setSelectedStates] = useState([]);
-    const [cities, setCities] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState("");
 
     useEffect(() => {
@@ -56,13 +55,13 @@ function AddSupplier() {
         validationSchema,
         onSubmit: async (values) => {
             if (values) {
-                const response = await axios.post(`${API_URL}suppliers`, values);
+                const response = await postRequest("suppliers", values, currentUser.token);
                 if (response?.status === 200) {
                     formik.resetForm();
+                    toast.success("Added successfully!");
                     navigate("/admin/supplier-list");
                 } else {
-                    alert("Something went wrong");
-                    console.log(response);
+                    toast.error("Something went wrong");
                 }
             }
         },

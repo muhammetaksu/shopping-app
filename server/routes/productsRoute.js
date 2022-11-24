@@ -1,4 +1,6 @@
 const express = require("express");
+const checkAuth = require("../middleware/checkAuth");
+const checkIsAdmin = require("../middleware/checkIsAdmin");
 const ProductModel = require("../models/ProductModel");
 const router = express.Router();
 
@@ -35,7 +37,7 @@ router.get("/:id", (req, res) => {
 
 // ADD PRODUCT
 
-router.post("/", async (req, res) => {
+router.post("/", checkIsAdmin, async (req, res) => {
     const product = {
         brand: req.body.brand,
         model: req.body.model,
@@ -62,7 +64,7 @@ router.post("/", async (req, res) => {
 
 // UPDATE PRODUCT
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", checkIsAdmin, async (req, res) => {
     try {
         const {
             brand,
@@ -107,7 +109,7 @@ router.put("/:id", async (req, res) => {
 
 // DELETE PRODUCT
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkIsAdmin, async (req, res) => {
     const id = req.params.id;
     await ProductModel.findByIdAndRemove(id).exec();
 

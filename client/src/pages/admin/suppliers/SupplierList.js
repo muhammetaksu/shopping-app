@@ -1,29 +1,19 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchCategories, fetchSuppliers } from "../../../store/middleware/thunkActions";
-import axios from "axios";
-import { API_URL } from "../../../env/config";
+import { fetchSuppliers } from "../../../store/middleware/thunkActions";
 
 import "antd/dist/antd.min.css";
 import { Modal, Table } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { CloseOutlined } from "@ant-design/icons";
 import { DeleteOutlined } from "@ant-design/icons";
+import { deleteRequest } from "../../../tools/Requests";
+import { toast } from "react-toastify";
 
-function SupplierList() {
+function SupplierList({ currentUser }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        dispatch(fetchSuppliers());
-    }, []);
-
-    // const originalDataState = useSelector((state) => state.originalProductsReducer);
-    // const { originalProducts } = originalDataState;
-
-    // const suppliersState = useSelector((state) => state.suppliersReducer);
-    // const { suppliers } = suppliersState;
 
     const suppliersState = useSelector((state) => state.suppliersReducer);
     const { suppliers } = suppliersState;
@@ -147,17 +137,14 @@ function SupplierList() {
     };
 
     const deleteSupplier = async (e) => {
-        const controller = new AbortController();
-        const { signal } = controller;
-        const result = await axios.delete(`${API_URL}suppliers/${e}`, {
-            signal,
-        });
+        const result = await deleteRequest("suppliers", e, currentUser.token);
         if (result?.status === 200) {
+            toast.success("Delete successfully!");
             dispatch(fetchSuppliers());
         } else {
+            toast.error("There is an error!");
             console.log("deleteSupplier()/Error");
         }
-        console.log(e);
     };
 
     return (

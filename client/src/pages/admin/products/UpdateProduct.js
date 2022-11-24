@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { fetchProductById } from "../../../store/middleware/thunkActions";
 import { clearGetProductById } from "../../../store/actions/mainActions";
 import { toast } from "react-toastify";
+import { updateRequest } from "../../../tools/Requests";
 
 const validationSchema = yup.object({
     brand: yup.string().required("Brand is required!"),
@@ -21,7 +22,7 @@ const validationSchema = yup.object({
     imageLink2: yup.string().required("Image 2 is required!"),
 });
 
-function UpdateProduct() {
+function UpdateProduct({ currentUser }) {
     const { id } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -32,8 +33,6 @@ function UpdateProduct() {
     const { suppliers } = suppliersState;
     const singleProductState = useSelector((state) => state.getProductByIdReducer);
     const { product } = singleProductState;
-
-    console.log(product);
 
     useEffect(() => {
         dispatch(fetchProductById(id));
@@ -66,12 +65,17 @@ function UpdateProduct() {
                     validationSchema={validationSchema}
                     onSubmit={async (values, { setSubmitting }) => {
                         if (values) {
-                            const response = await axios.put(`${API_URL}products/${id}`, values);
+                            const response = await updateRequest(
+                                "products",
+                                id,
+                                currentUser.token,
+                                values
+                            );
                             if (response?.status === 201) {
                                 toast.success("Successfully added!");
                                 navigate("/admin/product-list");
                             } else {
-                                alert("Something went wrong");
+                                toast.error("Something went wrong");
                                 console.log(response);
                             }
                         }

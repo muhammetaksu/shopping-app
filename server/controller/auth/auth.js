@@ -10,7 +10,7 @@ const { comparePassword } = require("../../utils/hashPassword");
 const auth = {
     login: async (req, res) => {
         if (!req.body.email || !req.body.password) {
-            return res.status(404).send({
+            return res.status(404).json({
                 message: "Email and password can not be empty!",
             });
         } else {
@@ -19,23 +19,25 @@ const auth = {
             UserModel.findOne({ email: email }, async (err, result) => {
                 try {
                     if (!result) {
-                        return res.status(404).send({
+                        return res.status(404).json({
                             message: "User not found.",
                         });
                     } else {
                         const passResult = await comparePassword(password, result.password);
                         if (!passResult) {
-                            return res.status(403).send("Invalid password!");
+                            return res.status(403).json({ message: "Invalid password!" });
                         }
 
-                        const token = generateAccessToken(email);
-                        const refreshToken = generateRefreshToken(email);
+                        const token = generateAccessToken(email, result._id);
+                        const refreshToken = generateRefreshToken(email, result._id);
                         return res.status(200).json({
                             user: {
                                 _id: result._id,
                                 name: result.name,
                                 surname: result.surname,
                                 email: result.email,
+                                createdAt: result.createdAt,
+                                updatedAt: result.updatedAt,
                             },
                             token: token,
                             refreshToken: refreshToken,
@@ -51,7 +53,7 @@ const auth = {
 
     adminLogin: async (req, res) => {
         if (!req.body.email || !req.body.password) {
-            return res.status(404).send({
+            return res.status(404).json({
                 message: "Email and password can not be empty!",
             });
         } else {
@@ -60,17 +62,17 @@ const auth = {
             AdminModel.findOne({ email: email }, async (err, result) => {
                 try {
                     if (!result) {
-                        return res.status(404).send({
+                        return res.status(404).json({
                             message: "User not found..",
                         });
                     } else {
                         const passResult = await comparePassword(password, result.password);
                         if (!passResult) {
-                            return res.status(403).send("Invalid password!");
+                            return res.status(403).json({ message: "Invalid password!" });
                         }
 
-                        const token = generateAccessToken(email);
-                        const refreshToken = generateRefreshToken(email);
+                        const token = generateAccessToken(email, result._id);
+                        const refreshToken = generateRefreshToken(email, result._id);
                         return res.status(200).json({
                             user: {
                                 _id: result._id,
@@ -78,6 +80,8 @@ const auth = {
                                 surname: result.surname,
                                 email: result.email,
                                 isAdmin: result.isAdmin,
+                                createdAt: result.createdAt,
+                                updatedAt: result.updatedAt,
                             },
                             token: token,
                             refreshToken: refreshToken,

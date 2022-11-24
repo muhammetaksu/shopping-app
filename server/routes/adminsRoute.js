@@ -1,11 +1,12 @@
 const express = require("express");
+const checkIsAdmin = require("../middleware/checkIsAdmin");
 const AdminModel = require("../models/AdminModel");
 const { encodePassword } = require("../utils/hashPassword");
 const router = express.Router();
 
 // GET ALL ADMINS
 
-router.get("/", (req, res) => {
+router.get("/", checkIsAdmin, (req, res) => {
     try {
         AdminModel.find({}, (error, result) => {
             if (error) {
@@ -23,7 +24,7 @@ router.get("/", (req, res) => {
 
 // GET SINGLE
 
-router.get("/:id", (req, res) => {
+router.get("/:id", checkIsAdmin, (req, res) => {
     const id = req.params.id;
     try {
         AdminModel.findById(id, (error, result) => {
@@ -42,7 +43,7 @@ router.get("/:id", (req, res) => {
 
 // ADD ADMIN
 
-router.post("/", async (req, res) => {
+router.post("/", checkIsAdmin, async (req, res) => {
     const admin = {
         name: req.body.name,
         surname: req.body.surname,
@@ -63,7 +64,7 @@ router.post("/", async (req, res) => {
 
 // DELETE ADMIN
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkIsAdmin, async (req, res) => {
     try {
         await AdminModel.findByIdAndRemove(req.params.id).exec();
         res.send("ADMIN DELETED");
@@ -76,7 +77,7 @@ router.delete("/:id", async (req, res) => {
 
 // UPDATE ADMIN
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", checkIsAdmin, async (req, res) => {
     const updatedUser = {
         name: req.body.name,
         surname: req.body.surname,

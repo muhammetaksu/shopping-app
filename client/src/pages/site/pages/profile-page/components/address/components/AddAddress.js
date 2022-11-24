@@ -33,13 +33,11 @@ const AddAddress = ({ currentUser }) => {
         },
         validationSchema,
         onSubmit: (values) => {
-            postRequest("address", values, currentUser.token)
-                .then((res) =>
-                    res.status == 201
-                        ? toast.success("Successfully added!")
-                        : toast.error("There is an error!")
-                )
-                .finally(() => navigate("../list"));
+            postRequest("address", values, currentUser.token).then((res) =>
+                res.status === 201
+                    ? (toast.success("Added successfully!"), navigate("../list"))
+                    : toast.warning(res.response.statusText)
+            );
         },
     });
 

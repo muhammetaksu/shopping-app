@@ -10,20 +10,16 @@ import { Modal, Table } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { CloseOutlined } from "@ant-design/icons";
 import { DeleteOutlined } from "@ant-design/icons";
+import { deleteRequest } from "../../../tools/Requests";
+import { toast } from "react-toastify";
 
-function CategoryList() {
+function CategoryList({ currentUser }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(fetchCategories());
     }, []);
-
-    // const originalDataState = useSelector((state) => state.originalProductsReducer);
-    // const { originalProducts } = originalDataState;
-
-    // const suppliersState = useSelector((state) => state.suppliersReducer);
-    // const { suppliers } = suppliersState;
 
     const categoriesState = useSelector((state) => state.categoriesReducer);
     const { categories } = categoriesState;
@@ -85,18 +81,15 @@ function CategoryList() {
         });
     };
 
-    const deleteCategory = async (e) => {
-        const controller = new AbortController();
-        const { signal } = controller;
-        const result = await axios.delete(`${API_URL}categories/${e}`, {
-            signal,
-        });
+    const deleteCategory = async (id) => {
+        const result = await deleteRequest("categories", id, currentUser.token);
         if (result?.status === 200) {
+            toast.success("Delete successfully!");
             dispatch(fetchCategories());
         } else {
+            toast.error("There is an error!");
             console.log("deleteCategory()/Error");
         }
-        console.log(e);
     };
 
     return (

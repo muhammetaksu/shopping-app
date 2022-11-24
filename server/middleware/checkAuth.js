@@ -3,13 +3,13 @@ const { accessTokenOptions } = require("../config/environments");
 
 module.exports = (req, res, next) => {
     try {
-        /*JWT is send with request header! 
-        Format of it: Authorization : Bearer <token>
-        */
         const token = req.headers.authorization.split(" ")[1];
         const decodedToken = jwt.verify(token, accessTokenOptions.jwtKey);
+        const { _id } = decodedToken;
+        req.headers.userId = _id;
         next();
     } catch (error) {
+        console.log("Auth failed");
         return res.status(401).send({
             message: "Auth failed",
         });

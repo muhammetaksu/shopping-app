@@ -3,12 +3,12 @@ const connectionString =
 
 const refreshTokenOptions = {
     jwtKey: "f6a94ee2-b8f4-4e1b-a8ee-6fafe4f0c6e3",
-    jwtExpiry: "1m",
+    jwtExpiry: "3d",
 };
 
 const accessTokenOptions = {
     jwtKey: "7bfc1d64-397e-11ed-a261-0242ac120002",
-    jwtExpiry: "10s",
+    jwtExpiry: "1d",
 };
 
 const HOST = "smtp@gmail.com";

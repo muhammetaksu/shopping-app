@@ -29,8 +29,6 @@ function AdminLogin() {
                     return resolve(axios.post(`${API_URL}login/admin`, admin));
                 });
 
-                console.log(response);
-
                 await toast.promise(response, {
                     pending: {
                         render() {
@@ -70,6 +68,8 @@ function AdminLogin() {
                             name: q.data.user.name,
                             surname: q.data.user.surname,
                             email: q.data.user.email,
+                            createdAt: q.data.user.createdAt,
+                            updatedAt: q.data.user.updatedAt,
                             isAdmin: Boolean(q.data.user.isAdmin),
                             token: q.data.token,
                             refreshToken: q.data.refreshToken,

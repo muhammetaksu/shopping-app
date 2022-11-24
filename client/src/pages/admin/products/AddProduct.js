@@ -6,6 +6,7 @@ import axios from "axios";
 import { API_URL } from "../../../env/config";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { postRequest } from "../../../tools/Requests";
 
 const validationSchema = yup.object({
     brand: yup.string().required("Brand is required!"),
@@ -19,7 +20,7 @@ const validationSchema = yup.object({
     imageLink2: yup.string().required("Image 2 is required!"),
 });
 
-function AddProduct() {
+function AddProduct({ currentUser }) {
     const navigate = useNavigate();
     const categoriesState = useSelector((state) => state.categoriesReducer);
     const { categories } = categoriesState;
@@ -48,13 +49,16 @@ function AddProduct() {
                     validationSchema={validationSchema}
                     onSubmit={async (values, { setSubmitting }) => {
                         if (values) {
-                            const response = await axios.post(`${API_URL}products`, values);
+                            const response = await postRequest(
+                                "products",
+                                values,
+                                currentUser.token
+                            );
                             if (response?.status === 201) {
                                 toast.success("Successfully added!");
                                 navigate("/admin/product-list");
                             } else {
                                 alert("Something went wrong");
-                                console.log(response);
                             }
                         }
                         setSubmitting(false);
