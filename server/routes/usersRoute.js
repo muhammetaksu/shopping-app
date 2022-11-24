@@ -29,17 +29,19 @@ router.get("/", checkIsAdmin, (req, res) => {
 router.get("/:id", checkAuth, (req, res) => {
     const id = req.params.id;
     try {
-        UserModel.findById(id, (error, result) => {
-            if (checkTrueUser(req.headers.userId, result._id) === false) {
-                return res.status(401).send("You are not authorized to perform this action!");
-            }
+        UserModel.findById(id)
+            .select("name surname email createdAt updatedAt")
+            .exec((error, result) => {
+                if (checkTrueUser(req.headers.userId, result._id) === false) {
+                    return res.status(401).send("You are not authorized to perform this action!");
+                }
 
-            if (error) {
-                return res.json(error);
-            } else {
-                return res.json(result);
-            }
-        });
+                if (error) {
+                    return res.json(error);
+                } else {
+                    return res.json(result);
+                }
+            });
     } catch (error) {
         console.log("models/UserModel.js: get: Error");
         console.log(error);

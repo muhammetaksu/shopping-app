@@ -24,27 +24,29 @@ function Departments() {
 
     return (
         <div className="sideBar">
-            <h4 id="sidebarTitle" className="border-bottom">
-                <p>Suppliers</p>
-            </h4>
-            <ul id="supplierItemsCont">
-                <li id="sidebarSupplierItem" onClick={() => getProductsBySupplier(-1)}>
-                    All Suppliers
-                </li>
-                {suppliers &&
-                    suppliers.map((item, i) => {
-                        return (
-                            <li
-                                id="sidebarSupplierItem"
-                                onClick={() => getProductsBySupplier(item._id)}
-                                key={i}
-                                style={{ color: "black", cursor: "pointer" }}
-                            >
-                                {item.name}
-                            </li>
-                        );
-                    })}
-            </ul>
+            <div>
+                <h4 id="sidebarTitle" className="border-bottom">
+                    <p>Suppliers</p>
+                </h4>
+                <ul id="supplierItemsCont">
+                    <li id="sidebarSupplierItem" onClick={() => getProductsBySupplier(-1)}>
+                        All Suppliers
+                    </li>
+                    {suppliers &&
+                        suppliers.map((item, i) => {
+                            return (
+                                <li
+                                    id="sidebarSupplierItem"
+                                    onClick={() => getProductsBySupplier(item._id)}
+                                    key={i}
+                                    style={{ color: "black", cursor: "pointer" }}
+                                >
+                                    {item.name}
+                                </li>
+                            );
+                        })}
+                </ul>
+            </div>
         </div>
     );
 }

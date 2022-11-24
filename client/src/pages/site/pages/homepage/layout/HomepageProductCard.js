@@ -1,24 +1,32 @@
-import React, { useState } from "react";
-import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useContext, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { optionForLoop } from "../../../../../assets/OptionForLoop";
-import { cartStorage } from "../../../../../service/localStorage/cartStorage";
-import { addProductToCart, setCartQuantity } from "../../../../../store/actions/mainActions";
+import { modalsContext } from "../../../../../context/ModalsProvider";
 import AddToCartBtn from "../../../../components/AddToCartBtn";
 import FavoriteBtn from "../../../../components/FavoriteBtn";
 
 const HomepageProductCard = ({ product, index }) => {
     const [quantity, setQuantity] = useState(1);
     const navigate = useNavigate();
+    const { currentUser } = useSelector((state) => state.userReducer);
+    const { setIsModalOpen, setModalContent } = useContext(modalsContext);
+
+    const goToDetail = () => {
+        if (currentUser?.token) {
+            navigate(`/productdetail/${product._id}`);
+        } else {
+            setIsModalOpen(true);
+            setModalContent("You must be logged in to view product details!");
+        }
+    };
 
     return (
         <div key={index}>
             <div className="card">
                 <div className="cardImgCont">
                     <img
-                        onClick={() => navigate(`/productdetail/${product._id}`)}
+                        onClick={() => goToDetail()}
                         className="cardImg"
                         src={product.image.imageLink1}
                         alt="detail"

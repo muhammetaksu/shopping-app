@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { store } from "./store/store";
 import PageNumberProvider from "./context/PageNumberProvider";
 import ProductsPerPageProvider from "./context/ProductsPerPageProvider";
+import ModalsProvider from "./context/ModalsProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -14,7 +15,9 @@ root.render(
         <Provider store={store}>
             <PageNumberProvider>
                 <ProductsPerPageProvider>
-                    <App />
+                    <ModalsProvider>
+                        <App />
+                    </ModalsProvider>
                 </ProductsPerPageProvider>
             </PageNumberProvider>
         </Provider>

@@ -148,12 +148,8 @@ function Navbar() {
                                 </div>
                             </ShowOnLogin>
                         ) : (
-                            <div>
-                                <p>Welcome</p>
-
-                                <div className="accounts-list-dropdown">
-                                    <p>Guest</p>
-                                </div>
+                            <div className="navLinks">
+                                <p>Welcome Guest</p>
                             </div>
                         )}
                     </>

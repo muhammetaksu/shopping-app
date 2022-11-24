@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "antd/dist/antd.min.css";
 import "./index.scss";
 import { Route, Routes } from "react-router-dom";
@@ -29,15 +29,14 @@ import { userStorage } from "./service/localStorage/userStorage";
 import { setCurrentUser } from "./store/actions/mainActions";
 import NewPassword from "./pages/site/pages/auth/NewPassword";
 import ProfilePage from "./pages/site/pages/profile-page/ProfilePage";
-import Loading from "./assets/Loading";
 import ContactPage from "./pages/site/pages/ContactPage";
 import HomePage from "./pages/site/pages/homepage/HomePage";
 import Footer from "./pages/components/Footer";
 import Navbar from "./pages/components/Navbar";
 import { getSingleRequest } from "./tools/Requests";
+import BasicModal from "./pages/components/BasicModal";
 
 function App() {
-    const [isLoading, setIsLoading] = useState(false);
     const { currentUser } = useSelector((state) => state.userReducer);
     const token = currentUser?.token ? currentUser?.token : null;
 
@@ -49,16 +48,18 @@ function App() {
 
             if (user.token) {
                 getSingleRequest(user.isAdmin ? "admins" : "users", user._id, user.token)
-                    .then((q) => {
+                    .then((res) => {
                         let newUser = {
-                            name: q.data.name,
-                            surname: q.data.surname,
-                            email: q.data.email,
+                            ...res.data,
                             ...user,
                         };
                         dispatch(setCurrentUser(newUser));
                     })
-                    .catch((err) => console.log(err));
+                    .catch((err) => console.log(err))
+                    .finally(() => {
+                        dispatch(fetchCartLocalStorage());
+                        dispatch(fetchFavLocalStorage());
+                    });
             }
         } catch (error) {
             console.log(error);
@@ -67,61 +68,57 @@ function App() {
         dispatch(fetchProducts());
         dispatch(fetchCategories());
         dispatch(fetchSuppliers());
-        dispatch(fetchCartLocalStorage());
-        dispatch(fetchFavLocalStorage());
     }, []);
 
     return (
         <div className="appJs ">
-            {isLoading && <Loading />}
-            {!isLoading && (
-                <>
-                    <ToastContainer
-                        transition={Slide}
-                        position="top-right"
-                        autoClose={3000}
-                        hideProgressBar={false}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                        pauseOnHover
-                    />
-                    {/*  */}
-                    <Navbar />
-                    <Routes>
-                        {/* AUTH ROUTES */}
-                        <Route element={<ProtectedRoute token={!token} />}>
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/admin-login" element={<AdminLogin />} />
-                            <Route path="/register" element={<Register />} />
-                            <Route path="/reset-password" element={<ResetPassword />} />
-                            <Route path="/reset-password/:id/:token" element={<NewPassword />} />
-                        </Route>
+            <>
+                <BasicModal />
+                <ToastContainer
+                    transition={Slide}
+                    position="top-right"
+                    autoClose={3000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    // pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
+                {/*  */}
+                <Navbar />
+                <Routes>
+                    {/* AUTH ROUTES */}
+                    <Route element={<ProtectedRoute token={!token} />}>
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/admin-login" element={<AdminLogin />} />
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/reset-password" element={<ResetPassword />} />
+                        <Route path="/reset-password/:id/:token" element={<NewPassword />} />
+                    </Route>
 
-                        {/* USER ROUTES */}
-                        <Route element={<ProtectedRoute token={token} />}>
-                            <Route path="/profile-page/*" element={<ProfilePage />} />
-                            <Route path="/cart" element={<CartPage />} />
-                            <Route path="/favorites" element={<FavoritePage />} />
-                            <Route path="/productdetail/:id" element={<ProductDetailPage />} />
-                            {/* ADMIN ROUTE */}
-                            <Route element={<AdminOnlyRoute />}>
-                                <Route path="/admin/*" element={<AdminHome />} />
-                            </Route>
+                    {/* USER ROUTES */}
+                    <Route element={<ProtectedRoute token={token} />}>
+                        <Route path="/profile-page/*" element={<ProfilePage />} />
+                        <Route path="/cart" element={<CartPage />} />
+                        <Route path="/favorites" element={<FavoritePage />} />
+                        <Route path="/productdetail/:id" element={<ProductDetailPage />} />
+                        {/* ADMIN ROUTE */}
+                        <Route element={<AdminOnlyRoute />}>
+                            <Route path="/admin/*" element={<AdminHome />} />
                         </Route>
+                    </Route>
 
-                        {/* PUBLIC ROUTE */}
-                        <Route>
-                            <Route path="/contact" element={<ContactPage />} />
-                            <Route path="/*" element={<PageNotFound />} />
-                            <Route path="/" element={<HomePage />} />
-                        </Route>
-                    </Routes>
-                    <Footer />
-                </>
-            )}
+                    {/* PUBLIC ROUTE */}
+                    <Route>
+                        <Route path="/contact" element={<ContactPage />} />
+                        <Route path="/*" element={<PageNotFound />} />
+                        <Route path="/" element={<HomePage />} />
+                    </Route>
+                </Routes>
+                <Footer />
+            </>
         </div>
     );
 }
