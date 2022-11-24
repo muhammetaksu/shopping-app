@@ -10,7 +10,7 @@ export const getRequest = async (path, token) => {
     return response;
 };
 export const getSingleRequest = async (path, id, token) => {
-    const response = await axios.get(API_URL + `${path}/${id}`, {
+    const response = await axios.get(API_URL + path + "/" + id, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -18,7 +18,7 @@ export const getSingleRequest = async (path, id, token) => {
     return response;
 };
 export const getSingleRequestByUserId = async (path, id, token) => {
-    const response = await axios.get(API_URL + `${path}/userId/${id}`, {
+    const response = await axios.get(API_URL + path + "/userId/" + id, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -38,7 +38,7 @@ export const postRequest = async (path, value, token) => {
     }
 };
 export const updateRequest = async (path, id, token, value) => {
-    const response = await axios.put(API_URL + path + id, value, {
+    const response = await axios.put(API_URL + path + "/" + id, value, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -47,7 +47,7 @@ export const updateRequest = async (path, id, token, value) => {
 };
 
 export const deleteRequest = async (path, id, token) => {
-    const response = await axios.delete(API_URL + `${path}/${id}`, {
+    const response = await axios.delete(API_URL + path + "/" + id, {
         headers: {
             Authorization: `Bearer ${token}`,
         },

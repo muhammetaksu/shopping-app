@@ -61,7 +61,6 @@ function UpdateSupplier({ currentUser }) {
         fetchCountries();
     }, []);
 
-    console.log(supplier);
     return (
         <div className="my-2 m-3">
             <div>

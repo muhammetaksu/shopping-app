@@ -50,14 +50,12 @@ function App() {
             if (user.token) {
                 getSingleRequest(user.isAdmin ? "admins" : "users", user._id, user.token)
                     .then((q) => {
-                        console.log(q);
                         let newUser = {
                             name: q.data.name,
                             surname: q.data.surname,
                             email: q.data.email,
                             ...user,
                         };
-                        console.log(newUser);
                         dispatch(setCurrentUser(newUser));
                     })
                     .catch((err) => console.log(err));

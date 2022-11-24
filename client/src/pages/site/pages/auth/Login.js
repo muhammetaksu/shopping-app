@@ -61,7 +61,6 @@ function Login() {
                         return q;
                     })
                     .then((q) => {
-                        console.log(q);
                         const userInfo2 = {
                             _id: q.data.user._id,
                             name: q.data.user.name,

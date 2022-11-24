@@ -113,9 +113,8 @@ router.put("/:id", checkAuth, (req, res) => {
                 return res.status(401).send("You are not authorized to perform this action!");
             }
 
-            result = newAddress;
-            await result.save();
-            return res.send("Address updated!");
+            await AddressModel.findByIdAndUpdate(req.params.id, newAddress);
+            return res.status(200).send("Address updated!");
         });
     } catch (error) {
         console.log("models/AddressModel.js: update: Error");

@@ -30,13 +30,11 @@ const ProfileDetail = ({ currentUser }) => {
         validationSchema,
         onSubmit: async (values) => {
             const response = await updateRequest(
-                currentUser.isAdmin ? "admins/" : "users/",
+                currentUser.isAdmin ? "admins" : "users",
                 currentUser._id,
                 currentUser.token,
                 values
             );
-
-            console.log(response);
 
             if (response.status === 200) {
                 toast.success("Successfully updated! Please login again.");

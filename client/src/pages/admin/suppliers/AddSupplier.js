@@ -71,8 +71,6 @@ function AddSupplier({ currentUser }) {
         setSelectedCountry(formik.values.country);
     }, [formik.values.country]);
 
-    console.log(formik.values);
-
     useEffect(() => {
         const findStates = async () => {
             const findStates = await countries.find((q) => q.name == selectedCountry);

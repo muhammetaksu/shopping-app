@@ -76,7 +76,6 @@ function UpdateProduct({ currentUser }) {
                                 navigate("/admin/product-list");
                             } else {
                                 toast.error("Something went wrong");
-                                console.log(response);
                             }
                         }
                         setSubmitting(false);

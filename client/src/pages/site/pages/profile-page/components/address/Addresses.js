@@ -22,7 +22,10 @@ const Addresses = ({ currentUser }) => {
                         <Route path="list" element={<AddressList currentUser={currentUser} />} />
                         <Route path="add" element={<AddAddress currentUser={currentUser} />} />
 
-                        <Route path="edit" element={<EditAddress currentUser={currentUser} />} />
+                        <Route
+                            path="edit/:id"
+                            element={<EditAddress currentUser={currentUser} />}
+                        />
                         <Route path="" element={<Navigate to={"list"} />} />
                     </Routes>
                 </div>
