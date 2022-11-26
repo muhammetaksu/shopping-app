@@ -28,7 +28,9 @@ function SiteHome() {
                 {products &&
                     products
                         .slice(page * productsPerPage, page * productsPerPage + productsPerPage)
-                        .map((product, i) => <HomepageProductCard product={product} index={i} />)}
+                        .map((product, i) => (
+                            <HomepageProductCard product={product} key={i} index={i} />
+                        ))}
             </div>
             <div
                 id="paginationBox"

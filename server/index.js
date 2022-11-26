@@ -14,6 +14,7 @@ const addressRoute = require("./routes/addressRoute");
 const ordersRoute = require("./routes/ordersRoute");
 const contactRoute = require("./routes/contactRoute");
 const passwordResetRoute = require("./routes/passwordResetRoute");
+const stripe = require("./routes/stripe");
 const checkIsAdmin = require("./middleware/checkIsAdmin");
 
 const app = express();
@@ -34,6 +35,7 @@ app.use("/users", usersRoute);
 app.use("/contact", contactRoute);
 app.use("/address", addressRoute);
 app.use("/orders", ordersRoute);
+app.use("/stripe", stripe);
 app.use("*", (req, res) => {
     res.send("There is no route!");
 });

@@ -57,8 +57,8 @@ const AddressList = ({ currentUser }) => {
                         <th>Action</th>
                     </tr>
                     {addresses &&
-                        addresses.map((address) => (
-                            <tr className="addressListCont">
+                        addresses.map((address, i) => (
+                            <tr key={i} className="addressListCont">
                                 <td>{address.title}</td>
                                 <td>
                                     {address.country +

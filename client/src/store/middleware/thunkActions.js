@@ -54,7 +54,7 @@ export const fetchCartLocalStorage = () => {
     return async (dispatch) => {
         const localCart = await cartStorage.getCart();
 
-        dispatch(setLocalCart(localCart));
+        await dispatch(setLocalCart(localCart));
     };
 };
 
@@ -62,6 +62,6 @@ export const fetchFavLocalStorage = () => {
     return async (dispatch) => {
         const localFav = await favoriteStorage.getFav();
 
-        dispatch(setLocalFavorites(localFav));
+        await dispatch(setLocalFavorites(localFav));
     };
 };

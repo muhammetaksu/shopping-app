@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "antd/dist/antd.min.css";
 import "./index.scss";
 import { Route, Routes } from "react-router-dom";
@@ -35,12 +35,16 @@ import Footer from "./pages/components/Footer";
 import Navbar from "./pages/components/Navbar";
 import { getSingleRequest } from "./tools/Requests";
 import BasicModal from "./pages/components/BasicModal";
+import CheckoutPage from "./pages/site/pages/CheckoutPage";
+import CheckoutSuccess from "./pages/site/pages/CheckoutSuccess";
+import { modalsContext } from "./context/ModalsProvider";
 
 function App() {
+    const [pageAccess, setPageAccess] = useState(false);
     const { currentUser } = useSelector((state) => state.userReducer);
-    const token = currentUser?.token ? currentUser?.token : null;
 
     const dispatch = useDispatch();
+    const { setModalContent, setIsModalOpen } = useContext(modalsContext);
 
     useEffect(() => {
         try {
@@ -55,71 +59,89 @@ function App() {
                         };
                         dispatch(setCurrentUser(newUser));
                     })
-                    .catch((err) => console.log(err))
+                    .catch((err) => {
+                        console.log(err);
+                        if (err.response.status === 401) {
+                            setModalContent("Your session has expired. Please login again!");
+                            setIsModalOpen(true);
+                            userStorage.removeUser();
+                        }
+                    })
                     .finally(() => {
-                        dispatch(fetchCartLocalStorage());
-                        dispatch(fetchFavLocalStorage());
+                        setPageAccess(true);
                     });
+            } else {
+                setPageAccess(true);
             }
         } catch (error) {
             console.log(error);
         }
-
+        dispatch(fetchCartLocalStorage());
+        dispatch(fetchFavLocalStorage());
         dispatch(fetchProducts());
         dispatch(fetchCategories());
         dispatch(fetchSuppliers());
     }, []);
 
     return (
-        <div className="appJs ">
-            <>
-                <BasicModal />
-                <ToastContainer
-                    transition={Slide}
-                    position="top-right"
-                    autoClose={3000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    // pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                />
-                {/*  */}
-                <Navbar />
-                <Routes>
-                    {/* AUTH ROUTES */}
-                    <Route element={<ProtectedRoute token={!token} />}>
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/admin-login" element={<AdminLogin />} />
-                        <Route path="/register" element={<Register />} />
-                        <Route path="/reset-password" element={<ResetPassword />} />
-                        <Route path="/reset-password/:id/:token" element={<NewPassword />} />
-                    </Route>
+        <>
+            {pageAccess && (
+                <div className="appJs ">
+                    <>
+                        <BasicModal />
+                        <ToastContainer
+                            transition={Slide}
+                            position="top-right"
+                            autoClose={3000}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                        />
+                        {/*  */}
+                        <Navbar />
+                        <Routes>
+                            {/* AUTH ROUTES */}
+                            <Route element={<ProtectedRoute token={!currentUser?.token} />}>
+                                <Route path="/login" element={<Login />} />
+                                <Route path="/admin-login" element={<AdminLogin />} />
+                                <Route path="/register" element={<Register />} />
+                                <Route path="/reset-password" element={<ResetPassword />} />
+                                <Route
+                                    path="/reset-password/:id/:token"
+                                    element={<NewPassword />}
+                                />
+                            </Route>
 
-                    {/* USER ROUTES */}
-                    <Route element={<ProtectedRoute token={token} />}>
-                        <Route path="/profile-page/*" element={<ProfilePage />} />
-                        <Route path="/cart" element={<CartPage />} />
-                        <Route path="/favorites" element={<FavoritePage />} />
-                        <Route path="/productdetail/:id" element={<ProductDetailPage />} />
-                        {/* ADMIN ROUTE */}
-                        <Route element={<AdminOnlyRoute />}>
-                            <Route path="/admin/*" element={<AdminHome />} />
-                        </Route>
-                    </Route>
+                            {/* USER ROUTES */}
+                            <Route element={<ProtectedRoute token={currentUser?.token} />}>
+                                <Route path="/profile-page/*" element={<ProfilePage />} />
+                                <Route path="/cart" element={<CartPage />} />
+                                <Route path="/favorites" element={<FavoritePage />} />
+                                <Route path="/productdetail/:id" element={<ProductDetailPage />} />
+                                <Route path="/checkout" element={<CheckoutPage />} />
+                                <Route path="/checkout-success" element={<CheckoutSuccess />} />
+                                {/* ADMIN ROUTE */}
+                                <Route element={<AdminOnlyRoute />}>
+                                    <Route path="/admin/*" element={<AdminHome />} />
+                                </Route>
+                            </Route>
 
-                    {/* PUBLIC ROUTE */}
-                    <Route>
-                        <Route path="/contact" element={<ContactPage />} />
-                        <Route path="/*" element={<PageNotFound />} />
-                        <Route path="/" element={<HomePage />} />
-                    </Route>
-                </Routes>
-                <Footer />
-            </>
-        </div>
+                            {/* PUBLIC ROUTE */}
+                            <Route>
+                                <Route path="/contact" element={<ContactPage />} />
+                                <Route path="/*" element={<PageNotFound />} />
+                                <Route path="/" element={<HomePage />} />
+                            </Route>
+                        </Routes>
+                        <Footer />
+                    </>
+                </div>
+            )}
+        </>
     );
 }
 

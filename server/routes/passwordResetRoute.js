@@ -48,7 +48,7 @@ router.post("/", async (req, res) => {
             // console.log("UPDATED TOKEN", token);
         }
 
-        const link = `${SITE_URL}reset-password/${user._id}/${token.token}`;
+        const link = `${SITE_URL}/reset-password/${user._id}/${token.token}`;
         const html = emailBody(link);
         await sendEmail(user.email, "Reset Password", html);
 
