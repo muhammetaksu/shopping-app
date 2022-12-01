@@ -19,17 +19,6 @@ export const fetchProducts = () => async (dispatch) => {
     }
 };
 
-export const fetchProductById = (id) => async (dispatch) => {
-    dispatch({ type: "GET_PRODUCT_BY_ID_REQUEST" });
-
-    try {
-        const response = await axios.get(`${API_URL}products/${id}`);
-        dispatch({ type: "GET_PRODUCT_BY_ID_SUCCESS", payload: response.data });
-    } catch (error) {
-        dispatch({ type: "GET_PRODUCT_BY_ID_ERROR", payload: error });
-    }
-};
-
 export const fetchCategories = () => async (dispatch) => {
     dispatch({ type: "GET_CATEGORIES_REQUEST" });
     try {

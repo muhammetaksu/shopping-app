@@ -1,11 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, Suspense } from "react";
 import "antd/dist/antd.min.css";
 import "./index.scss";
-import { Route, Routes } from "react-router-dom";
-
-import ProductDetailPage from "./pages/site/pages/ProductDetailPage";
-import CartPage from "./pages/site/pages/CartPage";
-import FavoritePage from "./pages/site/pages/FavoritePage";
+import { Route, Router, Routes, useLocation } from "react-router-dom";
 import {
     fetchCartLocalStorage,
     fetchCategories,
@@ -14,36 +10,44 @@ import {
     fetchSuppliers,
 } from "./store/middleware/thunkActions";
 import { useDispatch, useSelector } from "react-redux";
-import PageNotFound from "./pages/site/pages/PageNotFound";
-import AdminHome from "./pages/admin/home/AdminHome";
-import Register from "./pages/site/pages/auth/Register";
-import Login from "./pages/site/pages/auth/Login";
-import ResetPassword from "./pages/site/pages/auth/ResetPassword";
 import { ToastContainer } from "react-toastify";
 import { Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AdminLogin from "./pages/site/pages/auth/AdminLogin";
 import { AdminOnlyRoute } from "./tools/AdminOnly";
 import ProtectedRoute from "./tools/ProtectedRoute";
+import { getSingleRequest } from "./tools/Requests";
 import { userStorage } from "./service/localStorage/userStorage";
 import { setCurrentUser } from "./store/actions/mainActions";
-import NewPassword from "./pages/site/pages/auth/NewPassword";
-import ProfilePage from "./pages/site/pages/profile-page/ProfilePage";
-import ContactPage from "./pages/site/pages/ContactPage";
-import HomePage from "./pages/site/pages/homepage/HomePage";
-import Footer from "./pages/components/Footer";
-import Navbar from "./pages/components/Navbar";
-import { getSingleRequest } from "./tools/Requests";
-import BasicModal from "./pages/components/BasicModal";
-import CheckoutPage from "./pages/site/pages/CheckoutPage";
-import CheckoutSuccess from "./pages/site/pages/CheckoutSuccess";
 import { modalsContext } from "./context/ModalsProvider";
+import PageAnimation from "./assets/PageAnimation";
+import { AnimatePresence } from "framer-motion";
+
+/* COMPONENTS */
+const PageNotFound = React.lazy(() => import("./pages/site/pages/PageNotFound"));
+const AdminHome = React.lazy(() => import("./pages/admin/home/AdminHome"));
+const Register = React.lazy(() => import("./pages/site/pages/auth/Register"));
+const Login = React.lazy(() => import("./pages/site/pages/auth/Login"));
+const ResetPassword = React.lazy(() => import("./pages/site/pages/auth/ResetPassword"));
+const ProductDetailPage = React.lazy(() => import("./pages/site/pages/ProductDetailPage"));
+const CartPage = React.lazy(() => import("./pages/site/pages/CartPage"));
+const FavoritePage = React.lazy(() => import("./pages/site/pages/FavoritePage"));
+const CheckoutSuccess = React.lazy(() => import("./pages/site/pages/CheckoutSuccess"));
+const CheckoutPage = React.lazy(() => import("./pages/site/pages/CheckoutPage"));
+const BasicModal = React.lazy(() => import("./pages/components/BasicModal"));
+const Navbar = React.lazy(() => import("./pages/components/Navbar"));
+const Footer = React.lazy(() => import("./pages/components/Footer"));
+const HomePage = React.lazy(() => import("./pages/site/pages/homepage/HomePage"));
+const ContactPage = React.lazy(() => import("./pages/site/pages/ContactPage"));
+const ProfilePage = React.lazy(() => import("./pages/site/pages/profile-page/ProfilePage"));
+const NewPassword = React.lazy(() => import("./pages/site/pages/auth/NewPassword"));
+const AdminLogin = React.lazy(() => import("./pages/site/pages/auth/AdminLogin"));
 
 function App() {
     const [pageAccess, setPageAccess] = useState(false);
     const { currentUser } = useSelector((state) => state.userReducer);
 
     const dispatch = useDispatch();
+    const location = useLocation();
     const { setModalContent, setIsModalOpen } = useContext(modalsContext);
 
     useEffect(() => {
@@ -103,40 +107,51 @@ function App() {
                         />
                         {/*  */}
                         <Navbar />
-                        <Routes>
-                            {/* AUTH ROUTES */}
-                            <Route element={<ProtectedRoute token={!currentUser?.token} />}>
-                                <Route path="/login" element={<Login />} />
-                                <Route path="/admin-login" element={<AdminLogin />} />
-                                <Route path="/register" element={<Register />} />
-                                <Route path="/reset-password" element={<ResetPassword />} />
-                                <Route
-                                    path="/reset-password/:id/:token"
-                                    element={<NewPassword />}
-                                />
-                            </Route>
 
-                            {/* USER ROUTES */}
-                            <Route element={<ProtectedRoute token={currentUser?.token} />}>
-                                <Route path="/profile-page/*" element={<ProfilePage />} />
-                                <Route path="/cart" element={<CartPage />} />
-                                <Route path="/favorites" element={<FavoritePage />} />
-                                <Route path="/productdetail/:id" element={<ProductDetailPage />} />
-                                <Route path="/checkout" element={<CheckoutPage />} />
-                                <Route path="/checkout-success" element={<CheckoutSuccess />} />
-                                {/* ADMIN ROUTE */}
-                                <Route element={<AdminOnlyRoute />}>
-                                    <Route path="/admin/*" element={<AdminHome />} />
+                        <Suspense>
+                            <Routes location={location} key={location.key}>
+                                <Route element={<PageAnimation pathname={location.pathname} />}>
+                                    {/* AUTH ROUTES */}
+                                    <Route element={<ProtectedRoute token={!currentUser?.token} />}>
+                                        <Route path="/login" element={<Login />} />
+                                        <Route path="/admin-login" element={<AdminLogin />} />
+                                        <Route path="/register" element={<Register />} />
+                                        <Route path="/reset-password" element={<ResetPassword />} />
+                                        <Route
+                                            path="/reset-password/:id/:token"
+                                            element={<NewPassword />}
+                                        />
+                                    </Route>
+
+                                    {/* USER ROUTES */}
+                                    <Route element={<ProtectedRoute token={currentUser?.token} />}>
+                                        <Route path="/profile-page/*" element={<ProfilePage />} />
+                                        <Route path="/cart" element={<CartPage />} />
+                                        <Route path="/favorites" element={<FavoritePage />} />
+                                        <Route
+                                            path="/productdetail/:id"
+                                            element={<ProductDetailPage />}
+                                        />
+                                        <Route path="/checkout" element={<CheckoutPage />} />
+                                        <Route
+                                            path="/checkout-success"
+                                            element={<CheckoutSuccess />}
+                                        />
+                                        {/* ADMIN ROUTE */}
+                                        <Route element={<AdminOnlyRoute />}>
+                                            <Route path="/admin/*" element={<AdminHome />} />
+                                        </Route>
+                                    </Route>
+
+                                    {/* PUBLIC ROUTE */}
+                                    <Route>
+                                        <Route path="/contact" element={<ContactPage />} />
+                                        <Route path="/*" element={<PageNotFound />} />
+                                        <Route path="/" element={<HomePage />} />
+                                    </Route>
                                 </Route>
-                            </Route>
-
-                            {/* PUBLIC ROUTE */}
-                            <Route>
-                                <Route path="/contact" element={<ContactPage />} />
-                                <Route path="/*" element={<PageNotFound />} />
-                                <Route path="/" element={<HomePage />} />
-                            </Route>
-                        </Routes>
+                            </Routes>
+                        </Suspense>
                         <Footer />
                     </>
                 </div>

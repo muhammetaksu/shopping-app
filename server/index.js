@@ -37,7 +37,7 @@ app.use("/address", addressRoute);
 app.use("/orders", ordersRoute);
 app.use("/stripe", stripe);
 app.use("*", (req, res) => {
-    res.send("There is no route!");
+    res.status(404).send("There is no route!");
 });
 
 // Catch all routes

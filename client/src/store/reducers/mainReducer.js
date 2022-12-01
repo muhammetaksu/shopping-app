@@ -4,7 +4,6 @@ import {
     originalProductsReducer,
     productsReducer,
     filteredProductsReducer,
-    getProductByIdReducer,
     categoriesReducer,
     suppliersReducer,
 } from "./dataReducer.js";
@@ -17,7 +16,6 @@ export default combineReducers({
     originalProductsReducer,
     productsReducer,
     filteredProductsReducer,
-    getProductByIdReducer,
     categoriesReducer,
     suppliersReducer,
     userReducer,

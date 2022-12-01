@@ -4,6 +4,7 @@ import TrashIcon from "../../assets/TrashIcon";
 
 const FavPageProduct = ({ product, deleteFromFavorites }) => {
     const navigate = useNavigate();
+
     return (
         <div>
             <div className="favPageProductCard" key={product._id}>

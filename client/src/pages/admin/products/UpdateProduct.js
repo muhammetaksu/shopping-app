@@ -1,14 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as yup from "yup";
 import { Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { API_URL } from "../../../env/config";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchProductById } from "../../../store/middleware/thunkActions";
 import { clearGetProductById } from "../../../store/actions/mainActions";
 import { toast } from "react-toastify";
-import { updateRequest } from "../../../tools/Requests";
+import { getSingleRequest, updateRequest } from "../../../tools/Requests";
 
 const validationSchema = yup.object({
     brand: yup.string().required("Brand is required!"),
@@ -23,6 +21,7 @@ const validationSchema = yup.object({
 });
 
 function UpdateProduct({ currentUser }) {
+    const [product, setProduct] = useState({});
     const { id } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -31,15 +30,13 @@ function UpdateProduct({ currentUser }) {
     const { categories } = categoriesState;
     const suppliersState = useSelector((state) => state.suppliersReducer);
     const { suppliers } = suppliersState;
-    const singleProductState = useSelector((state) => state.getProductByIdReducer);
-    const { product } = singleProductState;
 
     useEffect(() => {
-        dispatch(fetchProductById(id));
-
-        return () => {
-            dispatch(clearGetProductById());
+        const fetchProductById = () => async () => {
+            let result = await getSingleRequest("products", id, currentUser.token);
+            setProduct(result.data);
         };
+        fetchProductById();
     }, [id]);
 
     return (

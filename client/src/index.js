@@ -7,19 +7,22 @@ import { store } from "./store/store";
 import PageNumberProvider from "./context/PageNumberProvider";
 import ProductsPerPageProvider from "./context/ProductsPerPageProvider";
 import ModalsProvider from "./context/ModalsProvider";
+import LoadingProvider from "./context/LoadingProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
     <BrowserRouter>
         <Provider store={store}>
-            <PageNumberProvider>
-                <ProductsPerPageProvider>
-                    <ModalsProvider>
-                        <App />
-                    </ModalsProvider>
-                </ProductsPerPageProvider>
-            </PageNumberProvider>
+            <LoadingProvider>
+                <PageNumberProvider>
+                    <ProductsPerPageProvider>
+                        <ModalsProvider>
+                            <App />
+                        </ModalsProvider>
+                    </ProductsPerPageProvider>
+                </PageNumberProvider>
+            </LoadingProvider>
         </Provider>
     </BrowserRouter>
 );

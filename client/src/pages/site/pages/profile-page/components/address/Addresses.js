@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Navigate, NavLink, Route, Routes } from "react-router-dom";
 import AddAddress from "./components/AddAddress";
 import AddressList from "./components/AddressList";

@@ -1,11 +1,9 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import axios from "axios";
-import { API_URL } from "../../../../../env/config";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { clearCurrentUser, setCurrentUser } from "../../../../../store/actions/mainActions";
+import { clearCurrentUser } from "../../../../../store/actions/mainActions";
 import { userStorage } from "../../../../../service/localStorage/userStorage";
 import { useNavigate } from "react-router-dom";
 import { updateRequest } from "../../../../../tools/Requests";

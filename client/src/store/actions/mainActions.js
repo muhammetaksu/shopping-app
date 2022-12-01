@@ -70,11 +70,6 @@ export const setLocalFavorites = (payload) => {
 };
 
 //// BOOK DETAIL PAGE ACTIONS
-export const clearGetProductById = () => {
-    return {
-        type: "CLEAR_GET_PRODUCT_BY_ID",
-    };
-};
 export const clearSelectedCategory = () => {
     return {
         type: "CLEAR_SELECTED_CATEGORY",

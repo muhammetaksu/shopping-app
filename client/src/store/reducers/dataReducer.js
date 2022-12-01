@@ -64,33 +64,6 @@ export const filteredProductsReducer = (state = { filteredProducts: [] }, action
     }
 };
 
-export const getProductByIdReducer = (state = { product: [] }, action) => {
-    switch (action.type) {
-        case "GET_PRODUCT_BY_ID_REQUEST":
-            return {
-                productByIdLoading: true,
-                ...state,
-            };
-        case "GET_PRODUCT_BY_ID_SUCCESS":
-            return {
-                productByIdLoading: false,
-                product: action.payload,
-            };
-        case "GET_PRODUCT_BY_ID_ERROR":
-            return {
-                productByIdLoading: false,
-                error: action.payload,
-            };
-        case "CLEAR_GET_PRODUCT_BY_ID":
-            return {
-                productByIdLoading: false,
-                product: [],
-            };
-        default:
-            return state;
-    }
-};
-
 export const categoriesReducer = (state = { categories: [] }, action) => {
     switch (action.type) {
         case "GET_CATEGORIES_REQUEST":

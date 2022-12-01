@@ -54,6 +54,7 @@ router.get("/:id", checkAuth, (req, res) => {
 router.post("/", checkAuth, async (req, res) => {
     const order = {
         productsId: req.body.productsId,
+        products: req.body.products,
         userId: req.body.userId,
         totalPrice: req.body.totalPrice,
         deliveryAddress: req.body.deliveryAddress,

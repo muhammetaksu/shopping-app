@@ -39,7 +39,11 @@ function FavoritePage() {
                     </div>
                     <div className="favPageProductCont">
                         {favorites?.map((product, index) => (
-                            <FavPageProduct key={index} product={product} />
+                            <FavPageProduct
+                                key={index}
+                                product={product}
+                                deleteFromFavorites={deleteFromFavorites}
+                            />
                         ))}
                     </div>
                 </>
